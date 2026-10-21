@@ -39,4 +39,4 @@ The public repository still exposes the data after gating. Moving to a private r
 
 ## Updates and rollback
 
-Deploy the entire checked `site/` as one release; never upload individual files into separate deployments. Record the deployment ID from the workflow log in [STATUS.md](STATUS.md). To roll back, use Pages deployment rollback in the dashboard, then revert the repository to the matching commit so the next push does not reintroduce the bad release.
+Deploy the entire checked `site/` as one release; never upload individual files into separate deployments. Record the released commit SHA in [STATUS.md](STATUS.md); the deployment ID is in that commit's Actions run log. Doc-only pushes redeploy identical `site/` content. To roll back, use Pages deployment rollback in the dashboard, then revert the repository to the matching commit so the next push does not reintroduce the bad release.

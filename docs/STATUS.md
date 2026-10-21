@@ -44,7 +44,7 @@ The source modeling/results files were preserved. [Annual QA](../../11_QAQC/2610
 
 ## Publication
 
-Published 21 October 2026 from commit `694b121` by workflow run [39597678127](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39597678127). Pages deployment `f1d8ad8d`. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
+First published 21 October 2026 from commit `694b121`, workflow run [39597678127](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39597678127), deployment `f1d8ad8d`. Later doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
 
 - Overview, Program, Model, Results and Data & Sources return 200 (`.html` paths 308 to extensionless URLs); `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
 - All seven downloads match the local `site/downloads/` SHA-256.
