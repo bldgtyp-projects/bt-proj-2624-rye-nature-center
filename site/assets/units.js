@@ -39,6 +39,7 @@ export const KINDS = {
   hot_water_per_area: { si: "L/h·m²", ip: "gal/h per 1,000 ft²", to: scale((1e-3 / GAL) * FT2 * 1000), digits: 1 },
   liquid_per_day: { si: "L/day", ip: "pints/day", to: scale(1e-3 / PINT), digits: 0 },
   speed: { si: "m/s", ip: "fpm", to: scale(60 / FT), digits: 0 },
+  wind_speed: { si: "m/s", ip: "mph", to: scale(3600 / (5280 * FT)), digits: 0 },
 };
 
 function kind(name) {

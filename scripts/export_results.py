@@ -61,7 +61,6 @@ def main():
             shutil.copyfile(p, PRIVATE / p.name)
         shutil.copyfile(run / 'run/in.osm', PRIVATE / 'in.osm')
         shutil.copyfile(ROOT / config['annual_review'], PRIVATE / 'review.json')
-        shutil.copyfile(ROOT / config['comparison_review'], PRIVATE / 'comparison.json')
         shutil.copyfile(ROOT / config['annual_diagnostics'], PRIVATE / 'diagnostics.json')
         workflow = json.loads((PRIVATE / 'out.osw').read_text())
         weather = Path(workflow['weather_file'])
@@ -137,11 +136,7 @@ def main():
     occupied_cooling_unmet = float(c.execute("select Value from TabularDataWithStrings where TableName='Comfort and Setpoint Not Met Summary' and RowName='Time Setpoint Not Met During Occupied Cooling' and ColumnName='Facility'").fetchone()[0])
     c.close()
     area = sum(z['floor_area_m2'] for z in inputs['zones'])
-    comparison = json.loads((PRIVATE / 'comparison.json').read_text())
     diagnostics = json.loads((PRIVATE / 'diagnostics.json').read_text())
-    history = [{'label': 'Previous annual model, constant {temperature:18} slab ground',
-                'total_kWh': comparison['windows']['electricity_kWh']},
-               {'label': 'Current annual model, Kiva slab ground', 'total_kWh': total}]
     humidity = [{'zone': key, 'label': label,
                  'occupied_hourly_max_RH_percent': diagnostics['interior'][key]['RH_percent']['occupied_maximum'],
                  'all_hourly_max_RH_percent': diagnostics['interior'][key]['RH_percent']['maximum'],
@@ -167,22 +162,21 @@ def main():
                          'sections': ['Winter outage · 1 week','Summer outage · 1 week']}],
               'annual': {'total_kWh': total, 'floor_area_m2': area, 'eui_kWh_m2_year': total/area,
                          'end_uses': END_USES, 'end_uses_kWh': annual, 'monthly': monthly,
-                         'history': history, 'humidity': humidity,
-                         'history_note': 'The only physical change between these two runs is the slab-ground boundary: Kiva replaces the constant {temperature:18} ground. Winter slab losses rise and the summer slab no longer acts as a heat sink, so both heating and cooling electricity increase. Earlier window-only comparisons belong to historical models and are not used as current savings claims.',
+                         'humidity': humidity,
                          'dehumidification_kWh': diagnostics['energy']['Dehumidifier Electricity Energy'], 'reporting_basis': 'Purchased site electricity, before any PV credit. Heating and cooling are equipment electricity, not thermal loads. Cooling includes supplemental dehumidifier electricity. Hot water includes tank parasitics. Fans and pumps include the shared ERV and conditioning equipment.',
-                         'calculation': 'Hourly component-energy outputs plus 15-minute supplemental dehumidifier electricity summed by reporting month. Dehumidifiers are included once in Cooling. Electric water-heater off-cycle parasitics reconstructed from its {power:20} input, rated capacity and hourly heater electricity. Every monthly sum reconciles to the quarter-hour Electricity:Facility meter within 0.00001 kWh.',
+                         'calculation': 'Monthly totals sum the EnergyPlus end-use electricity, including the dehumidifiers and the water heater\'s {power:20} standby draw, and match the building electricity meter.',
                          'review': {'severe_errors': 0, 'humidity_status': 'visitor_core_control_verified_labs_and_winter_comfort_open',
                                     'occupied_cooling_unmet_hours': occupied_cooling_unmet, 'annual_latch_intervals_checked': 35040},
                          'systems': [
-                             ['Heating and cooling','Four recirculating water-source heat-pump zones; explicit project capacities and matching air/water/fan flows, ERV-first sequencing, 15-minute sizing average. Template curves and the EMS ground-temperature surrogate remain provisional.'],
-                             ['Humidity control','Visitor Center/Core each use a generic {liquid_per_day:120} dehumidifier with a 60% RH target all day; disabled with window opening or outage controls. Electricity is included in Cooling. Labs and Restrooms have no supplemental device.'],
-                             ['Ventilation','One shared ERV, separate from heating and cooling. Sensible / latent effectiveness: 75% / 50%, held constant at reduced flow before frost control.'],
-                             ['Air paths','Supply to Labs, Visitor Center and Core; transfer through Core; Core and Restrooms extract through the ERV. No separate restroom exhaust-fan energy.'],
-                             ['Controls','Shared ERV follows reviewed ventilation and extract profiles. Positive window-opening permission disables conditioning in that zone.'],
-                             ['Window operation','Occupancy permission in all four zones; indoor {temperature:22} to {temperature:26}; outdoor {temperature:15} to {temperature:25}; indoor minus outdoor at least {temperature_delta:1.5}. Block at outdoor dew point ≥{temperature:13}; re-enable below {temperature:12}. Retain prior permission between.'],
-                             ['Thermostats','Occupied heating / cooling: 70°F / 75°F. Closed-hours setbacks: 68°F / 80°F, with the program-specific ready periods shown on the Program page.'],
-                             ['Hot water','Electric resistance tank, fixed {temperature:10:0} mains, {temperature:60:0} storage; Restrooms {temperature:35:0} and Core {temperature:49:0} fixture targets. Tank capacity, storage volume and distribution design remain provisional.'],
-                             ['Ground and weather','Kiva two-dimensional slab-ground boundary on all four slabs (294 ft exposed perimeter; 2 in XPS interior vertical insulation to the footing top at 3 ft 6 in; default soil). Early foundation basis; inputs provisional. Typical-year White Plains weather. Borefield and equipment design are not established by these results.']]} }
+                             ['Heating and cooling','A water-source heat pump in each of the four zones, with project capacities and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic.'],
+                             ['Humidity control','Visitor Center and Core each have a generic {liquid_per_day:120} dehumidifier set to 60% RH, off while windows are open. Its electricity is in Cooling. Learning Labs and Restrooms have none.'],
+                             ['Ventilation','One shared ERV, separate from heating and cooling, at 75% sensible and 50% latent effectiveness for all flows before frost control.'],
+                             ['Air paths','The ERV supplies Learning Labs, Visitor Center and Core. Air transfers through Core. Core and Restrooms exhaust through the ERV, with no separate restroom exhaust fan.'],
+                             ['Controls','The ERV follows the scheduled ventilation and exhaust profiles. Heating and cooling stop in a zone while its windows may open.'],
+                             ['Window operation','Windows may open in an occupied zone when indoor air is {temperature:22} to {temperature:26} and outdoor air is {temperature:15} to {temperature:25} and at least {temperature_delta:1.5} cooler. Opening stops at an outdoor dew point of {temperature:13} and resumes below {temperature:12}.'],
+                             ['Thermostats','Occupied: 70°F heating, 75°F cooling. Unoccupied: 68°F and 80°F. Each zone\'s warm-up period is in its Program page schedules.'],
+                             ['Hot water','Electric resistance tank: {temperature:10:0} mains, {temperature:60:0} storage, fixtures at {temperature:35:0} in Restrooms and {temperature:49:0} in Core. Tank size and piping are provisional.'],
+                             ['Ground and weather','Kiva two-dimensional ground model under all four slabs: 294 ft exposed perimeter, 2 in XPS interior vertical insulation down to the footing top at 3 ft 6 in, default soil. Foundation inputs are provisional. Typical-year White Plains weather.']]} }
     write_json(SITE / 'data/results.json', output)
     write_json(SITE / 'downloads/annual-results.json', output)
     buf = io.StringIO(newline=''); writer = csv.writer(buf)

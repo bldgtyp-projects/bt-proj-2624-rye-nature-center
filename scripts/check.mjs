@@ -14,7 +14,7 @@ for (const [x, kind, ip] of [
   [1000, "load", 3.41214163], [1, "power", 3.41214163], [3516.85284, "cooling_tons", 1], [10.7639104, "power_density", 1],
   [1, "occupant_density", 92.9030400], [0.00047194745, "airflow", 1], [1699.0108, "airflow_hourly", 1000],
   [0.0047194745, "airflow_per_person", 10], [1, "airflow_per_area", 196.850394], [0.0000630901964, "water_flow", 1],
-  [1, "hot_water_per_area", 24.5423867], [0.473176473, "liquid_per_day", 1], [0.00508, "speed", 1],
+  [1, "hot_water_per_area", 24.5423867], [0.473176473, "liquid_per_day", 1], [0.00508, "speed", 1], [0.44704, "wind_speed", 1],
 ]) near(units.value(x, kind), ip);
 assert.equal(units.prose("{temperature:22} to {temperature:26:0}; {speed:0.16}"), "72°F to 79°F; 31 fpm");
 assert.throws(() => units.value(1, "furlongs"));

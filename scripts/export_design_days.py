@@ -97,6 +97,32 @@ def coil_analysis(sql:Path,idf:list,design:list) -> dict:
             'room_load_components':{'cooling':components('Estimated Cooling Peak Load Components'),'heating':components('Estimated Heating Peak Load Components'),
                                     'cooling_time':peaks['cooling'],'heating_time':peaks['heating'],'cooling_condition':peak_day['cooling'],'heating_condition':peak_day['heating']}}
 
+def design_day_programs(inputs:dict)->dict:
+    """Per zone, what the winter and summer design-day schedules switch on, from the exported SI inputs."""
+    def window(values):
+        on=[i for i,v in enumerate(values) if v>0]
+        if not on:return None
+        return [on[0]*15,(on[-1]+1)*15]  # minutes from midnight, 15-minute schedule steps
+    out={}
+    for key,prefix in PREFIX.items():
+        zone=next(z for z in inputs['zones'] if z['id'].upper().startswith(prefix))
+        loads,refs,area=zone['loads'],zone['schedule_refs'],zone['floor_area_m2']
+        sched=lambda ref,season:inputs['schedules'][refs[ref]][season] if ref in refs else None
+        seasons={}
+        for season in ('winter_design','summer_design'):
+            occ=sched('people.occupancy_schedule',season) or [0]*96
+            def gain(load,ref):
+                s=sched(ref,season)
+                return loads[load]['watts_per_area']*area*max(s) if loads.get(load) and s else 0.0
+            vent=sched('ventilation.schedule',season)
+            seasons[season.split('_')[0]]={
+                'people_peak':zone['design_people']*max(occ),'occupied':window(occ),
+                'lighting_peak_W':gain('lighting','lighting.schedule'),'equipment_peak_W':gain('electric_equipment','electric_equipment.schedule'),
+                'ventilation':None if vent is None else ('all_day' if min(vent)>0 else window(vent)),
+                'heating_setpoint_C':sorted(set(sched('setpoint.heating_schedule',season))),'cooling_setpoint_C':sorted(set(sched('setpoint.cooling_schedule',season)))}
+        out[key]=seasons
+    return out
+
 def main() -> None:
     parser=argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--refresh',action='store_true')
@@ -128,8 +154,13 @@ def main() -> None:
     idf=objects(PRIVATE/'in.idf')
     design=[o for o in idf if o[0].lower()=='sizingperiod:designday']
     assert len(design)==review['sizing_days']==4 and review['weather_run_environments']==0
+    # SizingPeriod:DesignDay fields: date, peak dry bulb, daily range, moisture, wind and sky model, as EnergyPlus runs them.
     conditions=[{'name':o[1],'label':'Winter DB' if o[4]=='WinterDesignDay' else 'Summer '+('DP' if 'DP=>' in o[1] else 'WB' if 'WB=>' in o[1] else 'DB'),
-                 'dry_bulb_C':float(o[5]),'humidity_basis':o[9],'humidity_value_C':float(o[10])} for o in design]
+                 'dry_bulb_C':float(o[5]),'humidity_basis':o[9],'humidity_value_C':float(o[10]),
+                 'season':'heating' if o[4]=='WinterDesignDay' else 'cooling','annual_percentile':'99.6%' if '99.6%' in o[1] else '0.4%',
+                 'month':int(o[2]),'day':int(o[3]),'daily_range_K':float(o[6]),'wind_m_s':float(o[16]),'sky_model':o[21],
+                 'sky_clearness':float(o[26]) if o[21]=='ASHRAEClearSky' and o[26] else None} for o in design]
+    programs=design_day_programs(json.loads((SITE/'data/inputs.json').read_text()))
     units={}
     for key in PREFIX:
         hp=next(o for o in idf if o[0].lower()=='zonehvac:watertoairheatpump' and o[1].startswith(PREFIX[key]))
@@ -150,23 +181,19 @@ def main() -> None:
     data={'schema_version':1,'release':{'id':'design-days-2026-four-conditions-sized','review_date':'2026-10-21','status':'reviewed_design_model',
         'source':{**source,'idf_sha256':digest(PRIVATE/'in.idf'),'osm_sha256':digest(PRIVATE/'in.osm'),'sql_sha256':digest(PRIVATE/'eplusout.sql'),
                   'energyplus':'25.1.0','openstudio':'3.10.0','annual_hbjson_sha256':matched['annual_input_sha256'],'physical_inputs_match_annual':True}},
-        'conditions':conditions,'zones':zones,'coincident_room_loads_W':{k:v['peak_W'] for k,v in review['coincident_zone_loads'].items()},
+        'conditions':conditions,'design_day_programs':programs,'zones':zones,'coincident_room_loads_W':{k:v['peak_W'] for k,v in review['coincident_zone_loads'].items()},
         'operating_coil_peaks':review['diagnostics']['coincident_operating_coil_peaks'],
         'coil_peaks':analysis['coincident'],'room_to_coil':analysis['room_to_coil'],'room_load_components':analysis['room_load_components'],
         'controls':{'timesteps_per_hour':12,'sizing_average_minutes':15,'heating_factor':1,'cooling_factor':1,'windows_closed':True,'equipment_sequence':'ERV, WSHP, supplemental dehumidifier',
                     'heating_setpoint_C':21.1111111111,'cooling_setpoint_C':23.8888888889,'slab_ground_C':18.0,'ERV_channels_verified':13,'severe_errors':0},
         'basis':'Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.',
-        'sizing_notes':['ERV heat recovery is a provisional 75% sensible and 50% latent, with minimum-exhaust-temperature frost control at {temperature:0}. At the winter design hour frost control lowers the delivered supply temperature, and the coil heating above already includes that. The selected ERV and its frost strategy set the real winter coil load.',
-                        'Infiltration is a constant design rate whose leakage basis is still to be set. Its share of the room loads is in the component table.',
-                        'Sizing factors are 1.0. The loads carry no safety margin.',
-                        f"The summer design profile runs the Core kitchenette appliances at full draw in their scheduled windows, so the kettle and dishwasher coincide with the {analysis['room_load_components']['cooling_time'].split()[1][:5]} building room-load peak.",
-                        'Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling; the Kiva annual run shows warmer summer soil.',
-                        'Heat-pump curves and entering-water temperatures are generic; the ground source is an EMS temperature surrogate, not a borefield model.'],
-        'limitations':['Ground-source entering-water temperatures and performance curves need MEP/manufacturer confirmation; the template uses an EMS temperature surrogate.',
-                      'Labs has no supplemental humidity control and reaches 63.62% RH; Visitor/Core remain below 60% in these design-day tests.',
-                      'Separate community-event and additional summer solar/weather sensitivities remain to be evaluated before final equipment selection.',
-                      'The Design-Day run keeps the constant {temperature:18} slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.',
-                      'This is a design-analysis model. The results do not size the borefield or establish a final equipment selection.']}
+        'sizing_notes':['ERV heat recovery is a provisional 75% sensible and 50% latent, with frost control at a {temperature:0} minimum exhaust temperature. Frost control lowers the winter supply temperature, and the coil heating above includes it. The selected ERV sets the actual winter coil load.',
+                        'Infiltration is a constant design rate until the airtightness basis is set. Its share of the room loads is in the component table.',
+                        f"On the summer design day the Core kettle and dishwasher run at full draw at the {analysis['room_load_components']['cooling_time'].split()[1][:5]} building room-load peak.",
+                        'Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling. The annual run models the ground with Kiva and has warmer summer soil.',
+                        'Heat-pump performance curves and entering-water temperatures are generic, and the ground loop is a fixed-temperature stand-in for a borefield. MEP and manufacturer data replace both.',
+                        'Community-event occupancy and additional summer weather cases are not yet run.',
+                        'These results do not size the borefield or select equipment.']}
     write_json(SITE/'downloads/design-day-results.json',data)
     buf=io.StringIO(newline='');writer=csv.writer(buf)
     writer.writerow(['zone','room_heating_W','room_sensible_cooling_W','rated_heating_W','rated_total_cooling_W','rated_sensible_cooling_W','unit_airflow_m3_s','source_water_flow_m3_s','winter_min_air_C','summer_max_air_C','summer_max_RH_percent','coil_heating_W','coil_sensible_cooling_W','coil_total_cooling_W'])

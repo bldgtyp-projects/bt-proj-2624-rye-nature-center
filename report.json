@@ -15,7 +15,6 @@
   "final_idf": "../16_OSM/Rye_Nature_Center_261021/openstudio/run/in.idf",
   "annual_run": "../16_OSM/Rye_Nature_Center_261021/openstudio",
   "annual_review": "../11_QAQC/261021 Report Refresh Review/annual/review.json",
-  "comparison_review": "../11_QAQC/261020 Current Annual Review/review.json",
   "annual_diagnostics": "../11_QAQC/261021 Report Refresh Review/annual/diagnostics.json",
   "design_day_run": "../17_OSM_DESIGN_DAY/Rye_Nature_Center_261021/openstudio",
   "design_day_review": "../11_QAQC/261021 Report Refresh Review/design_day/review.json",

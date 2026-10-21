@@ -164,7 +164,7 @@
         "jan_1_day": "Thursday",
         "saved_parameter_jan_1_day": "Sunday",
         "steps_per_hour": 4,
-        "time_basis": "2026 model calendar from the final EnergyPlus input. Local standard time; interval-start labels; no display DST adjustment; no separate holiday calendar supplied. The saved Honeybee parameters say Sunday; downstream measures set the effective start to Thursday."
+        "time_basis": "2026 calendar, January 1 on a Thursday. Times mark the start of each interval, in local standard time with no daylight saving and no holidays."
       },
       "weather_description": "White Plains / Westchester County Airport TMYx typical-year weather"
     }
@@ -402,16 +402,6 @@
         }
       }
     ],
-    "history": [
-      {
-        "label": "Previous annual model, constant {temperature:18} slab ground",
-        "total_kWh": 18996.60699434911
-      },
-      {
-        "label": "Current annual model, Kiva slab ground",
-        "total_kWh": 19568.707658260733
-      }
-    ],
     "humidity": [
       {
         "zone": "labs",
@@ -442,10 +432,9 @@
         "all_quarter_hour_max_RH_percent": null
       }
     ],
-    "history_note": "The only physical change between these two runs is the slab-ground boundary: Kiva replaces the constant {temperature:18} ground. Winter slab losses rise and the summer slab no longer acts as a heat sink, so both heating and cooling electricity increase. Earlier window-only comparisons belong to historical models and are not used as current savings claims.",
     "dehumidification_kWh": 190.65679128543303,
     "reporting_basis": "Purchased site electricity, before any PV credit. Heating and cooling are equipment electricity, not thermal loads. Cooling includes supplemental dehumidifier electricity. Hot water includes tank parasitics. Fans and pumps include the shared ERV and conditioning equipment.",
-    "calculation": "Hourly component-energy outputs plus 15-minute supplemental dehumidifier electricity summed by reporting month. Dehumidifiers are included once in Cooling. Electric water-heater off-cycle parasitics reconstructed from its {power:20} input, rated capacity and hourly heater electricity. Every monthly sum reconciles to the quarter-hour Electricity:Facility meter within 0.00001 kWh.",
+    "calculation": "Monthly totals sum the EnergyPlus end-use electricity, including the dehumidifiers and the water heater's {power:20} standby draw, and match the building electricity meter.",
     "review": {
       "severe_errors": 0,
       "humidity_status": "visitor_core_control_verified_labs_and_winter_comfort_open",
@@ -455,39 +444,39 @@
     "systems": [
       [
         "Heating and cooling",
-        "Four recirculating water-source heat-pump zones; explicit project capacities and matching air/water/fan flows, ERV-first sequencing, 15-minute sizing average. Template curves and the EMS ground-temperature surrogate remain provisional."
+        "A water-source heat pump in each of the four zones, with project capacities and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic."
       ],
       [
         "Humidity control",
-        "Visitor Center/Core each use a generic {liquid_per_day:120} dehumidifier with a 60% RH target all day; disabled with window opening or outage controls. Electricity is included in Cooling. Labs and Restrooms have no supplemental device."
+        "Visitor Center and Core each have a generic {liquid_per_day:120} dehumidifier set to 60% RH, off while windows are open. Its electricity is in Cooling. Learning Labs and Restrooms have none."
       ],
       [
         "Ventilation",
-        "One shared ERV, separate from heating and cooling. Sensible / latent effectiveness: 75% / 50%, held constant at reduced flow before frost control."
+        "One shared ERV, separate from heating and cooling, at 75% sensible and 50% latent effectiveness for all flows before frost control."
       ],
       [
         "Air paths",
-        "Supply to Labs, Visitor Center and Core; transfer through Core; Core and Restrooms extract through the ERV. No separate restroom exhaust-fan energy."
+        "The ERV supplies Learning Labs, Visitor Center and Core. Air transfers through Core. Core and Restrooms exhaust through the ERV, with no separate restroom exhaust fan."
       ],
       [
         "Controls",
-        "Shared ERV follows reviewed ventilation and extract profiles. Positive window-opening permission disables conditioning in that zone."
+        "The ERV follows the scheduled ventilation and exhaust profiles. Heating and cooling stop in a zone while its windows may open."
       ],
       [
         "Window operation",
-        "Occupancy permission in all four zones; indoor {temperature:22} to {temperature:26}; outdoor {temperature:15} to {temperature:25}; indoor minus outdoor at least {temperature_delta:1.5}. Block at outdoor dew point ≥{temperature:13}; re-enable below {temperature:12}. Retain prior permission between."
+        "Windows may open in an occupied zone when indoor air is {temperature:22} to {temperature:26} and outdoor air is {temperature:15} to {temperature:25} and at least {temperature_delta:1.5} cooler. Opening stops at an outdoor dew point of {temperature:13} and resumes below {temperature:12}."
       ],
       [
         "Thermostats",
-        "Occupied heating / cooling: 70°F / 75°F. Closed-hours setbacks: 68°F / 80°F, with the program-specific ready periods shown on the Program page."
+        "Occupied: 70°F heating, 75°F cooling. Unoccupied: 68°F and 80°F. Each zone's warm-up period is in its Program page schedules."
       ],
       [
         "Hot water",
-        "Electric resistance tank, fixed {temperature:10:0} mains, {temperature:60:0} storage; Restrooms {temperature:35:0} and Core {temperature:49:0} fixture targets. Tank capacity, storage volume and distribution design remain provisional."
+        "Electric resistance tank: {temperature:10:0} mains, {temperature:60:0} storage, fixtures at {temperature:35:0} in Restrooms and {temperature:49:0} in Core. Tank size and piping are provisional."
       ],
       [
         "Ground and weather",
-        "Kiva two-dimensional slab-ground boundary on all four slabs (294 ft exposed perimeter; 2 in XPS interior vertical insulation to the footing top at 3 ft 6 in; default soil). Early foundation basis; inputs provisional. Typical-year White Plains weather. Borefield and equipment design are not established by these results."
+        "Kiva two-dimensional ground model under all four slabs: 294 ft exposed perimeter, 2 in XPS interior vertical insulation down to the footing top at 3 ft 6 in, default soil. Foundation inputs are provisional. Typical-year White Plains weather."
       ]
     ]
   },
@@ -525,30 +514,194 @@
         "label": "Summer DB",
         "dry_bulb_C": 31.9,
         "humidity_basis": "Wetbulb",
-        "humidity_value_C": 22.9
+        "humidity_value_C": 22.9,
+        "season": "cooling",
+        "annual_percentile": "0.4%",
+        "month": 7,
+        "day": 21,
+        "daily_range_K": 10.8,
+        "wind_m_s": 3.5,
+        "sky_model": "ASHRAETau2017",
+        "sky_clearness": null
       },
       {
         "name": "White.Plains-Westchester.Coun Ann Clg .4% Condns DP=>MDB",
         "label": "Summer DP",
         "dry_bulb_C": 26.2,
         "humidity_basis": "Dewpoint",
-        "humidity_value_C": 23.1
+        "humidity_value_C": 23.1,
+        "season": "cooling",
+        "annual_percentile": "0.4%",
+        "month": 7,
+        "day": 21,
+        "daily_range_K": 9.1,
+        "wind_m_s": 3.5,
+        "sky_model": "ASHRAETau2017",
+        "sky_clearness": null
       },
       {
         "name": "White.Plains-Westchester.Coun Ann Clg .4% Condns WB=>MDB",
         "label": "Summer WB",
         "dry_bulb_C": 29.1,
         "humidity_basis": "Wetbulb",
-        "humidity_value_C": 24.6
+        "humidity_value_C": 24.6,
+        "season": "cooling",
+        "annual_percentile": "0.4%",
+        "month": 7,
+        "day": 21,
+        "daily_range_K": 9.0,
+        "wind_m_s": 3.5,
+        "sky_model": "ASHRAETau2017",
+        "sky_clearness": null
       },
       {
         "name": "White.Plains-Westchester.Coun Ann Htg 99.6% Condns DB",
         "label": "Winter DB",
         "dry_bulb_C": -12.5,
         "humidity_basis": "Wetbulb",
-        "humidity_value_C": -12.5
+        "humidity_value_C": -12.5,
+        "season": "heating",
+        "annual_percentile": "99.6%",
+        "month": 1,
+        "day": 21,
+        "daily_range_K": 0.0,
+        "wind_m_s": 5.7,
+        "sky_model": "ASHRAEClearSky",
+        "sky_clearness": 0.0
       }
     ],
+    "design_day_programs": {
+      "labs": {
+        "winter": {
+          "people_peak": 0.0,
+          "occupied": null,
+          "lighting_peak_W": 0.0,
+          "equipment_peak_W": 0.0,
+          "ventilation": "all_day",
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        },
+        "summer": {
+          "people_peak": 43.99999999999998,
+          "occupied": [
+            555,
+            885
+          ],
+          "lighting_peak_W": 997.7957881541113,
+          "equipment_peak_W": 799.9999999999997,
+          "ventilation": [
+            540,
+            900
+          ],
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        }
+      },
+      "visitor": {
+        "winter": {
+          "people_peak": 0.0,
+          "occupied": null,
+          "lighting_peak_W": 0.0,
+          "equipment_peak_W": 0.0,
+          "ventilation": "all_day",
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        },
+        "summer": {
+          "people_peak": 55.0,
+          "occupied": [
+            510,
+            990
+          ],
+          "lighting_peak_W": 859.5754164810907,
+          "equipment_peak_W": 350.0,
+          "ventilation": [
+            510,
+            990
+          ],
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        }
+      },
+      "core": {
+        "winter": {
+          "people_peak": 0.0,
+          "occupied": null,
+          "lighting_peak_W": 0.0,
+          "equipment_peak_W": 0.0,
+          "ventilation": "all_day",
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        },
+        "summer": {
+          "people_peak": 4.0,
+          "occupied": [
+            510,
+            990
+          ],
+          "lighting_peak_W": 672.4436642046089,
+          "equipment_peak_W": 3555.0,
+          "ventilation": [
+            510,
+            990
+          ],
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        }
+      },
+      "restrooms": {
+        "winter": {
+          "people_peak": 0.0,
+          "occupied": null,
+          "lighting_peak_W": 0.0,
+          "equipment_peak_W": 0.0,
+          "ventilation": null,
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        },
+        "summer": {
+          "people_peak": 0.0,
+          "occupied": null,
+          "lighting_peak_W": 320.7062359850755,
+          "equipment_peak_W": 0.0,
+          "ventilation": null,
+          "heating_setpoint_C": [
+            21.11111111111111
+          ],
+          "cooling_setpoint_C": [
+            23.88888888888889
+          ]
+        }
+      }
+    },
     "zones": [
       {
         "id": "labs",
@@ -1185,19 +1338,13 @@
     },
     "basis": "Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
     "sizing_notes": [
-      "ERV heat recovery is a provisional 75% sensible and 50% latent, with minimum-exhaust-temperature frost control at {temperature:0}. At the winter design hour frost control lowers the delivered supply temperature, and the coil heating above already includes that. The selected ERV and its frost strategy set the real winter coil load.",
-      "Infiltration is a constant design rate whose leakage basis is still to be set. Its share of the room loads is in the component table.",
-      "Sizing factors are 1.0. The loads carry no safety margin.",
-      "The summer design profile runs the Core kitchenette appliances at full draw in their scheduled windows, so the kettle and dishwasher coincide with the 14:15 building room-load peak.",
-      "Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling; the Kiva annual run shows warmer summer soil.",
-      "Heat-pump curves and entering-water temperatures are generic; the ground source is an EMS temperature surrogate, not a borefield model."
-    ],
-    "limitations": [
-      "Ground-source entering-water temperatures and performance curves need MEP/manufacturer confirmation; the template uses an EMS temperature surrogate.",
-      "Labs has no supplemental humidity control and reaches 63.62% RH; Visitor/Core remain below 60% in these design-day tests.",
-      "Separate community-event and additional summer solar/weather sensitivities remain to be evaluated before final equipment selection.",
-      "The Design-Day run keeps the constant {temperature:18} slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.",
-      "This is a design-analysis model. The results do not size the borefield or establish a final equipment selection."
+      "ERV heat recovery is a provisional 75% sensible and 50% latent, with frost control at a {temperature:0} minimum exhaust temperature. Frost control lowers the winter supply temperature, and the coil heating above includes it. The selected ERV sets the actual winter coil load.",
+      "Infiltration is a constant design rate until the airtightness basis is set. Its share of the room loads is in the component table.",
+      "On the summer design day the Core kettle and dishwasher run at full draw at the 14:15 building room-load peak.",
+      "Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling. The annual run models the ground with Kiva and has warmer summer soil.",
+      "Heat-pump performance curves and entering-water temperatures are generic, and the ground loop is a fixed-temperature stand-in for a borefield. MEP and manufacturer data replace both.",
+      "Community-event occupancy and additional summer weather cases are not yet run.",
+      "These results do not size the borefield or select equipment."
     ]
   }
 }

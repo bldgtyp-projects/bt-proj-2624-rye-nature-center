@@ -116,8 +116,8 @@ def main() -> None:
     data = {'schema_version':1, 'exported_at':datetime.now(timezone.utc).isoformat(), 'status':'Draft input snapshot',
             'snapshot_label':snapshot['snapshot_label'],
             'source':{'path':str(Path(snapshot['input_source']).relative_to('..')), 'sha256':digest(SOURCE), 'simulation_parameters_sha256':digest(PARAMS), 'final_idf_sha256':digest(final_idf), 'honeybee_core':importlib.metadata.version('honeybee-core'), 'honeybee_energy':importlib.metadata.version('honeybee-energy')},
-            'calendar':{'year':2026,'days':365,'jan_1_day':effective_day,'saved_parameter_jan_1_day':rp['start_day_of_week'],'steps_per_hour':4,'time_basis':'2026 model calendar from the final EnergyPlus input. Local standard time; interval-start labels; no display DST adjustment; no separate holiday calendar supplied. The saved Honeybee parameters say Sunday; downstream measures set the effective start to Thursday.'},
-            'notes':['Zone loads and geometry come from the HBJSON used for the reviewed annual run. The Annual energy page records the shared ERV and controls applied downstream by the project OpenStudio measures.', 'Design People is the density times modeled floor area. It is a reference value before occupancy schedule multipliers.', 'Model floor area is calculated from Honeybee geometry and is not the architectural gross area.'],
+            'calendar':{'year':2026,'days':365,'jan_1_day':effective_day,'saved_parameter_jan_1_day':rp['start_day_of_week'],'steps_per_hour':4,'time_basis':'2026 calendar, January 1 on a Thursday. Times mark the start of each interval, in local standard time with no daylight saving and no holidays.'},
+            'notes':['Reference People is the occupant density times modeled floor area.', 'Modeled floor area comes from the energy-model geometry and differs from the architectural gross area.'],
             'zones':zones,'schedules':exported}
     write_json(SITE / 'data/inputs.json', data)
     shades = []

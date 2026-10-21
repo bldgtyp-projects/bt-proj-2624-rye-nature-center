@@ -102,15 +102,6 @@ def details(sql:Path,envelope:bool)->dict:
             figures['envelope'].append({'id':fid,'title':title,'unit':unit,'series':[{'name':k,'zone':zone_of.get(k.split(' (')[0]),'values':v} for k,v in sorted(values.items())]})
     return figures
 
-def lead_in_note(data:dict)->str:
-    w,s=data['winter'],data['summer']
-    if not (w['checks']['lead_in_hours'] or s['checks']['lead_in_hours']):
-        return ('The nine-day runs start the Kiva ground from its initialization rather than its seasonal state. A scratch seasonal lead-in test in the 21 October Kiva foundation review '
-                'found winter almost unchanged, but summer warmer: Labs heat index {temperature:39.6} with 1 hour in Danger. That test is a diagnostic, not a reviewed result; the values shown here are from the nine-day runs.')
-    month=lambda md:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][int(md[:2])-1]+' '+str(int(md[3:]))
-    return (f"Each run starts with a conditioned seasonal lead-in (winter from {month(w['simulation_period'][0])}, summer from {month(s['simulation_period'][0])}) "
-            'so the Kiva ground reaches its seasonal state before the outage; results use the final nine days.')
-
 def run_checks(sql:Path,idf:str)->dict:
     """Checks over the final nine days; any earlier conditioned lead-in is reported separately."""
     c=sqlite3.connect(f'file:{sql}?mode=ro',uri=True)
@@ -172,12 +163,12 @@ def main()->None:
         'source':{'hbjson_sha256':source['files']['input.hbjson'],'weather_file':Path(source['weather']).name,'weather_sha256':source['weather_sha256'],
                   'energyplus':'25.1.0','openstudio':'3.10.0','set_calculator_sha256':digest(Path(set_calculator.__file__))}},
         'zones':[{'id':k,'label':LABELS[k]} for k in PREFIX],
-        'criteria':{'basis':'Phius REVIVE 2024 Standard v24.1.1, sections 6.3.2 and 6.4.2, evaluated over the central 168 outage hours of the final nine days of each run.',
+        'criteria':{'basis':'Phius REVIVE 2024 Standard v24.1.1, sections 6.3.2 and 6.4.2, over the 168 outage hours.',
             'set_threshold_C':SET_THRESHOLD_C,'set_limit_F_h':SET_LIMIT_F_H,'cold_air_limit_C':COLD_AIR_LIMIT_C,
             'set_conditions':{'clo':CLOTHING_INSULATION_CLO,'W_per_person':ACTIVITY_LEVEL_W_PER_PERSON,'air_speed_m_s':AIR_SPEED_M_S},
             'heat_index_bands_C':[{'id':i,'label':l,'from_C':t} for i,l,t in HI_BANDS],
             'deadly_day':'Mean daily zone air temperature above Tdead [C] = 49.593 - 48.580 RH + 25.887 RH^2 (RH as a fraction), Mora et al. as printed in REVIVE 6.4.2.'},
-        'outage':{'buffer_hours':EDGE_BUFFER_HOURS,'outage_hours':OUTAGE_HOURS,'refuge_hours':'09:00-18:00 daily, Learning Labs'}}
+        'outage':{'buffer_hours':EDGE_BUFFER_HOURS,'outage_hours':OUTAGE_HOURS,'refuge_hours':'09:00 to 18:00 daily, Learning Labs'}}
     for season in SEASONS:
         folder=PRIVATE/season;sql=folder/'eplusout.sql';idf=(folder/'in.idf').read_text()
         checks=run_checks(sql,idf)
@@ -215,17 +206,15 @@ def main()->None:
                     'air_max_C':max(air[k][WINDOW]),'refuge_occupied':checks['outage_people_heat_kWh'][k]>0}
         data[season]=block
     data['limitations']=[
-        'First-pass results prepared for design review; not yet recorded as a reviewed package in the project QA folder. No refuge designation or certification outcome is implied.',
-        'Active heating, cooling and water heating are off for the seven outage days. Backup loads draw a constant 8.5 kWh/day; the ERV runs during refuge hours. Backup power supply is not sized here.',
-        'Outage ventilation follows the refuge programs: 10 cfm/person plus 0.12 cfm/ft2 in Learning Labs and area rates in Core and Visitor Center, during refuge hours, through 75% sensible / 50% latent heat recovery. REVIVE 6.3.3 lists 5 cfm/person for the ERV during an outage.',
-        'Window openings are modeled with the annual controls (open only when indoors is {temperature:22} to {temperature:26} and outdoors is {temperature:15} to {temperature:25}, wind effectiveness 0) and delivered no airflow in either outage. Opening windows during a summer outage has not been studied.',
-        'Only Learning Labs carries refuge occupancy (22 people, 09:00-18:00). REVIVE exempts thermal blocks unoccupied during a winter outage from the SET criterion; the 36 F air-temperature criterion applies to every block.',
-        'REVIVE 6.3.2 names no metric for the 36 F limit; zone mean air temperature is used. SET is calculated from zone air temperature, mean radiant temperature and humidity at 1 clo, {power:120} per person and {speed:0.16}.',
-        'The C and F deadly-day formulas printed in REVIVE 6.4.2 differ by {temperature_delta:0.36:2} at their constant term. Results use the C formula; the F formula gives the same deadly-day count unless noted.',
-        lead_in_note(data),
-        'Ground coupling uses the Kiva foundation measure with provisional inputs; its initial indoor temperature is {temperature:21.11:0} for winter and {temperature:23.89:0} for summer. ERV fan power, backup-circuit loads and refuge occupancy remain design assumptions to confirm.']
+        'First-pass results for design review. They do not designate a refuge or imply certification.',
+        'Heating, cooling and water heating are off for the seven outage days. Backup loads draw a constant 8.5 kWh/day and the ERV runs during refuge hours. The backup power supply is not sized.',
+        'Outage ventilation follows the refuge programs during refuge hours: 10 cfm/person plus 0.12 cfm/ft2 in Learning Labs and area rates in Core and Visitor Center, through 75% sensible and 50% latent heat recovery. REVIVE 6.3.3 lists 5 cfm/person.',
+        'Windows follow the annual controls: open only with indoor air at {temperature:22} to {temperature:26} and outdoor air at {temperature:15} to {temperature:25}, with no wind-driven flow. They deliver no airflow in either outage. Opening windows during a summer outage is not modeled.',
+        'Only Learning Labs is occupied: 22 people, 09:00 to 18:00. REVIVE exempts unoccupied zones from the winter SET limit. The 36°F air limit applies to every zone.',
+        'REVIVE 6.4.2 prints Celsius and Fahrenheit deadly-day formulas that differ by {temperature_delta:0.36:2}. Results use the Celsius formula; the Fahrenheit formula gives the same deadly-day count.',
+        'The Kiva ground model uses provisional inputs and starts from {temperature:21.11:0} indoors in winter and {temperature:23.89:0} in summer. ERV fan power, backup loads and refuge occupancy are assumptions to confirm.']
     if any(z['deadly_days']!=z['deadly_days_F_formula'] for z in data['summer']['zones'].values()):
-        data['limitations']=[l.replace(' the same deadly-day count unless noted',' a different deadly-day count; both are in the data') for l in data['limitations']]
+        data['limitations']=[l.replace(' the same deadly-day count.',' a different deadly-day count; both are in the data.') for l in data['limitations']]
     write_json(SITE/'data/resilience.json',data)
     # Supporting figures load on demand; compact JSON keeps the envelope surfaces under 1 MB.
     (SITE/'data/resilience-details.json').write_text(json.dumps({'release':data['release']['id'],'hours':{s:data[s]['hours'] for s in SEASONS},
