@@ -59,7 +59,7 @@ def main() -> None:
             'winter_min_air_C':winter['min_air_C'],'summer_max_air_C':max(v['max_air_C'] for v in summer),
             'summer_max_RH_percent':max(v['max_RH_percent'] for v in summer),'maximum_backup_W':max(v['max_backup_W'] for v in days.values()),
             'equipment':units[key],'conditions':[{'name':n,**v} for n,v in days.items()]})
-    data={'schema_version':1,'release':{'id':'design-days-2026-four-conditions-sized','review_date':'2026-10-20','status':'reviewed_design_model',
+    data={'schema_version':1,'release':{'id':'design-days-2026-four-conditions-sized','review_date':'2026-10-21','status':'reviewed_design_model',
         'source':{**source,'idf_sha256':digest(PRIVATE/'in.idf'),'osm_sha256':digest(PRIVATE/'in.osm'),'sql_sha256':digest(PRIVATE/'eplusout.sql'),
                   'energyplus':'25.1.0','openstudio':'3.10.0','annual_hbjson_sha256':matched['annual_input_sha256'],'physical_inputs_match_annual':True}},
         'conditions':conditions,'zones':zones,'coincident_room_loads_W':{k:v['peak_W'] for k,v in review['coincident_zone_loads'].items()},
@@ -70,6 +70,7 @@ def main() -> None:
         'limitations':['Ground-source entering-water temperatures and performance curves need MEP/manufacturer confirmation; the template uses an EMS temperature surrogate.',
                       'Labs has no supplemental humidity control and reaches 63.62% RH; Visitor/Core remain below 60% in these design-day tests.',
                       'Separate community-event and additional summer solar/weather sensitivities remain to be evaluated before final equipment selection.',
+                      'The Design-Day run keeps the constant 18°C slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.',
                       'This is a design-analysis model. The results do not size the borefield or establish a final equipment selection.']}
     write_json(SITE/'downloads/design-day-results.json',data)
     buf=io.StringIO(newline='');writer=csv.writer(buf)

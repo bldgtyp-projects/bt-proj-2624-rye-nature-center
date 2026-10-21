@@ -739,3 +739,5 @@ header nav a { white-space: nowrap; }
 .year-chart { max-height: 150px; cursor: pointer; }
 .year-chart .year-bars rect { fill: var(--accent); }
 .year-chart .week-mark { fill: var(--highlight); opacity: .15; }
+.detail-title { margin: 26px 0 0; font-size: 15px; }
+.detail-title small { font-weight: 400; color: var(--text-secondary); margin-left: 6px; }

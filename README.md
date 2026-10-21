@@ -4,7 +4,7 @@
 
 The deployable artifact is `site/`. It presents the reviewed annual run, the separate four-condition Design-Day study and first-pass Phius REVIVE winter/summer outage results for the architect/MEP team. This is the existing custom static-site exception to the PHPP report template and Manager. It is published as a public, noindex draft at https://project-2624.bldgtyp.com; pushing `main` redeploys ([Hosting](docs/HOSTING.md)).
 
-Current annual electricity is **18,996.6 kWh/year**, **49.1 kWh/m²/year** modeled floor area, before PV credit. Monthly stacked bars and annual end uses reconcile to the facility meter. Cooling includes supplemental dehumidification. The Design-Day section shows **11.483 kW heating / 15.836 kW sensible cooling** coincident room loads, individual zone bars and selectable winter DB/summer DB/DP/WB operating checks. Equipment allowances are disclosed separately. The current Annual inputs match the Design-Day model physically; each export retains its own identity.
+Current annual electricity is **19,568.7 kWh/year**, **50.5 kWh/m²/year** modeled floor area, before PV credit, with the Kiva slab-ground boundary. Monthly stacked bars and annual end uses reconcile to the facility meter. Cooling includes supplemental dehumidification. The Design-Day section shows **11.483 kW heating / 15.837 kW sensible cooling** coincident room loads, individual zone bars and selectable winter DB/summer DB/DP/WB operating checks. Equipment allowances are disclosed separately. The current Annual inputs match the Design-Day model physically; each export retains its own identity.
 
 ## Build and preview
 
@@ -36,7 +36,7 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 | `scripts/export_inputs.py` | Native Honeybee program, schedule and geometry projection |
 | `scripts/export_results.py` | Annual monthly/end-use energy, humidity summary and provenance |
 | `scripts/export_design_days.py` | Separate four-condition thermal-load/operating package and source identity |
-| `scripts/export_resilience.py` | Winter SET / summer heat-index outage package, REVIVE criteria comparison, run checks and source identity (uses `honeybee_revive` from the Ladybug runtime) |
+| `scripts/export_resilience.py` | Winter SET / summer heat-index outage package, REVIVE criteria comparison, run checks, source identity and the on-demand supporting graphs in `site/data/resilience-details.json` (uses `honeybee_revive` from the Ladybug runtime; evaluates the final nine days of a run with or without a lead-in) |
 | `scripts/verify_*.py` | Independent native input/SQL/download checks |
 | `scripts/build.mjs` | Shared shell/content for seven generated HTML pages |
 | `site/assets/app.js`, `viewer.js`, `results.js` | Program/geometry and results interactions |
