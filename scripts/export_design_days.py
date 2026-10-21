@@ -97,6 +97,19 @@ def coil_analysis(sql:Path,idf:list,design:list) -> dict:
             'room_load_components':{'cooling':components('Estimated Cooling Peak Load Components'),'heating':components('Estimated Heating Peak Load Components'),
                                     'cooling_time':peaks['cooling'],'heating_time':peaks['heating'],'cooling_condition':peak_day['cooling'],'heating_condition':peak_day['heating']}}
 
+def outdoor_hourly(sql:Path)->dict:
+    """Hourly outdoor air each design day ran with: dry bulb at the ERV outdoor-air node (hourly means) and
+    site dew point (5-minute values averaged to the hour). Keys are the upper-case design-day names."""
+    c=sqlite3.connect(sql.as_uri()+'?mode=ro',uri=True)
+    q='''select e.EnvironmentName,(t.Hour*60+t.Minute+59)/60 as h,avg(r.Value) from ReportData r join ReportDataDictionary d using(ReportDataDictionaryIndex)
+         join Time t using(TimeIndex) join EnvironmentPeriods e using(EnvironmentPeriodIndex)
+         where d.Name=? and d.KeyValue=? and (t.WarmupFlag is null or t.WarmupFlag=0) group by e.EnvironmentName,h order by e.EnvironmentName,h  -- timesteps are stamped at interval end'''
+    out=collections.defaultdict(lambda:{'dry_bulb_C':[],'dew_point_C':[]})
+    for field,name,key in [('dry_bulb_C','System Node Temperature','OUTBOARD OA NODE'),('dew_point_C','Site Outdoor Air Dewpoint Temperature','Environment')]:
+        for env,hour,value in c.execute(q,(name,key)):out[env.upper()][field].append(round(value,3))
+    assert all(len(v)==24 for day in out.values() for v in day.values()),out
+    return dict(out)
+
 def design_day_programs(inputs:dict)->dict:
     """Per zone, what the winter and summer design-day schedules switch on, from the exported SI inputs."""
     def window(values):
@@ -161,6 +174,8 @@ def main() -> None:
                  'month':int(o[2]),'day':int(o[3]),'daily_range_K':float(o[6]),'wind_m_s':float(o[16]),'sky_model':o[21],
                  'sky_clearness':float(o[26]) if o[21]=='ASHRAEClearSky' and o[26] else None} for o in design]
     programs=design_day_programs(json.loads((SITE/'data/inputs.json').read_text()))
+    weather=outdoor_hourly(PRIVATE/'eplusout.sql')
+    for c in conditions:c['outdoor_hourly']=weather[c['name'].upper()]
     units={}
     for key in PREFIX:
         hp=next(o for o in idf if o[0].lower()=='zonehvac:watertoairheatpump' and o[1].startswith(PREFIX[key]))

@@ -89,6 +89,29 @@ function peaksOn(d, condition, units) {
   return out;
 }
 
+// The 24 hours of outdoor air a design day ran with, in display units, with the heat-pump peak marked.
+function dayChart(d, cond, { esc, num, units }) {
+  const T = v => units.value(v, "temperature"), F = units.label("temperature");
+  const db = cond.outdoor_hourly.dry_bulb_C.map(T), dp = cond.outdoor_hourly.dew_point_C.map(T);
+  // Whole 5-degree steps with headroom, so a flat winter day still gets a readable axis.
+  const all = [...db, ...dp], yStep = Math.max(...all) - Math.min(...all) > 30 ? 10 : 5;
+  const yMin = Math.floor((Math.min(...all) - 2) / yStep) * yStep, yMax = Math.ceil((Math.max(...all) + 2) / yStep) * yStep;
+  const x = h => 52 + h / 24 * 528, y = v => 180 - (v - yMin) / (yMax - yMin) * 150;
+  const line = values => values.map((v, i) => `${i ? "L" : "M"}${x(i + 0.5).toFixed(1)},${y(v).toFixed(1)}`).join("");
+  const ticks = []; for (let v = yMin; v <= yMax + 1e-9; v += yStep) ticks.push(v);
+  const c = d.coil_peaks, marks = [];
+  if (sameCondition(c.heating_condition, cond.name)) marks.push([c.heating_hour, c.heating_minute, "Heat-pump heating peak"]);
+  if (sameCondition(c.total_cooling_condition, cond.name)) marks.push([c.total_cooling_hour, c.total_cooling_minute, "Heat-pump cooling peak"]);
+  const hourLabels = [[0, "12 am"], [6, "6 am"], [12, "noon"], [18, "6 pm"], [24, "12 am"]];
+  return `<div class="day-chart"><ul class="energy-legend" aria-label="Chart series"><li><span style="background:var(--highlight)"></span>Outdoor dry bulb</li><li><span style="background:var(--accent)"></span>Outdoor dew point</li></ul>
+  <svg class="chart" viewBox="0 0 600 215" role="img" aria-label="${esc(`Hourly outdoor dry bulb and dew point on the ${cond.label} design day, ${F}.`)}"><title>${esc(`Outdoor air over the ${cond.label} design day`)}</title>
+  ${ticks.map(v => `<line class="grid" x1="52" x2="580" y1="${y(v)}" y2="${y(v)}"/><text x="44" y="${y(v) + 4}" text-anchor="end">${num(v, 0)}</text>`).join("")}<text x="8" y="16">${esc(F)}</text>
+  ${hourLabels.map(([h, l]) => `<line class="grid" x1="${x(h)}" x2="${x(h)}" y1="180" y2="186"/><text x="${x(h)}" y="202" text-anchor="middle">${l}</text>`).join("")}
+  ${marks.map(([h, m, l]) => { const px = x(Math.min(24, h + m / 60)); return `<line class="limit" x1="${px}" x2="${px}" y1="30" y2="180"/><text class="limit-label" x="${px - 6}" y="26" text-anchor="end">${esc(l)}, ${clockOf(h, m)}</text>`; }).join("")}
+  <path d="${line(db)}" fill="none" style="stroke:var(--highlight)" stroke-width="2.4"><title>Outdoor dry bulb</title></path><path d="${line(dp)}" fill="none" style="stroke:var(--accent)" stroke-width="2.4" stroke-dasharray="5 4"><title>Outdoor dew point</title></path></svg>
+  <p class="caption">Hourly averages of the outdoor air the model used: dry bulb at the ERV outdoor-air inlet and site dew point.${cond.daily_range_K > 0 ? " Temperature follows ASHRAE's standard daily curve; the dew point falls overnight only where the air reaches saturation." : " The winter design day holds one temperature, saturated, all day."}</p></div>`;
+}
+
 function conditionPanel(d, cond, { esc, num, table, units }) {
   const [title, role] = CONDITION_ROLE[cond.label] ?? [cond.label, ""];
   const date = `${MONTHS[cond.month - 1]} ${cond.day}`;
@@ -108,6 +131,7 @@ function conditionPanel(d, cond, { esc, num, table, units }) {
   }), ["Zone", `Lowest air ${units.label("temperature")}`, `Highest air ${units.label("temperature")}`, "Peak RH", `Backup heat ${units.label("power")}`]);
   return `<h3>${esc(title)} · ${esc(date)}</h3><p>${esc(role)}</p>
   <dl class="facts condition-facts"><div><dt>Outdoor air</dt><dd>${esc(temperature)}</dd></div><div><dt>Coincident moisture</dt><dd>${esc(moisture)}</dd></div><div><dt>Sun and wind</dt><dd>${esc(sun)}; wind ${esc(units.fmt(cond.wind_m_s, "wind_speed"))}</dd></div><div><dt>How rare</dt><dd>${cond.season === "heating" ? `Colder than this about 35 hours in a typical year (${esc(cond.annual_percentile)} of hours)` : `Exceeded about 35 hours in a typical year (${esc(cond.annual_percentile)} of hours)`}</dd></div><div><dt>Peaks set on this day</dt><dd>${peaks.length ? esc(peaks.join("; ")) : "None of the building peaks"}</dd></div></dl>
+  ${dayChart(d, cond, { esc, num, units })}
   <p class="caption">${esc(program)}</p>
   <details><summary>Zone conditions on this day</summary><div class="details-body">${checks}<p class="caption">Zone air temperature and humidity with the modeled heat pumps running at their provisional capacities. Backup electric heat is available in every zone.</p></div></details>`;
 }

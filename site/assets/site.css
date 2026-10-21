@@ -762,3 +762,8 @@ header nav a { white-space: nowrap; }
 @media (max-width: 760px) { .condition-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); } .condition-facts { grid-template-columns: 1fr; } }
 @media (max-width: 420px) { .peak-metrics { grid-template-columns: 1fr; } .condition-temp { font-size: 22px; } .condition-panel { padding: 18px 14px 4px; } }
 @media (min-width: 900px) { .peak-chart.zone-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 40px; } }
+.day-chart { margin: 18px 0 6px; padding: 14px 16px 4px; background: var(--bg-card); border: 1px solid var(--border-card); }
+.day-chart .energy-legend { margin: 0 0 4px; }
+.day-chart .chart { max-height: 240px; }
+.day-chart .limit { stroke: var(--text-primary); stroke-width: 1.2; stroke-dasharray: 6 4; }
+.day-chart .limit-label { fill: var(--text-primary); font-size: 11px; }

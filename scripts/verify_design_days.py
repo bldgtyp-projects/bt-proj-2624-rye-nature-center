@@ -70,8 +70,18 @@ for side,field in [('heating','heating_W'),('cooling','total_cooling_W')]:
  hourly={**step,'hour':step['hour'] if step['minute']==0 else step['hour']+1,'minute':0}
  outdoor=value('System Node Mass Flow Rate','OUTBOARD OA NODE',hourly,'Hourly')[0]
  assert abs(outdoor/d['room_to_coil']['air_density_kg_m3']/step['erv_supply_m3_s']-1)<0.01,(side,outdoor)
+# Outdoor profiles: hourly means from native SQL, peaking at the design dry bulb with the design daily range.
+for c in d['conditions']:
+    h=c['outdoor_hourly'];env=c['name'].upper()
+    for field,name,key in [('dry_bulb_C','System Node Temperature','OUTBOARD OA NODE'),('dew_point_C','Site Outdoor Air Dewpoint Temperature','Environment')]:
+        native=[v for (v,) in sqlite3.connect(f'file:{p/"eplusout.sql"}?mode=ro',uri=True).execute('''select avg(r.Value) from ReportData r join ReportDataDictionary d using(ReportDataDictionaryIndex)
+            join Time t using(TimeIndex) join EnvironmentPeriods e using(EnvironmentPeriodIndex) where d.Name=? and d.KeyValue=? and upper(e.EnvironmentName)=?
+            and (t.WarmupFlag is null or t.WarmupFlag=0) group by (t.Hour*60+t.Minute+59)/60 order by (t.Hour*60+t.Minute+59)/60''',(name,key,env))]
+        assert len(native)==24 and all(abs(a-b)<1e-3 for a,b in zip(native,h[field])),(env,field)
+    assert abs(max(h['dry_bulb_C'])-c['dry_bulb_C'])<0.05 and abs(min(h['dry_bulb_C'])-(c['dry_bulb_C']-c['daily_range_K']))<0.15,env
+    assert all(dp<=db+0.05 for dp,db in zip(h['dew_point_C'],h['dry_bulb_C'])),env
 combined=json.loads((R/'site/data/results.json').read_text())
 assert combined['design_days']==d
 assert combined['release']['source']['hbjson_sha256']==d['release']['source']['annual_hbjson_sha256']
 assert next(a for a in combined['areas'] if a['id']=='resilience')['status'] in ('pending','draft_first_pass')
-print('PASS: eight room loads and twelve zone coil peaks match native SQL; room-to-coil steps close, with peak times, heat-pump fan power and ERV outdoor-air flow checked against SQL; component sums close; CSV rows, source hashes, controls, operating bounds and matched annual inputs pass.')
+print('PASS: eight room loads and twelve zone coil peaks match native SQL; room-to-coil steps close, with peak times, heat-pump fan power and ERV outdoor-air flow checked against SQL; component sums close; 24-hour outdoor profiles match SQL and the design peak and range; CSV rows, source hashes, controls, operating bounds and matched annual inputs pass.')
