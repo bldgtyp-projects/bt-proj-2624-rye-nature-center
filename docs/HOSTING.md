@@ -27,7 +27,9 @@ The workflow does not use the PHPP renderer. It:
 
 Org secrets used: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_ACCESS_OTP_IDP_ID`. Advance `TEMPLATE_REF` and `WRANGLER_VERSION` in the workflow deliberately, never to a floating ref.
 
-`site/_worker.js` (Pages advanced mode, routed for every path by `_routes.json`) returns 404 on any hostname except `project-2624.bldgtyp.com`, so the `*.pages.dev` project and per-deployment URLs serve nothing. Keep the guard if the site moves behind Access: the template's gate covers only the custom hostname.
+Cloudflare serves JS/CSS with `max-age=14400` even though HTML gets `no-cache`, so `build.mjs` appends a content hash (`?v=`) to script and stylesheet URLs and `app.js` passes it to its dynamic imports. Keep that when adding assets, or returning visitors run stale scripts against new pages for up to four hours.
+
+`site/_worker.js` (Pages advanced mode, routed for every path by `_routes.json`) redirects the retired `/results` path to `/annual-energy` and returns 404 on any hostname except `project-2624.bldgtyp.com`, so the `*.pages.dev` project and per-deployment URLs serve nothing. Keep the guard if the site moves behind Access: the template's gate covers only the custom hostname.
 
 ## Switching to an OTP gate
 

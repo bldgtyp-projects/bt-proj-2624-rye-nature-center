@@ -1,6 +1,6 @@
 # Client-report release status
 
-Updated 21 October 2026: page restructure and first-pass Resilience package (local, not yet pushed). Annual/Design-Day content from the 20 October 21:09 rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
+Updated 21 October 2026: page restructure and first-pass Resilience package, published. Annual/Design-Day content from the 20 October 21:09 rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
 
 ## Current local release
 
@@ -10,7 +10,7 @@ The separate Design-Day package is reviewed: coincident sensible room heating/co
 
 Resilience is a **first-pass** package (`draft_first_pass`) from the 21 October REVIVE winter (Jan 12-20) and summer (Jul 19-27) runs: one conditioned day, seven outage days, one recovery day. Against the Phius REVIVE 2024 criteria (reference only): summer heat index peaks at 37.6°C (Extreme Caution) in Learning Labs with zero Danger hours in every zone, but every zone has 3 deadly days (Mora). Winter SET below 54°F is 381 °F·h in Learning Labs (limit 216) and 344-361 °F·h elsewhere; every zone has 15-21 h of air below 36°F. Inputs to note: windows deliver zero airflow in both outages (annual window controls); outage ventilation runs at 62.1-style rates (~980 m³/h in refuge hours) through 75% recovery versus the REVIVE 5 cfm/person; only Learning Labs is occupied. No QA review under `11_QAQC/` exists yet. No certification outcome, PV credit or final equipment/borefield selection is implied. Remaining questions include source-water/manufacturer performance, Lab humidity, winter dry-air/operative comfort and separate event/additional-weather sensitivities.
 
-The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program schedules, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. The live site still serves the earlier five-page release (see Publication below); this restructure and Resilience are local until `main` is pushed.
+The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program schedules, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This release is live (see Publication below).
 
 ## Frozen source identity
 
@@ -45,12 +45,12 @@ The source modeling/results files were preserved. [Annual QA](../../11_QAQC/2610
 
 ## Publication
 
-First published 21 October 2026 from commit `694b121`, workflow run [39597678127](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39597678127), deployment `f1d8ad8d`. Later doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
+Current release: commit `07d6ff3` (content from `31617ac`), published 21 October 2026. The first draft was `694b121`; doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
 
-- Overview, Program, Model, Results and Data & Sources return 200 (`.html` paths 308 to extensionless URLs); `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
-- All seven downloads match the local `site/downloads/` SHA-256.
-- Browser: Results renders 72 monthly segments, Model renders the Three.js viewer, no console errors.
-- `bt-proj-2624-rye-nature-center.pages.dev` returns 404 for pages and known data paths; the per-deployment URL did not answer at check time.
+- Program, Model, Annual energy, Peak loads, Resilience and Data & Sources return 200; `/` serves the Overview; `/results` and `/results.html` 301 to `/annual-energy`. `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
+- All nine downloads match the local `site/downloads/` SHA-256.
+- Browser: Resilience renders four outage charts with the first-pass status, Annual energy 72 monthly segments, Peak loads eight zone bars, Model the Three.js viewer; no console errors.
+- `bt-proj-2624-rye-nature-center.pages.dev` returns 404; per-deployment URLs did not answer at check time.
 
 ## Next release
 
