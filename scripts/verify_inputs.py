@@ -66,8 +66,10 @@ def main() -> None:
             expected[face.identifier] = face.punched_geometry.area
             for sub in list(face.apertures) + list(face.doors):
                 expected[sub.identifier] = sub.geometry.area
-    assert len(expected) == len(geometry['surfaces'])
-    for surface in geometry['surfaces']:
+    shade_areas = {shade.identifier: shade.area for shade in model.shades}
+    assert len(expected) == len(geometry['surfaces']) and len(shade_areas) == len(geometry['shades'])
+    expected.update(shade_areas)
+    for surface in geometry['surfaces'] + geometry['shades']:
         area=0.0
         for triangle in surface['triangles']:
             assert len(triangle)==3
@@ -76,7 +78,7 @@ def main() -> None:
             cross=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]]
             area += math.sqrt(sum(t*t for t in cross))/2
         assert math.isclose(area,expected[surface['id']],rel_tol=1e-6,abs_tol=1e-6), surface['id']
-    print(f'PASS: 4 native zones, {len(native_schedules)} full annual schedules and 50 design profiles, CSV round trips, {len(expected)} surface mesh areas and source hashes.')
+    print(f'PASS: 4 native zones, {len(native_schedules)} full annual schedules and 50 design profiles, CSV round trips, {len(geometry["surfaces"])} surface and {len(shade_areas)} shade mesh areas and source hashes.')
 
 if __name__ == '__main__':
     main()

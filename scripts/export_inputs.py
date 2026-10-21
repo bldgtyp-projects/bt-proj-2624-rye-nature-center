@@ -120,10 +120,14 @@ def main() -> None:
             'notes':['Zone loads and geometry come from the HBJSON used for the reviewed annual run. The Annual energy page records the shared ERV and controls applied downstream by the project OpenStudio measures.', 'Design People is the density times modeled floor area. It is a reference value before occupancy schedule multipliers.', 'Model floor area is calculated from Honeybee geometry and is not the architectural gross area.'],
             'zones':zones,'schedules':exported}
     write_json(SITE / 'data/inputs.json', data)
-    write_json(SITE / 'data/geometry.json', {'units':'m','source_sha256':digest(SOURCE),'surfaces':geometry})
+    shades = []
+    for shade in model.shades:
+        mesh = shade.geometry.triangulated_mesh3d
+        shades.append({'id': shade.identifier, 'group': shade.display_name, 'vertices': [[p.x,p.y,p.z] for p in mesh.vertices], 'triangles': mesh.faces})
+    write_json(SITE / 'data/geometry.json', {'units':'m','source_sha256':digest(SOURCE),'surfaces':geometry,'shades':shades})
     (SITE / 'downloads/zone-inputs.csv').write_text(csv_text(csv_rows))
     write_json(SITE / 'downloads/program-definitions.json', data)
-    print(f'Exported {len(zones)} zones, {len(exported)} schedules, {len(geometry)} surfaces. Source {digest(SOURCE)[:12]}')
+    print(f'Exported {len(zones)} zones, {len(exported)} schedules, {len(geometry)} surfaces, {len(shades)} shades. Source {digest(SOURCE)[:12]}')
 
 if __name__ == '__main__':
     main()

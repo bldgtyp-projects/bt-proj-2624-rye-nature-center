@@ -31,7 +31,8 @@ export async function showModel(inputs) {
   const controls = new OrbitControls(camera, renderer.domElement);
   controls.enableDamping = false;
   const group = new THREE.Group();
-  scene.add(group);
+  const shadeGroup = new THREE.Group();
+  scene.add(group, shadeGroup);
   scene.add(new THREE.AmbientLight(0xffffff, 2));
   const light = new THREE.DirectionalLight(0xffffff, 2);
   light.position.set(-10, -20, 40);
@@ -71,10 +72,30 @@ export async function showModel(inputs) {
     mesh.add(edges);
     group.add(mesh);
   }
+  const shadeMaterial = new THREE.MeshStandardMaterial({
+    color: 0xb9bec4,
+    side: THREE.DoubleSide,
+    roughness: 1,
+    transparent: true,
+    opacity: 0.55,
+    depthWrite: false,
+  });
+  const shadeEdges = new THREE.LineBasicMaterial({ color: 0x6b7280, transparent: true, opacity: 0.35 });
+  for (const shade of geometry.shades ?? []) {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute("position", new THREE.Float32BufferAttribute(shade.vertices.flat(), 3));
+    geo.setIndex(shade.triangles.flat());
+    geo.computeVertexNormals();
+    const mesh = new THREE.Mesh(geo, shadeMaterial);
+    mesh.add(new THREE.LineSegments(new THREE.EdgesGeometry(geo, 20), shadeEdges));
+    shadeGroup.add(mesh);
+  }
+  // Frame the building; shading and site context can extend well beyond it.
   const bounds = new THREE.Box3().setFromObject(group),
     center = bounds.getCenter(new THREE.Vector3()),
     size = bounds.getSize(new THREE.Vector3());
   group.position.sub(center);
+  shadeGroup.position.sub(center);
   controls.target.set(0, 0, 0);
   const distance = Math.max(size.x, size.y, size.z) * 1.65;
   function render() {
@@ -99,6 +120,7 @@ export async function showModel(inputs) {
         (select.value === "all" || mesh.userData.zone === select.value) &&
         (document.querySelector("#roofs").checked ||
           mesh.userData.kind !== "RoofCeiling");
+    shadeGroup.visible = document.querySelector("#shades").checked;
     render();
   }
   for (const zone of inputs.zones) {
@@ -118,7 +140,7 @@ export async function showModel(inputs) {
   }
   const info = document.querySelector("#geometry-info");
   const p = document.createElement("p");
-  p.textContent = `${inputs.zones.length} zones · ${geometry.surfaces.length} surfaces including apertures and doors · Geometry units: meters. Snapshot ${inputs.source.sha256.slice(0, 12)}.`;
+  p.textContent = `${inputs.zones.length} zones · ${geometry.surfaces.length} surfaces including apertures and doors · ${(geometry.shades ?? []).length} shading surfaces · Geometry units: meters. Snapshot ${inputs.source.sha256.slice(0, 12)}.`;
   info.append(p);
   const north = new THREE.ArrowHelper(
     new THREE.Vector3(0, 1, 0),
@@ -134,6 +156,7 @@ export async function showModel(inputs) {
   controls.addEventListener("change", render);
   select.addEventListener("change", visibility);
   document.querySelector("#roofs").addEventListener("change", visibility);
+  document.querySelector("#shades").addEventListener("change", visibility);
   document.querySelector("#reset-view").addEventListener("click", reset);
   host.addEventListener("keydown", (event) => {
     if (

@@ -10,7 +10,7 @@ The separate Design-Day package is reviewed: coincident sensible room heating/co
 
 Resilience is a **first-pass** package (`draft_first_pass`) from the 21 October 09:02 REVIVE winter (Jan 12-20) and summer (Jul 19-27) reruns: one conditioned day, seven outage days, one recovery day. Against the Phius REVIVE 2024 criteria (reference only): summer heat index peaks at 38.4°C (Extreme Caution, 72 h) in Learning Labs with zero Danger hours in every zone, but every zone has 3 deadly days (Mora). The rerun corrected the summer Kiva initial indoor temperature from 21.11°C to 23.89°C, which raised summer peaks by 0.6-0.9 K; winter inputs and results are unchanged. The run HBJSON (`c9003ea0…`) has regenerated identifiers relative to `15_PHIUS_REVIVE/HBJSON/…_261021.hbjson`; normalized IDFs are otherwise identical, so the exporter now freezes the HBJSON the runs used. Winter SET below 54°F is 381 °F·h in Learning Labs (limit 216) and 344-361 °F·h elsewhere; every zone has 15-21 h of air below 36°F. Inputs to note: windows deliver zero airflow in both outages (annual window controls); outage ventilation runs at 62.1-style rates (~980 m³/h in refuge hours) through 75% recovery versus the REVIVE 5 cfm/person; only Learning Labs is occupied. No QA review under `11_QAQC/` exists yet. No certification outcome, PV credit or final equipment/borefield selection is implied. Remaining questions include source-water/manufacturer performance, Lab humidity, winter dry-air/operative comfort and separate event/additional-weather sensitivities.
 
-The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program week view with annual daily-mean strip, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This release is live (see Publication below).
+The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program week view with annual daily-mean strip, Model roofs-on default with a shading toggle, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This release is live (see Publication below).
 
 ## Frozen source identity
 
@@ -31,7 +31,7 @@ Native sources remain ignored in `_private/`, with separate Annual and Design-Da
 
 ## Verification
 
-- `verify_inputs.py`: four native zones, 25 full-year schedules, 50 design profiles, CSV round trips, 125 surface meshes and source identities.
+- `verify_inputs.py`: four native zones, 25 full-year schedules, 50 design profiles, CSV round trips, 125 surface and 341 shade mesh areas and source identities.
 - `verify_results.py`: all 72 monthly end-use values and twelve facility totals against frozen native SQL, proper reporting frequencies, exact CSV round trip and source hashes.
 - `verify_design_days.py`: eight room loads and equipment ratings/airflow against native SQL, four CSV rows, source hashes, control/operating bounds and matching Annual identity.
 - `verify_resilience.py`: zone air/RH/heat-index series against frozen native SQL, SET degree-hours recomputed and within 3% of EnergyPlus Pierce SET for Labs, heat-index band hours, deadly days, cold hours, 432-row CSV and source hashes.
