@@ -73,6 +73,29 @@
         "airflow_m3_s": 0.610921405942168,
         "source_water_flow_m3_s": 0.000356087844460572
       },
+      "coil": {
+        "heating": {
+          "W": 7206.5591310027075,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
+          "hour": 24,
+          "minute": 0,
+          "runtime_fraction": 0.8534620024797513
+        },
+        "total_cooling": {
+          "W": 10420.919133847365,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+          "hour": 14,
+          "minute": 25,
+          "runtime_fraction": 1.0
+        },
+        "sensible_cooling": {
+          "W": 7054.48432617603,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
+          "hour": 14,
+          "minute": 15
+        },
+        "supplemental_heating_W": 0.0
+      },
       "conditions": [
         {
           "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
@@ -143,6 +166,29 @@
         "rated_sensible_cooling_W": 9582.44143879075,
         "airflow_m3_s": 0.791960978639175,
         "source_water_flow_m3_s": 0.000460676919412352
+      },
+      "coil": {
+        "heating": {
+          "W": 6002.184319472798,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
+          "hour": 24,
+          "minute": 0,
+          "runtime_fraction": 0.5788919855111533
+        },
+        "total_cooling": {
+          "W": 13929.33356497981,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DP=>MDB",
+          "hour": 9,
+          "minute": 15,
+          "runtime_fraction": 1.0
+        },
+        "sensible_cooling": {
+          "W": 9346.506748245065,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+          "hour": 9,
+          "minute": 15
+        },
+        "supplemental_heating_W": 0.0
       },
       "conditions": [
         {
@@ -215,6 +261,29 @@
         "airflow_m3_s": 0.600107055935745,
         "source_water_flow_m3_s": 0.000333445780831527
       },
+      "coil": {
+        "heating": {
+          "W": 4105.604083202724,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
+          "hour": 24,
+          "minute": 0,
+          "runtime_fraction": 0.549991898995966
+        },
+        "total_cooling": {
+          "W": 9783.97624959656,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+          "hour": 10,
+          "minute": 5,
+          "runtime_fraction": 1.0
+        },
+        "sensible_cooling": {
+          "W": 6734.221145212119,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+          "hour": 10,
+          "minute": 5
+        },
+        "supplemental_heating_W": 0.0
+      },
       "conditions": [
         {
           "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
@@ -285,6 +354,29 @@
         "rated_sensible_cooling_W": 1164.3513750539,
         "airflow_m3_s": 0.0990397710905966,
         "source_water_flow_m3_s": 5.4122542270112e-05
+      },
+      "coil": {
+        "heating": {
+          "W": 1319.0325833093702,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
+          "hour": 24,
+          "minute": 0,
+          "runtime_fraction": 0.9986505747007955
+        },
+        "total_cooling": {
+          "W": 1511.9122462751593,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+          "hour": 14,
+          "minute": 15,
+          "runtime_fraction": 0.9765247474257029
+        },
+        "sensible_cooling": {
+          "W": 1146.3078047938423,
+          "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
+          "hour": 14,
+          "minute": 40
+        },
+        "supplemental_heating_W": 0.0
       },
       "conditions": [
         {
@@ -420,6 +512,171 @@
       }
     }
   },
+  "coil_peaks": {
+    "heating_W": 18633.3801169876,
+    "heating_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
+    "heating_hour": 24,
+    "heating_minute": 0,
+    "total_cooling_W": 26933.54526185202,
+    "total_cooling_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+    "total_cooling_hour": 14,
+    "total_cooling_minute": 5,
+    "sensible_cooling_W": 18411.030896748172,
+    "sensible_cooling_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
+    "sensible_cooling_hour": 14,
+    "sensible_cooling_minute": 15
+  },
+  "room_to_coil": {
+    "heating": {
+      "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
+      "hour": 24,
+      "minute": 0,
+      "room_sensible_W": 11464.456243486908,
+      "ventilation_sensible_W": 8055.394621703618,
+      "fan_and_other_W": -886.4707482029271,
+      "coil_W": 18633.3801169876,
+      "erv_supply_m3_s": 0.5808542516432464,
+      "erv_supply_C": 9.50484224848582,
+      "unit_fan_W": 896.6502451066324
+    },
+    "cooling": {
+      "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+      "hour": 14,
+      "minute": 5,
+      "room_sensible_W": 15756.129128859044,
+      "ventilation_sensible_W": 1087.8996155961083,
+      "fan_and_other_W": 1121.1057934021248,
+      "coil_sensible_W": 17965.134537857277,
+      "room_latent_W": 5203.251639677015,
+      "ventilation_latent_W": 3765.1590843177332,
+      "coil_latent_W": 8968.410723994748,
+      "coil_total_W": 26933.54526185202,
+      "erv_supply_m3_s": 0.41211199039459356,
+      "erv_supply_C": 26.116496906467273,
+      "unit_fan_W": 1057.3092464708482
+    },
+    "air_density_kg_m3": 1.1877601556612896
+  },
+  "room_load_components": {
+    "cooling": [
+      {
+        "component": "People",
+        "sensible_W": 3929.65,
+        "latent_W": 3138.62
+      },
+      {
+        "component": "Lights",
+        "sensible_W": 2537.2,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Equipment",
+        "sensible_W": 4043.68,
+        "latent_W": 88.87
+      },
+      {
+        "component": "Infiltration",
+        "sensible_W": 666.65,
+        "latent_W": 915.23
+      },
+      {
+        "component": "Interzone Mixing",
+        "sensible_W": -0.3,
+        "latent_W": 309.14
+      },
+      {
+        "component": "Roof",
+        "sensible_W": 192.34,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Exterior Wall",
+        "sensible_W": 40.35,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Interzone Wall",
+        "sensible_W": 34.67,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Ground Contact Floor",
+        "sensible_W": -1594.1,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Fenestration Conduction",
+        "sensible_W": 3038.07,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Fenestration Solar",
+        "sensible_W": 2998.06,
+        "latent_W": 0.0
+      }
+    ],
+    "heating": [
+      {
+        "component": "People",
+        "sensible_W": 0.0,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Lights",
+        "sensible_W": 0.0,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Equipment",
+        "sensible_W": 0.0,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Infiltration",
+        "sensible_W": -3266.6,
+        "latent_W": -1413.3
+      },
+      {
+        "component": "Interzone Mixing",
+        "sensible_W": -0.1,
+        "latent_W": -3.3
+      },
+      {
+        "component": "Roof",
+        "sensible_W": -1747.2,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Exterior Wall",
+        "sensible_W": -1819.9,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Interzone Wall",
+        "sensible_W": 0.57,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Ground Contact Floor",
+        "sensible_W": -31.3,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Fenestration Conduction",
+        "sensible_W": -4599.4,
+        "latent_W": 0.0
+      },
+      {
+        "component": "Fenestration Solar",
+        "sensible_W": 0.0,
+        "latent_W": 0.0
+      }
+    ],
+    "cooling_time": "7/21 14:15:00",
+    "heating_time": "1/21 24:00:00",
+    "cooling_condition": "White.Plains-Westchester.Coun Ann Clg .4% Condns DB=>MWB",
+    "heating_condition": "White.Plains-Westchester.Coun Ann Htg 99.6% Condns DB"
+  },
   "controls": {
     "timesteps_per_hour": 12,
     "sizing_average_minutes": 15,
@@ -429,10 +686,19 @@
     "equipment_sequence": "ERV, WSHP, supplemental dehumidifier",
     "heating_setpoint_C": 21.1111111111,
     "cooling_setpoint_C": 23.8888888889,
+    "slab_ground_C": 18.0,
     "ERV_channels_verified": 13,
     "severe_errors": 0
   },
   "basis": "Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
+  "sizing_notes": [
+    "ERV heat recovery is a provisional 75% sensible and 50% latent, with minimum-exhaust-temperature frost control at {temperature:0}. At the winter design hour frost control lowers the delivered supply temperature, and the coil heating above already includes that. The selected ERV and its frost strategy set the real winter coil load.",
+    "Infiltration is a constant design rate whose leakage basis is still to be set. Its share of the room loads is in the component table.",
+    "Sizing factors are 1.0. The loads carry no safety margin.",
+    "The summer design profile runs the Core kitchenette appliances at full draw in their scheduled windows, so the kettle and dishwasher coincide with the 14:15 building room-load peak.",
+    "Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling; the Kiva annual run shows warmer summer soil.",
+    "Heat-pump curves and entering-water temperatures are generic; the ground source is an EMS temperature surrogate, not a borefield model."
+  ],
   "limitations": [
     "Ground-source entering-water temperatures and performance curves need MEP/manufacturer confirmation; the template uses an EMS temperature surrogate.",
     "Labs has no supplemental humidity control and reaches 63.62% RH; Visitor/Core remain below 60% in these design-day tests.",

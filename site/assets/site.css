@@ -724,6 +724,10 @@ footer {
 .peak-row > :last-child { text-align: right; font-variant-numeric: tabular-nums; }
 #condition-summary { margin-top: 16px; }
 @media (max-width: 600px) { .peak-row { grid-template-columns: 105px minmax(30px,1fr) 68px; gap: 8px; font-size: 12px; } }
+.peak-chart.steps { gap: 4px; margin: 12px 0 26px; }
+.peak-chart.steps .peak-row { grid-template-columns: 250px minmax(40px, 1fr) 100px; }
+@media (max-width: 600px) { .peak-chart.steps .peak-row { grid-template-columns: 130px minmax(30px,1fr) 72px; } }
+.load-definitions td:first-child { overflow-wrap: normal; white-space: nowrap; font-weight: 600; }
 a.project-id { text-decoration: none; }
 a.project-id:hover { color: var(--text-primary); }
 .status.draft { color: var(--accent-text); }
