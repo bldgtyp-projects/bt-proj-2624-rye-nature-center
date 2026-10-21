@@ -1,0 +1,1112 @@
+/* ============================================================
+   BLDGTYP Design System — Reusable Components
+   https://github.com/bldgtyp/bt-branding
+
+   Requires tokens.css to be loaded first:
+     @import url('https://bldgtyp.github.io/bt-branding/tokens/tokens.css');
+     @import url('https://bldgtyp.github.io/bt-branding/tokens/components.css');
+
+   Or via <link> tags:
+     <link rel="stylesheet" href="https://bldgtyp.github.io/bt-branding/tokens/tokens.css">
+     <link rel="stylesheet" href="https://bldgtyp.github.io/bt-branding/tokens/components.css">
+
+   Also load fonts (not bundled to avoid duplication):
+     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700&family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet">
+   ============================================================ */
+
+
+/* ==========================================================
+   1. BUTTONS
+   ========================================================== */
+
+.btn-primary {
+    font-family: var(--font-mono); font-weight: 400; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background-color: var(--accent); color: #ffffff;
+    border: none; padding: 16px 42px;
+    border-radius: var(--radius-sm); cursor: pointer;
+    transition: all var(--transition-base); text-decoration: none;
+    display: inline-block;
+}
+
+.btn-primary:hover {
+    background-color: var(--accent-dark); transform: translateY(-2px);
+}
+
+.btn-ghost {
+    font-family: var(--font-mono); font-weight: 400; font-size: 13px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    background: transparent; color: var(--text-secondary);
+    border: 1px solid var(--border-subtle); padding: 16px 42px;
+    border-radius: var(--radius-sm); cursor: pointer;
+    transition: all var(--transition-base); text-decoration: none;
+    display: inline-block;
+}
+
+.btn-ghost:hover {
+    border-color: var(--accent-text); color: var(--accent-text);
+}
+
+
+/* ==========================================================
+   2. LINKS
+   ========================================================== */
+
+.link {
+    color: var(--highlight-text);
+    font-weight: 700;
+    text-decoration: underline;
+    text-decoration-style: dotted;
+    text-underline-offset: 3px;
+    text-decoration-thickness: 1.5px;
+    transition: color var(--transition-base), text-decoration-color var(--transition-base);
+}
+
+.link:hover {
+    color: var(--highlight-darker);
+    text-decoration-style: solid;
+}
+
+
+/* ==========================================================
+   3. ICON BUTTONS
+   ========================================================== */
+
+.icon-btn {
+    width: 32px; height: 32px;
+    background: transparent; border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm); cursor: pointer;
+    display: inline-flex; align-items: center; justify-content: center;
+    transition: all var(--transition-base);
+    color: var(--text-secondary);
+    text-decoration: none;
+}
+
+.icon-btn svg {
+    width: 16px; height: 16px;
+    fill: currentColor;
+}
+
+.icon-btn:hover {
+    border-color: var(--accent-text); color: var(--accent-text);
+}
+
+.nav-icons { display: flex; gap: 8px; align-items: center; }
+
+
+/* ==========================================================
+   4. SERVICE CARD
+   ========================================================== */
+
+.service-card {
+    background-color: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-sm);
+    padding: 40px 32px;
+    border-top: 3px solid var(--border-card);
+    border-bottom: 2px solid var(--accent);
+    max-width: 340px;
+    transition: all var(--transition-base);
+}
+
+.service-card:hover {
+    border-top-color: var(--highlight);
+}
+
+.service-card__title {
+    font-family: var(--font-primary); font-weight: 600; font-size: 16px;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--accent-text); margin-bottom: 12px;
+}
+
+.service-card__subtitle {
+    font-family: var(--font-primary); font-weight: 500; font-size: 20px;
+    color: var(--text-primary); margin-bottom: 16px; line-height: 1.4;
+}
+
+.service-card__body {
+    font-family: var(--font-primary); font-weight: 300; font-size: 15px;
+    line-height: 1.7; color: var(--text-secondary);
+}
+
+
+/* ==========================================================
+   4b. CARD GRID — TIGHT
+   Zero-gap grid where service cards tile edge-to-edge with
+   shared borders. Wrap service-cards in this container.
+   Outer border supplied by the container; cards contribute
+   only right + bottom borders (same pattern as doc-card grid).
+   ========================================================== */
+
+.card-grid--tight {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    border-top: 1px solid var(--border-card);
+    border-left: 1px solid var(--border-card);
+}
+
+.card-grid--tight > .service-card {
+    max-width: none;
+    border-radius: 0;
+    border-top: none;
+    border-left: none;
+    border-right: 1px solid var(--border-card);
+    border-bottom: 1px solid var(--border-card);
+}
+
+
+/* ==========================================================
+   5. STATS BAR
+   ========================================================== */
+
+.stats-bar {
+    background-color: var(--bg-stats, #111111);
+    padding: 60px 40px;
+    border-radius: var(--radius-sm);
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 40px;
+}
+
+.stats-bar__number {
+    font-family: var(--font-primary); font-weight: 600; font-size: 48px;
+    line-height: 1.1; color: var(--accent);
+}
+
+.stats-bar__label {
+    font-family: var(--font-mono); font-weight: 400; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #6b7280; margin-top: 8px;
+}
+
+
+/* ==========================================================
+   6. SECTION LABEL
+   ========================================================== */
+
+.section-label {
+    font-family: var(--font-mono); font-weight: 400; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-text); margin-bottom: 48px; display: block;
+}
+
+
+/* ==========================================================
+   7. GRAPH PAPER BACKGROUNDS
+   Three density variants applied via ::before pseudo-element.
+   Add the class to any positioned container.
+   ========================================================== */
+
+.graph-paper {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Standard: 20px minor / 100px major — hero sections, service areas */
+.graph-paper::before,
+.graph-paper--standard::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='20' y2='0' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='20' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='none' stroke='rgba(62,147,174,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 20px 20px, 100px 100px;
+}
+
+/* Medium: 12px minor / 60px major — dashboards, data views */
+.graph-paper--medium::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='12' y2='0' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='12' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='none' stroke='rgba(62,147,174,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 12px 12px, 60px 60px;
+}
+
+/* Fine: 6px minor / 30px major — technical details, reports */
+.graph-paper--fine::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='6' y2='0' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='6' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='30' height='30' fill='none' stroke='rgba(62,147,174,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 6px 6px, 30px 30px;
+}
+
+/* ==========================================================
+   7b. HEXAGON GRAPH PAPER BACKGROUNDS
+   Honeycomb-pattern variants using flat-top hexagons.
+   Same ::before technique as square graph paper.
+   Accent RGB = 62,147,174 (must be updated if --accent changes).
+   ========================================================== */
+
+/* Hex Standard: r=20, tile 60×34.64 — hero sections, honeybee-ph branding */
+.graph-paper--hex::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='60' height='34.64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20,0 L40,0 M20,0 L10,17.32 M40,0 L50,17.32 M0,17.32 L10,17.32 M50,17.32 L60,17.32 M10,17.32 L20,34.64 M50,17.32 L40,34.64 M20,34.64 L40,34.64' stroke='rgba(62,147,174,0.10)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: 60px 34.64px;
+}
+
+/* Hex Medium: r=12, tile 36×20.78 — dashboards, data views */
+.graph-paper--hex-medium::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='36' height='20.78' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12,0 L24,0 M12,0 L6,10.39 M24,0 L30,10.39 M0,10.39 L6,10.39 M30,10.39 L36,10.39 M6,10.39 L12,20.78 M30,10.39 L24,20.78 M12,20.78 L24,20.78' stroke='rgba(62,147,174,0.10)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: 36px 20.78px;
+}
+
+/* Hex Fine: r=7, tile 21×12.12 — technical details, reports */
+.graph-paper--hex-fine::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='21' height='12.12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7,0 L14,0 M7,0 L3.5,6.06 M14,0 L17.5,6.06 M0,6.06 L3.5,6.06 M17.5,6.06 L21,6.06 M3.5,6.06 L7,12.12 M17.5,6.06 L14,12.12 M7,12.12 L14,12.12' stroke='rgba(62,147,174,0.10)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: 21px 12.12px;
+}
+
+
+/* ==========================================================
+   7c. HIGHLIGHT-COLOR GRAPH PAPER
+   Same patterns as 7a/7b but using --highlight RGB (226,52,137).
+   Add alongside the base class, e.g. "graph-paper graph-paper--highlight".
+   ========================================================== */
+
+/* Square — highlight */
+.graph-paper--highlight::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    pointer-events: none;
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='20' height='20' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='20' y2='0' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='20' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='100' height='100' fill='none' stroke='rgba(226,52,137,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 20px 20px, 100px 100px;
+}
+
+.graph-paper--highlight.graph-paper--medium::before {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='12' y2='0' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='12' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='none' stroke='rgba(226,52,137,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 12px 12px, 60px 60px;
+}
+
+.graph-paper--highlight.graph-paper--fine::before {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='6' height='6' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='6' y2='0' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='6' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='30' height='30' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='30' height='30' fill='none' stroke='rgba(226,52,137,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 6px 6px, 30px 30px;
+}
+
+/* Hexagon — highlight */
+.graph-paper--highlight.graph-paper--hex::before {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='60' height='34.64' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M20,0 L40,0 M20,0 L10,17.32 M40,0 L50,17.32 M0,17.32 L10,17.32 M50,17.32 L60,17.32 M10,17.32 L20,34.64 M50,17.32 L40,34.64 M20,34.64 L40,34.64' stroke='rgba(226,52,137,0.10)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: 60px 34.64px;
+}
+
+.graph-paper--highlight.graph-paper--hex-medium::before {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='36' height='20.78' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12,0 L24,0 M12,0 L6,10.39 M24,0 L30,10.39 M0,10.39 L6,10.39 M30,10.39 L36,10.39 M6,10.39 L12,20.78 M30,10.39 L24,20.78 M12,20.78 L24,20.78' stroke='rgba(226,52,137,0.10)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: 36px 20.78px;
+}
+
+.graph-paper--highlight.graph-paper--hex-fine::before {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='21' height='12.12' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M7,0 L14,0 M7,0 L3.5,6.06 M14,0 L17.5,6.06 M0,6.06 L3.5,6.06 M17.5,6.06 L21,6.06 M3.5,6.06 L7,12.12 M17.5,6.06 L14,12.12 M7,12.12 L14,12.12' stroke='rgba(226,52,137,0.10)' stroke-width='1' fill='none'/%3E%3C/svg%3E");
+    background-size: 21px 12.12px;
+}
+
+
+/* ==========================================================
+   8. TYPOGRAPHY HELPERS
+   Opt-in classes for common text patterns.
+   ========================================================== */
+
+.type-hero {
+    font-family: var(--font-primary); font-weight: 600;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    letter-spacing: -0.02em; line-height: 1.15;
+}
+
+.type-heading {
+    font-family: var(--font-primary); font-weight: 600;
+    font-size: 42px; letter-spacing: -0.015em; line-height: 1.15;
+}
+
+.type-subheading {
+    font-family: var(--font-primary); font-weight: 500;
+    font-size: 20px; line-height: 1.4;
+}
+
+.type-body {
+    font-family: var(--font-primary); font-weight: 400;
+    font-size: 16px; line-height: 1.7;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.type-body-lg {
+    font-family: var(--font-primary); font-weight: 400;
+    font-size: 17px; line-height: 1.8;
+    letter-spacing: 0.05em;
+    color: var(--text-secondary);
+}
+
+.type-table-text {
+    font-family: var(--font-table); font-weight: 400;
+    font-size: 14px; line-height: 1.5;
+    letter-spacing: normal;
+    color: var(--text-secondary);
+    font-variant-numeric: tabular-nums;
+}
+
+.type-table-header {
+    font-family: var(--font-table); font-weight: 500;
+    font-size: 12px; line-height: 1.4;
+    letter-spacing: 0.02em; text-transform: uppercase;
+    color: var(--text-muted);
+}
+
+.type-mono-label {
+    font-family: var(--font-mono); font-weight: 400; font-size: 12px;
+    letter-spacing: 0.15em; text-transform: uppercase;
+    color: var(--accent-text);
+}
+
+.type-mono-nav {
+    font-family: var(--font-mono); font-weight: 400; font-size: 11px;
+    letter-spacing: 0.05em; text-transform: uppercase;
+    color: var(--text-secondary); text-decoration: none;
+    transition: color var(--transition-base);
+}
+
+.type-mono-nav:hover { color: var(--accent-text); }
+
+.type-stat-number {
+    font-family: var(--font-primary); font-weight: 600; font-size: 48px;
+    line-height: 1.1; color: var(--accent);
+}
+
+.type-stat-label {
+    font-family: var(--font-mono); font-weight: 400; font-size: 12px;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    color: #6b7280; margin-top: 8px;
+}
+
+
+/* ==========================================================
+   9. THEME TOGGLE
+   ========================================================== */
+
+.theme-toggle {
+    width: 32px; height: 32px;
+    background: transparent; border: 1px solid var(--border-subtle);
+    border-radius: var(--radius-sm); cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px; transition: all var(--transition-base);
+    color: var(--text-primary);
+}
+
+.theme-toggle:hover { border-color: var(--accent-text); color: var(--accent-text); }
+
+
+/* ==========================================================
+   10. HERO TITLE — Two-line with highlight second line
+   Wrap the second line in <em> for highlight color.
+   Follow with .hero-sub for // subtitle lines.
+   ========================================================== */
+
+.hero-title {
+    font-family: var(--font-primary);
+    font-weight: 500;
+    font-size: clamp(52px, 7vw, 96px);
+    line-height: 1.0;
+    letter-spacing: -0.03em;
+    margin: 0 0 28px 0;
+    color: var(--text-primary);
+}
+
+.hero-title em {
+    font-style: normal;
+    color: var(--highlight-text);
+    font-weight: 600;
+}
+
+.hero-sub {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 14.5px;
+    color: var(--text-muted);
+    max-width: 62ch;
+    line-height: 1.55;
+    margin: 0;
+}
+
+
+/* ==========================================================
+   11. SITE HEADER — Sticky navbar with backdrop blur
+   Contains logo, nav-primary, search-btn, and hamburger.
+   ========================================================== */
+
+.site-header {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    padding: 0 40px;
+    height: 64px;
+    background: color-mix(in oklab, var(--bg-page) 86%, transparent);
+    backdrop-filter: saturate(1.4) blur(14px);
+    -webkit-backdrop-filter: saturate(1.4) blur(14px);
+    border-bottom: 1px solid var(--border-subtle);
+}
+
+/* Logo / breadcrumb (folder-nav style with "/" separator) */
+.site-header__logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    color: var(--text-primary);
+    text-decoration: none;
+    padding-right: 28px;
+    border-right: 1px solid var(--border-subtle);
+    margin-right: 28px;
+    height: 32px;
+}
+
+.site-header__logo-mark {
+    width: 22px;
+    height: 22px;
+    position: relative;
+}
+
+.site-header__logo-mark svg {
+    width: 100%;
+    height: 100%;
+    fill: currentColor;
+}
+
+.site-header__logo-sep {
+    color: var(--text-muted);
+    margin-left: 6px;
+}
+
+/* Primary nav (dropdown triggers) */
+.nav-primary {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    flex: 1;
+}
+
+.nav-group {
+    position: relative;
+}
+
+.nav-group__trigger {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    padding: 8px 14px;
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 12.5px;
+    letter-spacing: 0.04em;
+    color: var(--text-muted);
+    background: none;
+    border: none;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: color .2s var(--ease), background .2s var(--ease);
+}
+
+.nav-group__trigger:hover {
+    color: var(--text-primary);
+    background: var(--bg-elev);
+}
+
+.nav-group__trigger.is-active {
+    color: var(--accent-text);
+}
+
+.nav-group__trigger .chev {
+    width: 8px;
+    height: 8px;
+    opacity: .5;
+    transition: transform .2s var(--ease);
+}
+
+.nav-group.is-open .nav-group__trigger .chev {
+    transform: rotate(180deg);
+}
+
+.nav-group__dropdown {
+    display: none;
+    position: absolute;
+    top: calc(100% + 17px);
+    left: 0;
+    min-width: 220px;
+    padding: 6px;
+    background: var(--bg-page);
+    border: 1px solid var(--border-strong);
+    border-radius: 4px;
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    z-index: 50;
+}
+
+.nav-group.is-open .nav-group__dropdown {
+    display: flex;
+    flex-direction: column;
+    animation: dropdown-in .15s var(--ease);
+}
+
+@keyframes dropdown-in {
+    from { opacity: 0; transform: translateY(-4px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+.nav-group__dropdown a {
+    display: block;
+    padding: 8px 12px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    border-radius: var(--radius-sm);
+    transition: all .15s var(--ease);
+}
+
+.nav-group__dropdown a:hover {
+    background: var(--bg-elev);
+    color: var(--text-primary);
+}
+
+/* Hamburger (mobile) */
+.nav-hamburger {
+    display: none;
+    width: 34px;
+    height: 34px;
+    place-items: center;
+    background: transparent;
+    border: 1px solid transparent;
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all .15s var(--ease);
+}
+
+.nav-hamburger:hover {
+    border-color: var(--border-strong);
+    color: var(--text-primary);
+}
+
+.nav-hamburger svg {
+    width: 18px;
+    height: 18px;
+}
+
+
+/* ==========================================================
+   12. SEARCH BUTTON
+   Pill-shaped trigger that opens a search modal.
+   ========================================================== */
+
+.search-btn {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px 0 12px;
+    height: 34px;
+    min-width: 240px;
+    border: 1px solid var(--border-strong);
+    background: var(--bg-elev);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 400;
+    cursor: pointer;
+    transition: all .15s var(--ease);
+}
+
+.search-btn:hover {
+    border-color: var(--accent-text);
+    color: var(--text-secondary);
+}
+
+.search-btn svg {
+    width: 14px;
+    height: 14px;
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 2;
+}
+
+.search-btn .kbd {
+    margin-left: auto;
+    font-size: 10.5px;
+    padding: 2px 6px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-muted);
+}
+
+
+/* ==========================================================
+   13. DOC CARD — Animated top-border, multi-section layout
+   Top border slides left-to-right on hover.
+   Includes: index row, tag, title, description,
+   dashed divider, and arrow CTA.
+   ========================================================== */
+
+.doc-card {
+    position: relative;
+    padding: 40px 36px 36px 36px;
+    border-right: 1px solid var(--border-subtle);
+    border-bottom: 1px solid var(--border-subtle);
+    background: var(--bg-page);
+    text-decoration: none;
+    color: var(--text-primary);
+    transition: background .2s var(--ease);
+    display: flex;
+    flex-direction: column;
+    min-height: 280px;
+    cursor: pointer;
+    overflow: hidden;
+}
+
+.doc-card:hover {
+    background: var(--bg-elev);
+}
+
+/* Animated top border */
+.doc-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent);
+    transition: width .35s var(--ease);
+}
+
+.doc-card:hover::before {
+    width: 100%;
+}
+
+/* Index row: number — dash-line — tag */
+.doc-card__idx {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    color: var(--text-muted);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 28px;
+}
+
+.doc-card__idx-num {
+    color: var(--accent-text);
+    font-weight: 400;
+}
+
+.doc-card__idx-dash {
+    flex: 1;
+    height: 1px;
+    background: var(--border-subtle);
+}
+
+/* Category tag */
+.doc-card__tag {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 400;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--accent-text);
+    margin-bottom: 14px;
+}
+
+/* Card title */
+.doc-card__name {
+    font-family: var(--font-primary);
+    font-weight: 600;
+    font-size: 30px;
+    letter-spacing: -0.015em;
+    margin: 0 0 10px 0;
+    line-height: 1.05;
+}
+
+/* Card description */
+.doc-card__desc {
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: 15.5px;
+    line-height: 1.5;
+    color: var(--text-secondary);
+    margin: 0 0 28px 0;
+    max-width: 36ch;
+}
+
+/* Footer: dashed divider + CTA */
+.doc-card__footer {
+    margin-top: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 20px;
+    border-top: 1px dashed var(--border-strong);
+}
+
+.doc-card__cta {
+    font-family: var(--font-mono);
+    font-weight: 400;
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--text-primary);
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.doc-card__cta .arr {
+    transition: transform .25s var(--ease);
+}
+
+.doc-card:hover .doc-card__cta .arr {
+    transform: translateX(4px);
+}
+
+
+/* ==========================================================
+   14. SIDEBAR NAV
+   Collapsible nav tree with section dividers, dashed
+   child borders, and expand/collapse chevrons.
+   ========================================================== */
+
+.sidebar {
+    width: 260px;
+    padding: 20px 16px 40px 0;
+    border-right: 1px solid var(--border-subtle);
+    flex-shrink: 0;
+}
+
+/* Section label with leading dash */
+.sidebar__label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    padding: 14px 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color .15s var(--ease);
+}
+
+.sidebar__label:hover {
+    color: var(--text-secondary);
+}
+
+.sidebar__label.is-active {
+    color: var(--accent-text);
+    font-weight: 500;
+}
+
+.sidebar__label::before {
+    content: '';
+    width: 14px;
+    height: 1px;
+    background: currentColor;
+    opacity: .6;
+}
+
+/* Nav tree */
+.nav-tree {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-tree li {
+    position: relative;
+}
+
+.nav-tree a,
+.nav-tree button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    width: 100%;
+    padding: 7px 12px 7px 14px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: 13.5px;
+    color: var(--text-secondary);
+    text-decoration: none;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: all .15s var(--ease);
+    position: relative;
+}
+
+.nav-tree a:hover,
+.nav-tree button:hover {
+    color: var(--text-primary);
+    background: var(--bg-elev);
+}
+
+/* Group headings (collapsible) */
+.nav-tree .group > button {
+    color: var(--text-primary);
+    font-weight: 500;
+    font-size: 13px;
+}
+
+.nav-tree .group > button .chev {
+    margin-left: auto;
+    width: 10px;
+    height: 10px;
+    transition: transform .2s var(--ease);
+    opacity: .6;
+}
+
+.nav-tree .group.is-open > button .chev {
+    transform: rotate(90deg);
+}
+
+/* Child list with dashed left border */
+.nav-tree .children {
+    list-style: none;
+    padding: 0;
+    margin: 4px 0 8px 14px;
+    border-left: 1px dashed var(--border-strong);
+    display: none;
+}
+
+.nav-tree .group.is-open > .children {
+    display: block;
+}
+
+/* Active state with left accent bar */
+.nav-tree .is-active {
+    color: var(--accent-text);
+    font-weight: 500;
+    background: var(--accent-light);
+}
+
+.nav-tree .is-active::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 4px;
+    bottom: 4px;
+    width: 2px;
+    background: var(--accent);
+}
+
+
+/* ==========================================================
+   15. CALLOUT BLOCKS
+   Note (accent) and Warning (highlight) callouts with
+   left accent bar and gradient background.
+   ========================================================== */
+
+.callout {
+    margin: 16px 0 20px 0;
+    border: 1px solid var(--border-subtle);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.callout::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 3px;
+}
+
+.callout__title {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 400;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    padding: 14px 20px 0 20px;
+    position: relative;
+    z-index: 1;
+}
+
+.callout__body {
+    padding: 8px 20px 14px 20px;
+    font-family: var(--font-primary);
+    font-weight: 300;
+    font-size: 14px;
+    line-height: 1.6;
+    color: var(--text-secondary);
+    position: relative;
+    z-index: 1;
+}
+
+/* Graph paper overlay (medium density, via ::after) */
+.callout::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    pointer-events: none;
+}
+
+/* Note variant (accent color) */
+.callout--note {
+    border-color: var(--accent);
+    background: linear-gradient(to right, var(--accent-light), transparent 80%);
+}
+
+.callout--note::before {
+    background: var(--accent);
+}
+
+.callout--note::after {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='12' y2='0' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='12' stroke='rgba(62,147,174,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='none' stroke='rgba(62,147,174,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 12px 12px, 60px 60px;
+}
+
+.callout--note .callout__title {
+    color: var(--accent-dark);
+}
+
+[data-theme="dark"] .callout--note {
+    background: linear-gradient(to right, rgba(62,147,174,0.12), transparent 80%);
+}
+
+[data-theme="dark"] .callout--note .callout__title {
+    color: var(--accent);
+}
+
+/* Warning variant (highlight color) */
+.callout--warning {
+    border-color: var(--highlight);
+    background: linear-gradient(to right, var(--highlight-light), transparent 80%);
+}
+
+.callout--warning::before {
+    background: var(--highlight);
+}
+
+.callout--warning::after {
+    background-image:
+        url("data:image/svg+xml,%3Csvg width='12' height='12' xmlns='http://www.w3.org/2000/svg'%3E%3Cline x1='0' y1='0' x2='12' y2='0' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3Cline x1='0' y1='0' x2='0' y2='12' stroke='rgba(226,52,137,0.10)' stroke-width='1'/%3E%3C/svg%3E"),
+        url("data:image/svg+xml,%3Csvg width='60' height='60' xmlns='http://www.w3.org/2000/svg'%3E%3Crect width='60' height='60' fill='none' stroke='rgba(226,52,137,0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    background-size: 12px 12px, 60px 60px;
+}
+
+.callout--warning .callout__title {
+    color: var(--highlight-darker);
+}
+
+[data-theme="dark"] .callout--warning {
+    background: linear-gradient(to right, rgba(226,52,137,0.12), transparent 80%);
+}
+
+[data-theme="dark"] .callout--warning .callout__title {
+    color: var(--highlight);
+}
+
+
+/* ==========================================================
+   16. SITE FOOTER
+   Mono-spaced footer bar with left nav items (· separated),
+   right-aligned site URL and version badge.
+   ========================================================== */
+
+.site-footer {
+    border-top: 1px solid var(--border-subtle);
+    padding: 36px 40px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 32px;
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 400;
+    color: var(--text-muted);
+    letter-spacing: 0.04em;
+}
+
+.site-footer a {
+    color: var(--text-secondary);
+    font-weight: 400;
+    text-decoration: none;
+    transition: color .15s var(--ease);
+}
+
+.site-footer a:hover {
+    color: var(--accent-text);
+}
+
+.site-footer__left {
+    display: flex;
+    gap: 28px;
+    align-items: center;
+}
+
+.site-footer__right {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.site-footer .version-badge {
+    padding: 3px 9px;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-sm);
+    color: var(--text-secondary);
+}
+
+
+/* ==========================================================
+   17. RESPONSIVE — HEADER / FOOTER / MOBILE
+   ========================================================== */
+
+@media (max-width: 900px) {
+    .site-header { padding: 0 20px; }
+    .site-header__logo { padding-right: 16px; margin-right: 16px; }
+    .nav-primary { display: none; }
+    .search-btn { display: none; }
+    .nav-hamburger { display: grid; }
+    .sidebar { display: none; }
+    .site-footer { flex-direction: column; align-items: flex-start; padding: 28px 20px; }
+    .site-footer__left { flex-wrap: wrap; gap: 16px; }
+    .site-footer__right { flex-wrap: wrap; gap: 12px; }
+}

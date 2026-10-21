@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 120 120" fill="none">
+  <title>BLDGTYP</title>
+  <polygon points="60,14 102,38 60,62 18,38" fill="#d6ebf1"></polygon>
+  <polygon points="18,38 60,62 60,106 18,82" fill="#3E93AE"></polygon>
+  <polygon points="102,38 60,62 60,106 102,82" fill="#2d6b80"></polygon>
+  <polygon points="60,14 102,38 102,82 60,106 18,82 18,38" fill="none" stroke="#C42977" stroke-width="4" stroke-linejoin="round"></polygon>
+</svg>

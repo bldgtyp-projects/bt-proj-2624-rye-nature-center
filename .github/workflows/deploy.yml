@@ -1,0 +1,76 @@
+name: Deploy to Cloudflare Pages
+
+# Custom static report: no PHPP renderer build. Checks site/, then reuses the
+# bt-web-report template's Pages/domain/DNS/Access setup script (reading the
+# publishing block in report.json) and uploads site/ as one release.
+# Refs are pinned; advance the template SHA and wrangler version deliberately.
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+
+concurrency:
+  group: deploy
+  cancel-in-progress: false
+
+env:
+  PAGES_PROJECT: bt-proj-2624-rye-nature-center
+  TEMPLATE_REF: 65a1448ec0b9c1640e85542a2bf8dcad105738d6
+  WRANGLER_VERSION: 4.151.0
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    env:
+      CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+      CLOUDFLARE_ACCOUNT_ID: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+      CLOUDFLARE_ACCESS_OTP_IDP_ID: ${{ secrets.CLOUDFLARE_ACCESS_OTP_IDP_ID }}
+    steps:
+      - uses: actions/checkout@v6
+        with:
+          path: project
+
+      - name: Checkout bt-web-report template (setup script, retry.sh)
+        uses: actions/checkout@v6
+        with:
+          repository: bldgtyp/bt-web-report-template
+          ref: ${{ env.TEMPLATE_REF }}
+          path: renderer
+
+      - uses: pnpm/action-setup@v6
+        with:
+          version: 10.33.0
+
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 24
+
+      - name: Check site
+        working-directory: project
+        run: node scripts/check.mjs
+
+      - name: Install template dependencies (with retry)
+        working-directory: renderer
+        run: scripts/retry.sh --label='pnpm install' --max-attempts=4 --initial-delay=10 -- pnpm install --ignore-scripts --no-frozen-lockfile
+
+      - name: Ensure Cloudflare Pages project, domain, DNS and access (with retry)
+        run: |
+          renderer/scripts/retry.sh \
+            --label='setup-cloudflare-pages' \
+            --max-attempts=5 \
+            --initial-delay=10 \
+            --max-delay=120 \
+            -- \
+            node renderer/scripts/setup-cloudflare-pages.mjs --project-yaml project/report.json --project-name "$PAGES_PROJECT"
+
+      - name: Deploy site/ to Cloudflare Pages (with retry on transient 5xx)
+        working-directory: project
+        run: |
+          ../renderer/scripts/retry.sh \
+            --label='wrangler pages deploy' \
+            --max-attempts=6 \
+            --initial-delay=15 \
+            --max-delay=180 \
+            -- \
+            pnpm dlx "wrangler@$WRANGLER_VERSION" pages deploy site --project-name "$PAGES_PROJECT" --branch main

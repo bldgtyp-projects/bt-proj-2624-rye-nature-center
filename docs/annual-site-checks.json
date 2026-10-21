@@ -1,0 +1,38 @@
+{
+  "status": "passed",
+  "url": "http://127.0.0.1:4624/results.html",
+  "browser": "Playwright MCP",
+  "browser_plugin": "not available",
+  "viewports": [
+    {
+      "width": 1280,
+      "height": 900
+    },
+    {
+      "width": 390,
+      "height": 844
+    }
+  ],
+  "annual_total_kWh": 18996.606994354475,
+  "design_conditions": 4,
+  "monthly_segments": 72,
+  "zone_peak_bars": 8,
+  "monthly_table_rows": 12,
+  "interactions": [
+    "month July",
+    "winter DB",
+    "summer DP",
+    "summer WB",
+    "expanded disclosures",
+    "monthly-energy.csv actual download",
+    "design-day-loads.csv actual download",
+    "Core Program to model viewer"
+  ],
+  "page_errors": [],
+  "relevant_console_errors_or_warnings": [],
+  "document_overflow": false,
+  "resilience": "pending",
+  "deployed": false,
+  "source_annual_sha256": "5e459f449a4cb86c2e67642e130effe3c4f7d867195c2940346c6ec0185f392e",
+  "source_design_day_sha256": "5e459f449a4cb86c2e67642e130effe3c4f7d867195c2940346c6ec0185f392e"
+}

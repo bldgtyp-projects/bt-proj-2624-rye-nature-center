@@ -1,0 +1,7 @@
+_private/
+.DS_Store
+node_modules/
+.venv/
+.wrangler/
+__pycache__/
+_.rtf

@@ -1,0 +1,24 @@
+{
+  "project_number": "2624",
+  "snapshot_label": "20 October 2026",
+  "input_source": "../16_OSM/Rye_Nature_Center_261020_with_op_windows/openstudio/Rye_Nature_Center_261020_with_op_windows.hbjson",
+  "simulation_parameters": "../16_OSM/Rye_Nature_Center_261020_with_op_windows/openstudio/simulation_parameter.json",
+  "publishing": {
+    "pages_project": "bt-proj-2624-rye-nature-center",
+    "production_url": "https://project-2624.bldgtyp.com",
+    "status": "draft_public",
+    "access": {
+      "mode": "public",
+      "allowed_emails": []
+    }
+  },
+  "final_idf": "../16_OSM/Rye_Nature_Center_261020_with_op_windows/openstudio/run/in.idf",
+  "annual_run": "../16_OSM/Rye_Nature_Center_261020_with_op_windows/openstudio",
+  "annual_review": "../11_QAQC/261020 Current Annual Review/review.json",
+  "comparison_review": "../11_QAQC/261020 Dehumidification Annual Review/review.json",
+  "annual_diagnostics": "../11_QAQC/261020 Current Annual Review/diagnostics.json",
+  "design_day_run": "../17_OSM_DESIGN_DAY/Rye_Nature_Center_261020_with_op_windows/openstudio",
+  "design_day_review": "../11_QAQC/261020 Sizing Rerun Review/review.json",
+  "design_day_verification": "../11_QAQC/261020 Sizing Rerun Review/sizing_verification.json",
+  "design_day_input_match": "../11_QAQC/261020 Current Annual Review/native_context_check.json"
+}
