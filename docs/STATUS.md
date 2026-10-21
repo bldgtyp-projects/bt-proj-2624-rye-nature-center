@@ -1,6 +1,6 @@
 # Client-report release status
 
-Updated 21 October 2026: Kiva Annual and Design-Day refresh (10:45/10:46 runs) and Refuge lead-in refresh (11:13 runs), local, not yet pushed. Annual/Design-Day content from the 20 October 21:09 rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
+Updated 21 October 2026: Kiva Annual and Design-Day refresh (10:45/10:46 runs), Refuge lead-in refresh (11:13 runs), supporting outage graphs and US (IP) display units, published. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
 
 ## Current local release
 
@@ -10,7 +10,7 @@ The separate Design-Day package is reviewed: coincident sensible room heating/co
 
 Resilience is a **first-pass** package (`draft_first_pass`) from the 21 October 11:13 REVIVE runs, which add a conditioned seasonal lead-in (`rnc_refuge_leadin`: winter Aug 1, 2019 to Jan 20, 2020, starting Thursday; summer Feb 1 to Jul 27, 2026). Both are aligned: conditioning runs through the 12 January / 19 July conditioned day, is zero for all seven outage days and resumes on the recovery day. The verifier slices the final nine days independently and checks the window start date. Against the Phius REVIVE 2024 criteria (reference only): summer heat index peaks at 39.6°C in Learning Labs with **1 hour in Danger** (23 July 18:00); other zones peak at 38.8-39.1°C with none; every zone has 3 deadly days (Mora). Heat-index bands now use the exact NOAA °F thresholds (Danger from 103°F = 39.44°C); with honeybee-REVIVE's rounded 39.4°C line an hour at 39.41°C would count as a second Danger hour. Winter SET below 54°F is 375 °F·h in Learning Labs (limit 216) and 338-354 °F·h elsewhere; every zone has 15-19 h of air below 36°F (minimum 1.05°C). Compared with the nine-day runs, the lead-in makes summer about 1.3 K warmer at peak and winter slightly better. The earlier 10:59 winter lead-in run (2021-22 calendar) had misaligned outage controls and was not used. Five collapsed supporting-graph panels (winter/summer energy flows and air change rates, winter envelope surfaces) come from the same frozen runs and load on demand from `data/resilience-details.json`. Inputs to note: windows deliver zero airflow in both outages (annual window controls); outage ventilation runs at 62.1-style rates (~980 m³/h in refuge hours) through 75% recovery versus the REVIVE 5 cfm/person; only Learning Labs is occupied. Identity/equivalence is recorded in the [refresh review](<../../11_QAQC/261021 Report Refresh Review/review.md>); no full Refuge QA review exists yet. No certification outcome, PV credit or final equipment/borefield selection is implied. Remaining questions include source-water/manufacturer performance, Lab humidity, winter dry-air/operative comfort and separate event/additional-weather sensitivities.
 
-Display is in US (IP) units through `site/assets/units.js`; data and downloads remain SI ([contract](UPDATE.md#display-units)). The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program week view with annual daily-mean strip, Model roofs-on default with a shading toggle, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. The live site still serves the `121e66a` release (see Publication below); this refresh is local.
+Display is in US (IP) units through `site/assets/units.js`; data and downloads remain SI ([contract](UPDATE.md#display-units)). The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program week view with annual daily-mean strip, Model roofs-on default with a shading toggle, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This release is live (see Publication below).
 
 ## Frozen source identity
 
@@ -47,12 +47,12 @@ The source modeling/results files were preserved. [Annual QA](../../11_QAQC/2610
 
 ## Publication
 
-Current release: the "Refresh Resilience from the 09:02 reruns" commit, published 21 October 2026. Earlier releases: `07d6ff3` (page restructure, first Resilience package) and `694b121` (first draft); doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
+Current release: commit `354682a` (IP display units, on top of `4a730a1`: Kiva Annual/Design-Day refresh, aligned lead-in resilience, supporting outage graphs), published 21 October 2026 by run [39632980583](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39632980583). Earlier releases: `121e66a` (Model roofs/shading), `954f2ee` (Program week view), `07d6ff3` (page restructure) and `694b121` (first draft); doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
 
-- Program, Model, Annual energy, Peak loads, Resilience and Data & Sources return 200; `/` serves the Overview; `/results` and `/results.html` 301 to `/annual-energy`. `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
-- All nine downloads match the local `site/downloads/` SHA-256.
-- Browser: Resilience renders four outage charts with the first-pass status, Annual energy 72 monthly segments, Peak loads eight zone bars, Model the Three.js viewer; no console errors.
-- `bt-proj-2624-rye-nature-center.pages.dev` returns 404; per-deployment URLs did not answer at check time.
+- All seven pages return 200; `/results` and `/results.html` 301 to `/annual-energy`. `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
+- Every live data file, download and changed script matches the local `site/` SHA-256.
+- `scripts/scan_units.browser.js` on the live host: no SI units on any page (Data & sources lists °C by design), across every Program zone/schedule/scenario, every design condition and all Resilience panels; 0 errors. Headline values: 19,569 kWh/year, 16.0 kBtu/ft²·yr, 39.2 / 54.0 kBtu/h, heat index 103.3°F, SET 375 °F·h, coldest air 34°F.
+- `bt-proj-2624-rye-nature-center.pages.dev` returns 404.
 
 ## Next release
 
