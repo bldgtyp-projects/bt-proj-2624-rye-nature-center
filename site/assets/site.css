@@ -118,30 +118,8 @@ p {
   color: var(--text-primary);
   margin: 0 0 8px;
 }
-.notice {
-  border-left: 3px solid var(--accent);
-  background: var(--bg-section-alt);
-  padding: 17px 22px;
-  display: flex;
-  gap: 8px 28px;
-  flex-wrap: wrap;
-  margin: 28px 0 40px;
-  font-size: 14px;
-}
-.notice strong {
-  font-weight: 500;
-}
-.notice span {
-  color: var(--text-secondary);
-}
 .compact {
   margin-bottom: 26px;
-}
-.overview-grid {
-  display: grid;
-  grid-template-columns: 1.1fr 1fr;
-  gap: 70px;
-  margin: 45px 0 55px;
 }
 .facts {
   margin: 24px 0 0;
@@ -160,24 +138,6 @@ dt {
 }
 dd {
   margin: 0;
-}
-.directory {
-  border-top: 1px solid var(--border-strong);
-}
-.directory > a {
-  display: block;
-  padding: 24px 0;
-  text-decoration: none;
-  border-bottom: 1px solid var(--border-strong);
-  color: var(--text-primary);
-}
-.directory p {
-  font-size: 15px;
-  margin: 8px 0 14px;
-}
-.go {
-  font-size: 14px;
-  color: var(--accent-text);
 }
 .section-title {
   display: flex;
@@ -200,8 +160,7 @@ dd {
   text-decoration: none;
   color: var(--text-primary);
 }
-.result-link:hover,
-.directory > a:hover {
+.result-link:hover {
   background: var(--bg-section-alt);
 }
 .status {
@@ -585,9 +544,6 @@ footer {
     margin-left: 0;
     gap: 25px;
   }
-  .overview-grid {
-    gap: 35px;
-  }
   .zone-metrics {
     gap: 15px;
   }
@@ -615,11 +571,6 @@ footer {
   .lead {
     font-size: 19px;
   }
-  .overview-grid {
-    grid-template-columns: 1fr;
-    margin: 30px 0;
-    gap: 30px;
-  }
   .facts > div {
     grid-template-columns: 100px 1fr;
     gap: 12px;
@@ -639,10 +590,6 @@ footer {
   }
   .result-link h3 {
     margin-top: 9px;
-  }
-  .notice {
-    margin: 22px 0 28px;
-    padding: 15px 18px;
   }
   .zone-metrics {
     grid-template-columns: repeat(2, 1fr);
@@ -767,3 +714,8 @@ header nav a { white-space: nowrap; }
 .day-chart .chart { max-height: 240px; }
 .day-chart .limit { stroke: var(--text-primary); stroke-width: 1.2; stroke-dasharray: 6 4; }
 .day-chart .limit-label { fill: var(--text-primary); font-size: 11px; }
+/* External reference links (site/assets/references.js). */
+a.ext::after { content: "\00a0↗"; font-size: 0.85em; text-decoration: none; display: inline-block; }
+.reference-list { margin: 6px 0 18px; padding-left: 18px; }
+.reference-list li { margin: 0 0 8px; overflow-wrap: anywhere; }
+.reference-source { color: var(--text-secondary); font-size: 0.9em; }

@@ -1,5 +1,6 @@
 // Same asset version as this module, so a new release never mixes cached scripts.
 const units = await import("./units.js" + new URL(import.meta.url).search);
+const refs = await import("./references.js" + new URL(import.meta.url).search);
 const $ = (selector) => document.querySelector(selector);
 const esc = (value) =>
   String(value ?? "").replace(
@@ -37,11 +38,12 @@ function fail(target, error) {
 function metric(label, value, unit) {
   return `<div><span class="metric-label">${label}</span><span class="metric-value">${value}</span><span class="metric-unit">${unit}</span></div>`;
 }
+// A cell given as { html } is trusted markup (reference links); every other cell is escaped.
 function table(rows, head = ["Input", "Value"]) {
-  return `<div class="table-wrap"><table><thead><tr>${head.map((v) => `<th scope="col">${esc(v)}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((v) => `<td>${esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
+  return `<div class="table-wrap"><table><thead><tr>${head.map((v) => `<th scope="col">${esc(v)}</th>`).join("")}</tr></thead><tbody>${rows.map((r) => `<tr>${r.map((v) => `<td>${v?.html ?? esc(v)}</td>`).join("")}</tr>`).join("")}</tbody></table></div>`;
 }
 function provenance(data) {
-  return `<p>Source HBJSON: <code>${esc(data.source.path.split("/").pop())}</code></p><p>SHA-256: <code class="source-hash">${esc(data.source.sha256)}</code></p>`;
+  return `<p>Source ${refs.link("hbjson", "HBJSON")}: <code>${esc(data.source.path.split("/").pop())}</code></p><p>SHA-256: <code class="source-hash">${esc(data.source.sha256)}</code></p>`;
 }
 const MONTHS = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
 const DAY_NAMES = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"];

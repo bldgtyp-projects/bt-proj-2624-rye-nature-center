@@ -40,6 +40,7 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 | `scripts/verify_*.py` | Independent native input/SQL/download checks |
 | `scripts/build.mjs` | Shared shell/content for seven generated HTML pages |
 | `site/assets/app.js`, `viewer.js`, `results.js` | Program/geometry and results interactions |
+| `site/assets/references.js` | Every external source URL (weather, standards, software) and the helpers that link to them; nothing else writes an external link |
 | `site/assets/units.js` | The only place SI data becomes IP display: conversions, unit labels, precision and `{kind:value}` prose tokens ([contract](docs/UPDATE.md#display-units)) |
 | `scripts/scan_units.browser.js` | Release check: no SI units in any rendered page |
 | `site/assets/site.css` | BLDGTYP report layout and responsive charts |

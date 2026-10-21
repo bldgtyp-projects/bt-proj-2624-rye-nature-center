@@ -2,7 +2,7 @@
 // describes the SI downloads). Run in the browser console or Browser tool on the local preview
 // (node scripts/serve.mjs, http://127.0.0.1:4624/). Opens every page, every disclosure and
 // supporting-graph panel, every Program zone/schedule/scenario and every design condition.
-// Expected result: every page lists [] and 0 errors; downloads.html may list "°C".
+// Expected result: every page lists [] and 0 errors, peak-loads.html shows 4 condition cards; downloads.html may list "°C".
 (async () => {
   const pages = ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "downloads.html"];
   const SI = /\d\s?(?:°C|m²|m³|m\/s|L\/s|L\/day|L\/h|W\/m²|kW\b|K·h)|°C|\bm²|\bm³|W\/m²|\bkW\b|L\/s/g;
@@ -36,8 +36,9 @@
         }
       }
     if (page === "peak-loads.html") {
-      const c = d.querySelector("#design-condition");
-      for (const option of c.options) { c.value = option.value; c.dispatchEvent(new Event("change")); scan(`${page}: ${option.textContent}`); }
+      const cards = d.querySelectorAll(".condition-card");
+      out[`${page} condition cards`] = cards.length; // Expect 4.
+      for (const card of cards) { card.click(); await wait(200); scan(`${page}: ${card.textContent.trim().slice(0, 40)}`); }
     }
     const text = d.body.innerText + [...d.querySelectorAll("svg title, svg text")].map((e) => e.textContent).join(" ");
     out[page] = [...new Set(text.match(SI) || [])];
