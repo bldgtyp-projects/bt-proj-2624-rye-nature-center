@@ -205,7 +205,7 @@ async function showResults() {
   const host = $("#results");
   const area = host.dataset.area;
   const results = await getData(area === "resilience" ? "data/resilience.json" : "data/results.json");
-  const renderers = await import("./results.js");
+  const renderers = await import("./results.js" + new URL(import.meta.url).search);
   const render = { annual: renderers.renderAnnual, peaks: renderers.renderPeaks, resilience: renderers.renderResilience }[area];
   render(results, host, { esc, num, metric, table });
   if (location.hash)
@@ -225,7 +225,7 @@ async function start() {
   if ($("#provenance")) $("#provenance").innerHTML = provenance(data);
   if ($("#viewer")) {
     try {
-      const { showModel } = await import("./viewer.js");
+      const { showModel } = await import("./viewer.js" + new URL(import.meta.url).search);
       await showModel(data);
     } catch (e) {
       fail($("#viewer"), e);

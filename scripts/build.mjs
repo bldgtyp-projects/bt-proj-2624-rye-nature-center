@@ -1,4 +1,5 @@
-import { readFile, writeFile } from "node:fs/promises";
+import { readFile, readdir, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
 const root = fileURLToPath(new URL("../", import.meta.url));
@@ -6,6 +7,11 @@ const inputs = JSON.parse(
   await readFile(path.join(root, "site/data/inputs.json"), "utf8"),
 );
 const results = JSON.parse(await readFile(path.join(root, "site/data/results.json"), "utf8"));
+// Scripts and styles get a long browser cache, so their URLs carry a content version.
+const assetHash = createHash("sha256");
+for (const name of (await readdir(path.join(root, "site/assets"), { recursive: true })).filter((f) => /\.(js|css)$/.test(f) && !f.startsWith("vendor")).sort())
+  assetHash.update(name).update(await readFile(path.join(root, "site/assets", name)));
+const v = `?v=${assetHash.digest("hex").slice(0, 10)}`;
 const energy = results.annual;
 const whole = value => Number(value).toLocaleString("en-US", { maximumFractionDigits: 0 });
 const annualSummary = `<div class="zone-metrics annual-metrics"><div><span class="metric-label">Annual purchased electricity</span><span class="metric-value">${whole(energy.total_kWh)}</span><span class="metric-unit">kWh/year</span></div><div><span class="metric-label">Modeled site energy intensity</span><span class="metric-value">${energy.eui_kWh_m2_year.toFixed(1)}</span><span class="metric-unit">kWh/m²/year</span></div><div><span class="metric-label">Current scenario</span><span class="metric-value">Operable windows</span><span class="metric-unit">with temperature + moisture limits</span></div></div>`;
@@ -76,7 +82,7 @@ for (const [filename, title, body] of pages) {
   ).replaceAll('starting on Sunday', `starting on ${inputs.calendar.jan_1_day}`);
   await writeFile(
     path.join(root, "site", filename),
-    `<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="description" content="Rye Nature Center design energy model: inputs, geometry and simulation results."><title>${title} | Rye Nature Center | BLDGTYP</title><link rel="icon" href="assets/brand/favicon.svg"><link rel="stylesheet" href="assets/brand/tokens.css"><link rel="stylesheet" href="assets/brand/components.css"><link rel="stylesheet" href="assets/site.css"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet"><script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script><script type="module" src="assets/app.js"></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="header-inner"><a class="brand" href="index.html"><img src="assets/brand/bldgtyp-icon.svg" alt="" width="31" height="31"><span>BLDG<span class="brand-light">TYP</span></span></a><a class="project-id" href="index.html">2624 / RYE NATURE CENTER</a><nav aria-label="Main navigation">${nav}</nav></div></header><main id="main">${content}<noscript><p>JavaScript is needed for the interactive model and schedule charts. <a href="downloads/zone-inputs.csv">Download the zone inputs</a> or <a href="downloads/schedules.zip">schedule CSV files</a>.</p></noscript></main><footer><span>BLDGTYP · Building performance consulting</span><span>2624 · Draft for design coordination</span></footer></body></html>`,
+    `<!doctype html><html lang="en" data-theme="light"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><meta name="description" content="Rye Nature Center design energy model: inputs, geometry and simulation results."><title>${title} | Rye Nature Center | BLDGTYP</title><link rel="icon" href="assets/brand/favicon.svg"><link rel="stylesheet" href="assets/brand/tokens.css${v}"><link rel="stylesheet" href="assets/brand/components.css${v}"><link rel="stylesheet" href="assets/site.css${v}"><link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600&family=Geist:wght@400;500&family=Geist+Mono:wght@400&display=swap" rel="stylesheet"><script type="importmap">{"imports":{"three":"./assets/vendor/three/three.module.min.js"}}</script><script type="module" src="assets/app.js${v}"></script></head><body><a class="skip" href="#main">Skip to content</a><header><div class="header-inner"><a class="brand" href="index.html"><img src="assets/brand/bldgtyp-icon.svg" alt="" width="31" height="31"><span>BLDG<span class="brand-light">TYP</span></span></a><a class="project-id" href="index.html">2624 / RYE NATURE CENTER</a><nav aria-label="Main navigation">${nav}</nav></div></header><main id="main">${content}<noscript><p>JavaScript is needed for the interactive model and schedule charts. <a href="downloads/zone-inputs.csv">Download the zone inputs</a> or <a href="downloads/schedules.zip">schedule CSV files</a>.</p></noscript></main><footer><span>BLDGTYP · Building performance consulting</span><span>2624 · Draft for design coordination</span></footer></body></html>`,
   );
 }
 console.log(`Built ${pages.length} static pages in site/.`);

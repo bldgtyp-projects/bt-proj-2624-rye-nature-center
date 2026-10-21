@@ -8,6 +8,9 @@ export default {
         headers: { "Cache-Control": "no-store" },
       });
     }
+    const { pathname } = new URL(request.url);
+    if (pathname === "/results" || pathname === "/results.html")
+      return Response.redirect(new URL("/annual-energy", request.url), 301);
     return env.ASSETS.fetch(request);
   },
 };

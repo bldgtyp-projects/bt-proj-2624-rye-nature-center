@@ -37,6 +37,9 @@ for (const season of ["winter", "summer"]) {
 }
 for (const page of ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "downloads.html"]) await stat(path.join(root, page));
 await assert.rejects(stat(path.join(root, "results.html")));
+const moved = await worker.fetch(new Request("https://project-2624.bldgtyp.com/results.html"), { ASSETS: { fetch() { throw Error("Unexpected asset access"); } } });
+assert.equal(moved.status, 301);
+assert.equal(moved.headers.get("location"), "https://project-2624.bldgtyp.com/annual-energy");
 assert.equal(results.design_days.conditions.length, 4);
 assert.equal(results.design_days.release.source.annual_hbjson_sha256, inputs.source.sha256);
 assert.equal(results.design_days.controls.sizing_average_minutes, 15);
