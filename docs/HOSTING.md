@@ -1,32 +1,42 @@
 # Hosting and access
 
-## Feasibility confirmed, live setup pending
+## Current state: public draft
 
-A one-off site can use the existing Cloudflare infrastructure. Pages accepts a directory of static HTML/assets; it does not require Astro, PHPP or the Report Manager. Cloudflare Access and custom-domain DNS are separate from the renderer. This is supported by [Cloudflare's static HTML guide](https://developers.cloudflare.com/pages/framework-guides/deploy-anything/) and [Direct Upload guide](https://developers.cloudflare.com/pages/get-started/direct-upload/).
+Published 21 October 2026 as a **public, noindex draft**, matching the other bt-web-report sites (Ed chose public over an OTP gate for the draft).
 
-The current local platform evidence is:
+| Item | Value |
+| --- | --- |
+| URL | https://project-2624.bldgtyp.com |
+| Repository | [bldgtyp-projects/bt-proj-2624-rye-nature-center](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center) (public; checkout is this `04_Web/` folder) |
+| Pages project | `bt-proj-2624-rye-nature-center`, direct upload, account `phtools@bldgtyp.com` |
+| DNS | CNAME `project-2624` → `bt-proj-2624-rye-nature-center.pages.dev`, created by the setup script |
+| Access | `report.json` `publishing.access.mode: public`; no Cloudflare Access application |
+| Workflow | [.github/workflows/deploy.yml](../.github/workflows/deploy.yml) on push to `main` or manual dispatch |
 
-- `/Users/em/Dropbox/bldgtyp-00/00_PH_Tools/bldgtyp/bt-web-report/context/environment.html`, sections Cloudflare configuration and Accounts: one direct-upload Pages project per report; `project-<number>.bldgtyp.com`; existing `phtools@bldgtyp.com` account; R2 is outside the report publishing path.
-- `bt-web-report-template/scripts/per-project-deploy.yml`: delegates building and publishing to the shared PHPP renderer workflow. This custom site should use its own build/upload workflow instead.
-- `bt-web-report-template/scripts/setup-cloudflare-pages.mjs`: existing Pages custom-domain/DNS/OTP setup helper. Review its exported functions when implementing the remote setup; do not route this site through the PHPP schema merely to reuse its CLI.
+The repository is public because the `bldgtyp-projects` org is on GitHub Free, where org secrets do not reach private repos. Everything in `site/` (downloads, geometry, schedules) and the scripts/docs are therefore public on GitHub as well as on the site. `_private/` and `_.rtf` are git-ignored.
 
-Proposed Pages project: `bt-proj-2624-rye-nature-center`.
-Proposed hostname: `project-2624.bldgtyp.com`.
-These names have not been checked for remote availability. No cloud/account changes have been made. Existing local documentation establishes the architectural fit; account permissions and live state still need preflight.
+## How a release deploys
 
-## Deployment sequence
+Pushing `main` publishes. Commit locally as often as needed; push only a checked release.
 
-1. Confirm the client email allowlist, proposed hostname, and authority to publish. Keep the source repository private because the repository contains downloadable project inputs.
-2. Check the existing authenticated Cloudflare account and whether the proposed Pages project, custom domain, Access application or DNS record already exists. Preserve existing projects and policies.
-3. Create the Pages direct-upload project under the normal account if absent. Before uploading project data, attach the custom hostname and configure a Cloudflare Access self-hosted application for the whole hostname, including assets and downloads. Use One-Time PIN and the confirmed email allowlist, including Ed and John. Use the existing protected credential flow; never put credentials in this folder.
-4. Build and run the checks in the README. Review `site/` as the exact upload directory. Deploy through the established authenticated Wrangler installation: `wrangler pages deploy site --project-name bt-proj-2624-rye-nature-center --branch main`. Pin the installed Wrangler release in a future CI workflow; do not add an unpinned remote execution dependency here.
-5. The included `site/_worker.js` rejects every hostname except `project-2624.bldgtyp.com`. `_routes.json` sends every path through the guard. This closes the alternate `pages.dev` and deployment-preview paths. The guard is not authentication: the custom hostname still depends on Cloudflare Access. Pages advanced mode forwards authorized custom-host requests to `env.ASSETS.fetch(request)`. See [advanced mode](https://developers.cloudflare.com/pages/functions/advanced-mode/) and [routing](https://developers.cloudflare.com/pages/functions/routing/).
-6. Verify in a fresh signed-out session: production HTML, JSON, ZIP and geometry requests all require Access; an allowlisted user can open the site and downloads; a non-allowlisted user cannot; project and deployment `pages.dev` URLs return 404 even for known asset paths. Test nested/trailing-slash paths and downloaded bytes. Record the deployment ID and live evidence before marking deployed.
+The workflow does not use the PHPP renderer. It:
 
-The normal report infrastructure documents a gate on the custom hostname only. This site's hostname guard intentionally covers the alternate-host boundary as well. Cloudflare runtime behavior still requires deployment acceptance. All requests invoke a Pages Function; confirm the account's Functions limits and fail-closed behavior during setup.
+1. runs `node scripts/check.mjs` against the committed `site/`;
+2. checks out `bldgtyp/bt-web-report-template` at a pinned SHA and runs its `scripts/setup-cloudflare-pages.mjs --project-yaml report.json`. The script parses JSON as YAML and reads `publishing.production_url` and `publishing.access`, then ensures the Pages project, custom domain, DNS record and Access state (creating, updating or deleting the Access app to match `report.json`);
+3. uploads the whole `site/` directory with a pinned `wrangler pages deploy site --branch main`.
+
+Org secrets used: `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_ACCESS_OTP_IDP_ID`. Advance `TEMPLATE_REF` and `WRANGLER_VERSION` in the workflow deliberately, never to a floating ref.
+
+`site/_worker.js` (Pages advanced mode, routed for every path by `_routes.json`) returns 404 on any hostname except `project-2624.bldgtyp.com`, so the `*.pages.dev` project and per-deployment URLs serve nothing. Keep the guard if the site moves behind Access: the template's gate covers only the custom hostname.
+
+## Switching to an OTP gate
+
+1. The org token `bt-web-report-platform-deploy` is documented with Pages and DNS scopes only. Add **Access: Apps and Policies Edit** (account scope) in the Cloudflare dashboard first; otherwise the setup step fails.
+2. Set `publishing.access` in `report.json` to `{"mode": "cloudflare_access_otp", "allowed_emails": [...]}`, including Ed and John. The allowlist is reconciled on every deploy, so dashboard-only edits are reverted.
+3. Push. Then verify in a signed-out browser that HTML, JSON, ZIP and geometry paths all require the PIN, that an allowlisted address gets in, and that a non-listed one does not. Cloudflare reports "code sent" for any address, listed or not.
+
+The public repository still exposes the data after gating. Moving to a private repo needs repo-level copies of the three secrets (GitHub UI) or a paid org plan.
 
 ## Updates and rollback
 
-Deploy the entire checked `site/` directory as one release. Do not upload individual input/geometry files into different deployments. Save the deployment ID and input/output manifest hashes. Use Pages deployment rollback to restore a prior coherent release; then reconcile the source folder and docs with that release.
-
-For ongoing GitHub automation, use a private `bldgtyp-projects` repository and its own workflow that builds/checks these files, then uploads `site/`. Reuse organization secrets with the same minimum account/zone scopes as existing reports. The normal renderer workflow and Manager would otherwise assume PHPP content and can overwrite this custom setup. Remote repository creation, CI and account configuration remain a later step.
+Deploy the entire checked `site/` as one release; never upload individual files into separate deployments. Record the deployment ID from the workflow log in [STATUS.md](STATUS.md). To roll back, use Pages deployment rollback in the dashboard, then revert the repository to the matching commit so the next push does not reintroduce the bad release.

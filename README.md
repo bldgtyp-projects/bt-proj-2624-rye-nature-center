@@ -2,7 +2,7 @@
 
 [Project context](../CONTEXT.md) · [Current site status](docs/STATUS.md) · [Refresh guide](docs/UPDATE.md) · [Hosting](docs/HOSTING.md)
 
-The deployable artifact is `site/`. It presents the reviewed annual run and separate four-condition Design-Day study for the architect/MEP team. Resilience remains pending. This is the existing custom static-site exception to the PHPP report template and Manager. Live hosting/access setup is still recorded as pending; no publication was performed in this update.
+The deployable artifact is `site/`. It presents the reviewed annual run and separate four-condition Design-Day study for the architect/MEP team. Resilience remains pending. This is the existing custom static-site exception to the PHPP report template and Manager. It is published as a public, noindex draft at https://project-2624.bldgtyp.com; pushing `main` redeploys ([Hosting](docs/HOSTING.md)).
 
 Current annual electricity is **18,996.6 kWh/year**, **49.1 kWh/m²/year** modeled floor area, before PV credit. Monthly stacked bars and annual end uses reconcile to the facility meter. Cooling includes supplemental dehumidification. The Design-Day section shows **11.483 kW heating / 15.836 kW sensible cooling** coincident room loads, individual zone bars and selectable winter DB/summer DB/DP/WB operating checks. Equipment allowances are disclosed separately. The current Annual inputs match the Design-Day model physically; each export retains its own identity.
 

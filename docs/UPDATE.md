@@ -36,4 +36,4 @@ Check the monthly selector, exact-value disclosure, CSV download, Design-Day sel
 
 The available Playwright MCP browser was used for the current release because the Browser plugin was not available. No browser dependency installation is needed. Screenshots and the verification summary remain in `docs/`; they are not deployed.
 
-Edit page text in `scripts/build.mjs`, not generated HTML. Edit behavior in `site/assets/` and rebuild. Preserve noindex metadata, same-origin viewer/data, licenses and alternate-host rejection. Update STATUS.md and project CONTEXT.md after a checked release. Publishing requires the separate [hosting/access procedure](HOSTING.md); upload the whole checked `site/` directory as one release.
+Edit page text in `scripts/build.mjs`, not generated HTML. Edit behavior in `site/assets/` and rebuild. Preserve noindex metadata, same-origin viewer/data, licenses and alternate-host rejection. Update STATUS.md and project CONTEXT.md after a checked release. Publishing is a push of `main`, which deploys the whole committed `site/` as one release ([HOSTING.md](HOSTING.md)).

@@ -1,6 +1,6 @@
 # Client-report release status
 
-Updated 20 October 2026 after the 21:09 Annual rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
+Updated 21 October 2026 (draft publication); content from the 20 October 21:09 Annual rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
 
 ## Current local release
 
@@ -10,7 +10,7 @@ The separate Design-Day package is reviewed: coincident sensible room heating/co
 
 Resilience remains pending. No outage thermal result, certification outcome, PV credit or final equipment/borefield selection is implied. Remaining questions include source-water/manufacturer performance, Lab humidity, winter dry-air/operative comfort and separate event/additional-weather sensitivities.
 
-The five-page layout, Program schedules, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This is a local release. Hosting/access setup remains recorded as not configured; no live account check, publication or cloud/account change was performed.
+The five-page layout, Program schedules, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This release is live as a public, noindex draft at https://project-2624.bldgtyp.com (see Publication below).
 
 ## Frozen source identity
 
@@ -42,6 +42,15 @@ The Browser plugin was unavailable; the existing Playwright MCP browser was used
 
 The source modeling/results files were preserved. [Annual QA](../../11_QAQC/261020%20Current%20Annual%20Review/review.md) and [Design-Day QA](../../11_QAQC/261020%20Sizing%20Rerun%20Review/review.md) support the release. Measure README edits required metadata refresh only; runtime logic/data and its configuration fingerprint are unchanged.
 
+## Publication
+
+Published 21 October 2026 from commit `694b121` by workflow run [39597678127](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39597678127). Pages deployment `f1d8ad8d`. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
+
+- Overview, Program, Model, Results and Data & Sources return 200 (`.html` paths 308 to extensionless URLs); `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
+- All seven downloads match the local `site/downloads/` SHA-256.
+- Browser: Results renders 72 monthly segments, Model renders the Three.js viewer, no console errors.
+- `bt-proj-2624-rye-nature-center.pages.dev` returns 404 for pages and known data paths; the per-deployment URL did not answer at check time.
+
 ## Next release
 
-Review the local report with Ed. Add resilience only with its own reviewed package. Before live publication, confirm the client allowlist and follow [HOSTING.md](HOSTING.md), including custom-host authentication and alternate-host/download checks. Local tests do not verify live Access.
+Review the live draft with Ed. Add resilience only with its own reviewed package. Pushing `main` redeploys; follow [HOSTING.md](HOSTING.md) to switch to an OTP gate before sharing beyond the design team.

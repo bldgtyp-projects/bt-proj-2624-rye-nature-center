@@ -6,7 +6,7 @@
   "publishing": {
     "pages_project": "bt-proj-2624-rye-nature-center",
     "production_url": "https://project-2624.bldgtyp.com",
-    "status": "draft_public",
+    "status": "live_draft_public",
     "access": {
       "mode": "public",
       "allowed_emails": []
