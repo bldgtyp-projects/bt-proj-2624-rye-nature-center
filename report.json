@@ -20,5 +20,9 @@
   "design_day_run": "../17_OSM_DESIGN_DAY/Rye_Nature_Center_261020_with_op_windows/openstudio",
   "design_day_review": "../11_QAQC/261020 Sizing Rerun Review/review.json",
   "design_day_verification": "../11_QAQC/261020 Sizing Rerun Review/sizing_verification.json",
-  "design_day_input_match": "../11_QAQC/261020 Current Annual Review/native_context_check.json"
+  "design_day_input_match": "../11_QAQC/261020 Current Annual Review/native_context_check.json",
+  "resilience_model": "../15_PHIUS_REVIVE/HBJSON/Rye_Nature_Center_Resilience_261021.hbjson",
+  "resilience_weather": "../15_PHIUS_REVIVE/weather/Phius_REVIVE_2024_USA_NY_White.Plains-Westchester.County.AP.725037_TMYx.epw",
+  "resilience_winter_run": "../15_PHIUS_REVIVE/winter/Rye_Nature_Center_Resilience_261021/openstudio",
+  "resilience_summer_run": "../15_PHIUS_REVIVE/summer/Rye_Nature_Center_Resilience_261021/openstudio"
 }

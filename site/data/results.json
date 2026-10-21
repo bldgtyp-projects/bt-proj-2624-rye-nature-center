@@ -187,13 +187,13 @@
     },
     {
       "id": "resilience",
-      "title": "Resiliency",
-      "subtitle": "Phius REVIVE study",
-      "status": "pending",
-      "description": "One-week winter and summer outage studies remain in progress. This study does not imply certification.",
+      "title": "Resilience",
+      "subtitle": "Seven-day winter and summer power outages",
+      "status": "draft_first_pass",
+      "description": "First-pass Phius REVIVE 2024 outage simulations for design review; not a certification result.",
       "sections": [
-        "Winter outage · 1 week",
-        "Summer outage · 1 week"
+        "Winter outage",
+        "Summer outage"
       ]
     }
   ],

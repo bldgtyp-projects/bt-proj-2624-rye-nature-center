@@ -7,7 +7,7 @@
 1. Review the model/result packages first. Record the exact run identities and the source hashes in the owning QA reviews. The source run folder may be overwritten on the next simulation.
 2. Archive the prior coherent `site/`, scripts/docs/configuration and `_private/` snapshot under `_private/archives/`. Do not include older archives recursively. The current pre-refresh archive is `20261020-before-current-energy-design-days.zip`.
 3. Set `report.json` to the reviewed Annual run, HBJSON, parameters, final IDF, Annual review/diagnostics and previous-model review. Select the Design-Day run/review/verification and the fresh native annual/design input-match check. All paths must remain project-local. Check that the native-match record pins both selected HBJSON hashes.
-4. From `04_Web/`, run the three exporters with `--refresh`: inputs, Annual results, then Design Days. This captures new sources in `_private/` and replaces generated client data/downloads. Without `--refresh`, the exporters reproduce their frozen snapshots.
+4. From `04_Web/`, run the four exporters with `--refresh`: inputs, Annual results, Design Days, then Resilience. This captures new sources in `_private/` and replaces generated client data/downloads. Without `--refresh`, the exporters reproduce their frozen snapshots.
 5. Build and run all three Python verifiers plus `check.mjs` as listed in the README. A failed exporter/check leaves a partial local refresh; do not publish it. Fix the failure or restore the entire prior archive, never a mixture of input/result files.
 
 Original modeling, SQL, OSM/IDF and weather files are read only. Only derived client data is deployed. Raw sources stay private, including result SQL, workflow/error logs and native HBJSON. Do not refresh from a run that has not been reviewed.
@@ -28,11 +28,11 @@ Room loads are unfactored sensible thermal loads. Individual zone maxima are non
 
 ## Resilience contract
 
-Keep the pending state until separately reviewed winter/summer outage packages exist. Each needs the original expanded run periods and inner seven outage days, generated EPW identity, refuge population/loads, systems on backup, active systems disabled, window/recovery operation, source hashes and reviewed temperature/humidity outputs. No placeholder zeros or certification claim. Annual HVAC measures reject Refuge programs and are not an automatic resilience-system implementation.
+The current package is `draft_first_pass`, frozen in `_private/resilience/` from the 21 October winter/summer runs named in `report.json`; `verify_resilience.py` checks it against native SQL and EnergyPlus Pierce SET. Promote it to reviewed only after a QA review under `11_QAQC/`. A reviewed package needs the original expanded run periods and inner seven outage days, generated EPW identity, refuge population/loads, systems on backup, active systems disabled, window/recovery operation, source hashes and reviewed temperature/humidity outputs. No placeholder zeros or certification claim. Annual HVAC measures reject Refuge programs and are not an automatic resilience-system implementation.
 
 ## Browser and release checks
 
-Check the monthly selector, exact-value disclosure, CSV download, Design-Day selector across winter and humid summer conditions, equipment/provenance disclosures and resilience pending state. Check all four Program choices and geometry source identity. Inspect desktop and phone width, open the wide tables and confirm page-level overflow is absent. Collect application errors and inspect screenshots.
+Check the monthly selector, exact-value disclosure, CSV download, Design-Day selector across winter and humid summer conditions, equipment/provenance disclosures, both outage charts and the REVIVE comparison table. Check all four Program choices and geometry source identity. Inspect desktop and phone width, open the wide tables and confirm page-level overflow is absent. Collect application errors and inspect screenshots.
 
 The available Playwright MCP browser was used for the current release because the Browser plugin was not available. No browser dependency installation is needed. Screenshots and the verification summary remain in `docs/`; they are not deployed.
 

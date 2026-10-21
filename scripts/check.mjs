@@ -26,7 +26,17 @@ const results = JSON.parse(
 assert.equal(results.areas.length, 3);
 assert.equal(results.areas.find(a => a.id === "annual").status, "reviewed");
 assert.equal(results.areas.find(a => a.id === "peaks").status, "reviewed");
-assert.equal(results.areas.find(a => a.id === "resilience").status, "pending");
+assert.equal(results.areas.find(a => a.id === "resilience").status, "draft_first_pass");
+const resilience = JSON.parse(await readFile(path.join(root, "data/resilience.json"), "utf8"));
+assert.equal(resilience.release.status, "draft_first_pass");
+assert.deepEqual(JSON.parse(await readFile(path.join(root, "downloads/resilience-results.json"), "utf8")), resilience);
+for (const season of ["winter", "summer"]) {
+  assert.equal(resilience[season].hours.length, 216);
+  assert.equal(resilience[season].checks.outage_conditioning_kWh, 0);
+  for (const z of Object.values(resilience[season].zones)) assert.equal(z.air_C.length, 216);
+}
+for (const page of ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "downloads.html"]) await stat(path.join(root, page));
+await assert.rejects(stat(path.join(root, "results.html")));
 assert.equal(results.design_days.conditions.length, 4);
 assert.equal(results.design_days.release.source.annual_hbjson_sha256, inputs.source.sha256);
 assert.equal(results.design_days.controls.sizing_average_minutes, 15);
@@ -87,5 +97,5 @@ async function walk(dir) {
 }
 await walk(root);
 console.log(
-  "PASS: static links, reviewed annual data, matched source identity, monthly totals, reviewed Design-Day data and pending resilience, Pages alternate-host rejection, asset size/privacy boundary.",
+  "PASS: static links, reviewed annual data, matched source identity, monthly totals, reviewed Design-Day data, first-pass resilience package and seven pages, Pages alternate-host rejection, asset size/privacy boundary.",
 );

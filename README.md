@@ -2,7 +2,7 @@
 
 [Project context](../CONTEXT.md) · [Current site status](docs/STATUS.md) · [Refresh guide](docs/UPDATE.md) · [Hosting](docs/HOSTING.md)
 
-The deployable artifact is `site/`. It presents the reviewed annual run and separate four-condition Design-Day study for the architect/MEP team. Resilience remains pending. This is the existing custom static-site exception to the PHPP report template and Manager. It is published as a public, noindex draft at https://project-2624.bldgtyp.com; pushing `main` redeploys ([Hosting](docs/HOSTING.md)).
+The deployable artifact is `site/`. It presents the reviewed annual run, the separate four-condition Design-Day study and first-pass Phius REVIVE winter/summer outage results for the architect/MEP team. This is the existing custom static-site exception to the PHPP report template and Manager. It is published as a public, noindex draft at https://project-2624.bldgtyp.com; pushing `main` redeploys ([Hosting](docs/HOSTING.md)).
 
 Current annual electricity is **18,996.6 kWh/year**, **49.1 kWh/m²/year** modeled floor area, before PV credit. Monthly stacked bars and annual end uses reconcile to the facility meter. Cooling includes supplemental dehumidification. The Design-Day section shows **11.483 kW heating / 15.836 kW sensible cooling** coincident room loads, individual zone bars and selectable winter DB/summer DB/DP/WB operating checks. Equipment allowances are disclosed separately. The current Annual inputs match the Design-Day model physically; each export retains its own identity.
 
@@ -14,10 +14,12 @@ Run from `04_Web/` using the installed runtimes:
 /Users/em/ladybug_tools/python/bin/python3 scripts/export_inputs.py
 /Users/em/ladybug_tools/python/bin/python3 scripts/export_results.py
 /Users/em/ladybug_tools/python/bin/python3 scripts/export_design_days.py
+/Users/em/ladybug_tools/python/bin/python3 scripts/export_resilience.py
 node scripts/build.mjs
 /Users/em/ladybug_tools/python/bin/python3 scripts/verify_inputs.py
 /Users/em/ladybug_tools/python/bin/python3 scripts/verify_results.py
 /Users/em/ladybug_tools/python/bin/python3 scripts/verify_design_days.py
+/Users/em/ladybug_tools/python/bin/python3 scripts/verify_resilience.py
 node scripts/check.mjs
 node scripts/serve.mjs
 ```
@@ -34,8 +36,9 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 | `scripts/export_inputs.py` | Native Honeybee program, schedule and geometry projection |
 | `scripts/export_results.py` | Annual monthly/end-use energy, humidity summary and provenance |
 | `scripts/export_design_days.py` | Separate four-condition thermal-load/operating package and source identity |
+| `scripts/export_resilience.py` | Winter SET / summer heat-index outage package, REVIVE criteria comparison, run checks and source identity (uses `honeybee_revive` from the Ladybug runtime) |
 | `scripts/verify_*.py` | Independent native input/SQL/download checks |
-| `scripts/build.mjs` | Shared shell/content for five generated HTML pages |
+| `scripts/build.mjs` | Shared shell/content for seven generated HTML pages |
 | `site/assets/app.js`, `viewer.js`, `results.js` | Program/geometry and results interactions |
 | `site/assets/site.css` | BLDGTYP report layout and responsive charts |
 | `site/data/`, `site/downloads/` | Reviewed generated data and client downloads |
@@ -47,7 +50,7 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 
 ## Presentation and data boundaries
 
-The five pages are Overview, Program, Model, Results and Data & Sources. Program supports an annual date or separate winter/summer schedule profile. The Three.js viewer serves project geometry and libraries from the same origin; it uploads no model to an external viewer. BLDGTYP CSS assets/licenses are retained; Google Fonts supplies typefaces.
+The seven pages are Overview (reached from the logo and project name, not a tab), Program, Model, Annual energy, Peak loads, Resilience and Data & Sources. Program supports an annual date or separate winter/summer schedule profile. The Three.js viewer serves project geometry and libraries from the same origin; it uploads no model to an external viewer. BLDGTYP CSS assets/licenses are retained; Google Fonts supplies typefaces.
 
 Keep details behind native disclosures while the initial page shows the main results. Preserve explicit units and reporting periods. The effective calendar is 2026, beginning Thursday; saved HB parameters retain Sunday. Times are local standard time with interval-start schedule labels and no display DST inference. Modeled area differs from architectural gross area.
 

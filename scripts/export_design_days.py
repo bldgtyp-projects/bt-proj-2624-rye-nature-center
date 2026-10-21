@@ -85,6 +85,6 @@ def main() -> None:
         sections=['Winter DB','Summer DB','Summer DP','Summer WB'])
     write_json(SITE/'data/results.json',annual)
     write_json(SITE/'downloads/annual-results.json',annual)
-    print('PASS: four reviewed design conditions, loads, operating checks and separate provenance exported; resilience remains pending.')
+    print('PASS: four reviewed design conditions, loads, operating checks and separate provenance exported.')
 
 if __name__=='__main__':main()

@@ -29,5 +29,5 @@ for k,v in d['coincident_room_loads_W'].items():assert v==review['coincident_zon
 combined=json.loads((R/'site/data/results.json').read_text())
 assert combined['design_days']==d
 assert combined['release']['source']['hbjson_sha256']==d['release']['source']['annual_hbjson_sha256']
-assert next(a for a in combined['areas'] if a['id']=='resilience')['status']=='pending'
-print('PASS: all eight room loads match native SQL; four CSV rows, source hashes, controls, operating bounds and matched annual inputs pass; resilience pending.')
+assert next(a for a in combined['areas'] if a['id']=='resilience')['status'] in ('pending','draft_first_pass')
+print('PASS: all eight room loads match native SQL; four CSV rows, source hashes, controls, operating bounds and matched annual inputs pass.')

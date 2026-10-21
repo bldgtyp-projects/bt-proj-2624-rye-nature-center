@@ -724,3 +724,11 @@ footer {
 .peak-row > :last-child { text-align: right; font-variant-numeric: tabular-nums; }
 #condition-summary { margin-top: 16px; }
 @media (max-width: 600px) { .peak-row { grid-template-columns: 105px minmax(30px,1fr) 68px; gap: 8px; font-size: 12px; } }
+a.project-id { text-decoration: none; }
+a.project-id:hover { color: var(--text-primary); }
+.status.draft { color: var(--accent-text); }
+.outage-chart .outage-window { fill: var(--text-secondary); opacity: .07; }
+.outage-chart .limit { stroke: var(--text-primary); stroke-width: 1.2; stroke-dasharray: 6 4; }
+.outage-chart .limit-label { fill: var(--text-primary); }
+header nav a { white-space: nowrap; }
+@media (max-width: 640px) { header nav { flex-wrap: wrap; justify-content: flex-start; gap: 4px 20px; } }
