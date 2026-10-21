@@ -1,6 +1,6 @@
 # Client-report release status
 
-Updated 21 October 2026: Kiva Annual and Design-Day refresh (10:45/10:46 runs), Refuge lead-in refresh (11:13 runs), supporting outage graphs and US (IP) display units, published. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
+Updated 21 October 2026: Kiva Annual and Design-Day refresh (10:45/10:46 runs), Refuge lead-in refresh (11:13 runs), supporting outage graphs, US (IP) display units and the room-versus-coil Peak loads page, published. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
 
 ## Current local release
 
@@ -54,11 +54,12 @@ The source modeling/results files were preserved. [Annual QA](../../11_QAQC/2610
 
 ## Publication
 
-Current release: commit `354682a` (IP display units, on top of `4a730a1`: Kiva Annual/Design-Day refresh, aligned lead-in resilience, supporting outage graphs), published 21 October 2026 by run [39632980583](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39632980583). Earlier releases: `121e66a` (Model roofs/shading), `954f2ee` (Program week view), `07d6ff3` (page restructure) and `694b121` (first draft); doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
+Current release: commit `0c1ea2c` (Peak loads: room loads beside heat-pump coil loads), published 21 October 2026 by run [39644242666](https://github.com/bldgtyp-projects/bt-proj-2624-rye-nature-center/actions/runs/39644242666). Earlier releases: `354682a` (IP display units, on top of `4a730a1`: Kiva Annual/Design-Day refresh, aligned lead-in resilience, supporting outage graphs), `121e66a` (Model roofs/shading), `954f2ee` (Program week view), `07d6ff3` (page restructure) and `694b121` (first draft); doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
 
 - All seven pages return 200; `/results` and `/results.html` 301 to `/annual-energy`. `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
 - Every live data file, download and changed script matches the local `site/` SHA-256.
 - `scripts/scan_units.browser.js` on the live host: no SI units on any page (Data & sources lists °C by design), across every Program zone/schedule/scenario, every design condition and all Resilience panels; 0 errors. Headline values: 19,569 kWh/year, 16.0 kBtu/ft²·yr, 39.2 / 54.0 kBtu/h, heat index 103.3°F, SET 375 °F·h, coldest air 34°F.
+- `0c1ea2c` live checks: all seven pages 200; `/peak-loads.html` 308 to `/peak-loads`; the changed pages, scripts, `data/results.json` and Design-Day downloads match local SHA-256; units scan clean on every page; Peak loads headline 39.2 / 63.6 / 54.0 / 91.9 kBtu/h with the full-capacity note.
 - `bt-proj-2624-rye-nature-center.pages.dev` returns 404.
 
 ## Next release
