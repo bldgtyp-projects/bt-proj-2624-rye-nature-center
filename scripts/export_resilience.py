@@ -106,7 +106,7 @@ def lead_in_note(data:dict)->str:
     w,s=data['winter'],data['summer']
     if not (w['checks']['lead_in_hours'] or s['checks']['lead_in_hours']):
         return ('The nine-day runs start the Kiva ground from its initialization rather than its seasonal state. A scratch seasonal lead-in test in the 21 October Kiva foundation review '
-                'found winter almost unchanged, but summer warmer: Labs heat index 39.6 C with 1 hour in Danger. That test is a diagnostic, not a reviewed result; the values shown here are from the nine-day runs.')
+                'found winter almost unchanged, but summer warmer: Labs heat index {temperature:39.6} with 1 hour in Danger. That test is a diagnostic, not a reviewed result; the values shown here are from the nine-day runs.')
     month=lambda md:['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][int(md[:2])-1]+' '+str(int(md[3:]))
     return (f"Each run starts with a conditioned seasonal lead-in (winter from {month(w['simulation_period'][0])}, summer from {month(s['simulation_period'][0])}) "
             'so the Kiva ground reaches its seasonal state before the outage; results use the final nine days.')
@@ -218,12 +218,12 @@ def main()->None:
         'First-pass results prepared for design review; not yet recorded as a reviewed package in the project QA folder. No refuge designation or certification outcome is implied.',
         'Active heating, cooling and water heating are off for the seven outage days. Backup loads draw a constant 8.5 kWh/day; the ERV runs during refuge hours. Backup power supply is not sized here.',
         'Outage ventilation follows the refuge programs: 10 cfm/person plus 0.12 cfm/ft2 in Learning Labs and area rates in Core and Visitor Center, during refuge hours, through 75% sensible / 50% latent heat recovery. REVIVE 6.3.3 lists 5 cfm/person for the ERV during an outage.',
-        'Window openings are modeled with the annual controls (open only when indoors is 22-26 C and outdoors is 15-25 C, wind effectiveness 0) and delivered no airflow in either outage. Opening windows during a summer outage has not been studied.',
+        'Window openings are modeled with the annual controls (open only when indoors is {temperature:22} to {temperature:26} and outdoors is {temperature:15} to {temperature:25}, wind effectiveness 0) and delivered no airflow in either outage. Opening windows during a summer outage has not been studied.',
         'Only Learning Labs carries refuge occupancy (22 people, 09:00-18:00). REVIVE exempts thermal blocks unoccupied during a winter outage from the SET criterion; the 36 F air-temperature criterion applies to every block.',
-        'REVIVE 6.3.2 names no metric for the 36 F limit; zone mean air temperature is used. SET is calculated from zone air temperature, mean radiant temperature and humidity at 1 clo, 120 W/person and 0.16 m/s.',
-        'The C and F deadly-day formulas printed in REVIVE 6.4.2 differ by 0.36 K at their constant term. Results use the C formula; the F formula gives the same deadly-day count unless noted.',
+        'REVIVE 6.3.2 names no metric for the 36 F limit; zone mean air temperature is used. SET is calculated from zone air temperature, mean radiant temperature and humidity at 1 clo, {power:120} per person and {speed:0.16}.',
+        'The C and F deadly-day formulas printed in REVIVE 6.4.2 differ by {temperature_delta:0.36:2} at their constant term. Results use the C formula; the F formula gives the same deadly-day count unless noted.',
         lead_in_note(data),
-        'Ground coupling uses the Kiva foundation measure with provisional inputs; its initial indoor temperature is 21.11 C for winter and 23.89 C for summer. ERV fan power, backup-circuit loads and refuge occupancy remain design assumptions to confirm.']
+        'Ground coupling uses the Kiva foundation measure with provisional inputs; its initial indoor temperature is {temperature:21.11:0} for winter and {temperature:23.89:0} for summer. ERV fan power, backup-circuit loads and refuge occupancy remain design assumptions to confirm.']
     if any(z['deadly_days']!=z['deadly_days_F_formula'] for z in data['summer']['zones'].values()):
         data['limitations']=[l.replace(' the same deadly-day count unless noted',' a different deadly-day count; both are in the data') for l in data['limitations']]
     write_json(SITE/'data/resilience.json',data)

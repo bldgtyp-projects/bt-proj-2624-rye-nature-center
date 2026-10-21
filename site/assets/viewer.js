@@ -140,7 +140,7 @@ export async function showModel(inputs) {
   }
   const info = document.querySelector("#geometry-info");
   const p = document.createElement("p");
-  p.textContent = `${inputs.zones.length} zones · ${geometry.surfaces.length} surfaces including apertures and doors · ${(geometry.shades ?? []).length} shading surfaces · Geometry units: meters. Snapshot ${inputs.source.sha256.slice(0, 12)}.`;
+  p.textContent = `${inputs.zones.length} zones · ${geometry.surfaces.length} surfaces including apertures and doors · ${(geometry.shades ?? []).length} shading surfaces · Model geometry is stored in meters. Snapshot ${inputs.source.sha256.slice(0, 12)}.`;
   info.append(p);
   const north = new THREE.ArrowHelper(
     new THREE.Vector3(0, 1, 0),

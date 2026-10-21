@@ -37,3 +37,14 @@ Check the monthly selector, exact-value disclosure, CSV download, Design-Day sel
 The available Playwright MCP browser was used for the current release because the Browser plugin was not available. No browser dependency installation is needed. Screenshots and the verification summary remain in `docs/`; they are not deployed.
 
 Edit page text in `scripts/build.mjs`, not generated HTML. Edit behavior in `site/assets/` and rebuild. Preserve noindex metadata, same-origin viewer/data, licenses and alternate-host rejection. Update STATUS.md and project CONTEXT.md after a checked release. Publishing is a push of `main`, which deploys the whole committed `site/` as one release ([HOSTING.md](HOSTING.md)).
+
+## Display units
+
+All data, downloads and frozen sources are SI. The site displays US (IP) units through `site/assets/units.js` only. Design record: [UNITS_PLAN.md](UNITS_PLAN.md).
+
+- **Renderers** (`app.js`, `results.js`, `viewer.js`, `build.mjs`) never write an SI unit string or conversion factor. The one exception is the Data & sources page, whose text describes the SI downloads. They call `units.fmt(value, kind)`, `units.number(...)`, `units.label(kind)` or `units.value(...)` with a quantity kind (`temperature`, `temperature_delta`, `area`, `load`, `airflow`, `energy`, `eui`...). A new quantity needs a new kind in `units.js` and a reference pair in `check.mjs`.
+- **Exporter prose** writes SI quantities as tokens, `{kind:value}` or `{kind:value:digits}`, for example `indoor {temperature:22} to {temperature:26}`. Renderers pass prose through `units.prose()`. Thresholds defined in IP (NOAA heat index, REVIVE 36/54 °F and 216 °F·h, thermostats) are stored as exact SI conversions and display as the round IP value. Quantities that were specified or quoted in IP (for example the Kiva insulation depths in inches, REVIVE's 5 cfm/person, the 10 cfm/person design rate) may stay as IP text in the prose; the lint only rejects SI written as text.
+- **Precision:** temperatures show 0.1 °F in tables and whole °F in prose and headline metrics (`units.say`, and the default for prose tokens). The summer heat-index metric and caption keep 0.1 °F because the peak sits next to the 103 °F Danger line.
+- **Electricity** stays kWh (and kWh/day); EUI is kBtu/ft²·yr; thermal energy and hourly flows are kBtu; loads and capacities are kBtu/h, with tons beside cooling.
+- **Guards:** `check.mjs` tests every conversion against reference pairs, fails on SI values written as text in exported prose, rejects unknown tokens, and fails on SI unit strings or conversion factors in the renderers or static pages (the Data & sources page may describe the SI downloads).
+- **Release check:** with the local preview running, run `scripts/scan_units.browser.js` in the browser. Every page must list no SI units and 0 errors; `downloads.html` may list `°C`. Static checks cannot see text assembled at runtime.

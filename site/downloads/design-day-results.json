@@ -432,12 +432,12 @@
     "ERV_channels_verified": 13,
     "severe_errors": 0
   },
-  "basis": "Room loads are unfactored sensible thermal loads in W. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
+  "basis": "Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
   "limitations": [
     "Ground-source entering-water temperatures and performance curves need MEP/manufacturer confirmation; the template uses an EMS temperature surrogate.",
     "Labs has no supplemental humidity control and reaches 63.62% RH; Visitor/Core remain below 60% in these design-day tests.",
     "Separate community-event and additional summer solar/weather sensitivities remain to be evaluated before final equipment selection.",
-    "The Design-Day run keeps the constant 18°C slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.",
+    "The Design-Day run keeps the constant {temperature:18} slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.",
     "This is a design-analysis model. The results do not size the borefield or establish a final equipment selection."
   ]
 }

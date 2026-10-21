@@ -139,7 +139,7 @@ def main():
     area = sum(z['floor_area_m2'] for z in inputs['zones'])
     comparison = json.loads((PRIVATE / 'comparison.json').read_text())
     diagnostics = json.loads((PRIVATE / 'diagnostics.json').read_text())
-    history = [{'label': 'Previous annual model, constant 18°C slab ground',
+    history = [{'label': 'Previous annual model, constant {temperature:18} slab ground',
                 'total_kWh': comparison['windows']['electricity_kWh']},
                {'label': 'Current annual model, Kiva slab ground', 'total_kWh': total}]
     humidity = [{'zone': key, 'label': label,
@@ -168,20 +168,20 @@ def main():
               'annual': {'total_kWh': total, 'floor_area_m2': area, 'eui_kWh_m2_year': total/area,
                          'end_uses': END_USES, 'end_uses_kWh': annual, 'monthly': monthly,
                          'history': history, 'humidity': humidity,
-                         'history_note': 'The only physical change between these two runs is the slab-ground boundary: Kiva replaces the constant 18°C ground. Winter slab losses rise and the summer slab no longer acts as a heat sink, so both heating and cooling electricity increase. Earlier window-only comparisons belong to historical models and are not used as current savings claims.',
+                         'history_note': 'The only physical change between these two runs is the slab-ground boundary: Kiva replaces the constant {temperature:18} ground. Winter slab losses rise and the summer slab no longer acts as a heat sink, so both heating and cooling electricity increase. Earlier window-only comparisons belong to historical models and are not used as current savings claims.',
                          'dehumidification_kWh': diagnostics['energy']['Dehumidifier Electricity Energy'], 'reporting_basis': 'Purchased site electricity, before any PV credit. Heating and cooling are equipment electricity, not thermal loads. Cooling includes supplemental dehumidifier electricity. Hot water includes tank parasitics. Fans and pumps include the shared ERV and conditioning equipment.',
-                         'calculation': 'Hourly component-energy outputs plus 15-minute supplemental dehumidifier electricity summed by reporting month. Dehumidifiers are included once in Cooling. Electric water-heater off-cycle parasitics reconstructed from its 20 W input, rated capacity and hourly heater electricity. Every monthly sum reconciles to the quarter-hour Electricity:Facility meter within 0.00001 kWh.',
+                         'calculation': 'Hourly component-energy outputs plus 15-minute supplemental dehumidifier electricity summed by reporting month. Dehumidifiers are included once in Cooling. Electric water-heater off-cycle parasitics reconstructed from its {power:20} input, rated capacity and hourly heater electricity. Every monthly sum reconciles to the quarter-hour Electricity:Facility meter within 0.00001 kWh.',
                          'review': {'severe_errors': 0, 'humidity_status': 'visitor_core_control_verified_labs_and_winter_comfort_open',
                                     'occupied_cooling_unmet_hours': occupied_cooling_unmet, 'annual_latch_intervals_checked': 35040},
                          'systems': [
                              ['Heating and cooling','Four recirculating water-source heat-pump zones; explicit project capacities and matching air/water/fan flows, ERV-first sequencing, 15-minute sizing average. Template curves and the EMS ground-temperature surrogate remain provisional.'],
-                             ['Humidity control','Visitor Center/Core each use a generic 120 L/day dehumidifier with a 60% RH target all day; disabled with window opening or outage controls. Electricity is included in Cooling. Labs and Restrooms have no supplemental device.'],
+                             ['Humidity control','Visitor Center/Core each use a generic {liquid_per_day:120} dehumidifier with a 60% RH target all day; disabled with window opening or outage controls. Electricity is included in Cooling. Labs and Restrooms have no supplemental device.'],
                              ['Ventilation','One shared ERV, separate from heating and cooling. Sensible / latent effectiveness: 75% / 50%, held constant at reduced flow before frost control.'],
                              ['Air paths','Supply to Labs, Visitor Center and Core; transfer through Core; Core and Restrooms extract through the ERV. No separate restroom exhaust-fan energy.'],
                              ['Controls','Shared ERV follows reviewed ventilation and extract profiles. Positive window-opening permission disables conditioning in that zone.'],
-                             ['Window operation','Occupancy permission in all four zones; indoor 22 to 26°C; outdoor 15 to 25°C; indoor minus outdoor at least 1.5°C. Block at outdoor dew point ≥13°C; re-enable below 12°C. Retain prior permission between.'],
+                             ['Window operation','Occupancy permission in all four zones; indoor {temperature:22} to {temperature:26}; outdoor {temperature:15} to {temperature:25}; indoor minus outdoor at least {temperature_delta:1.5}. Block at outdoor dew point ≥{temperature:13}; re-enable below {temperature:12}. Retain prior permission between.'],
                              ['Thermostats','Occupied heating / cooling: 70°F / 75°F. Closed-hours setbacks: 68°F / 80°F, with the program-specific ready periods shown on the Program page.'],
-                             ['Hot water','Electric resistance tank, fixed 10°C mains, 60°C storage; Restrooms 35°C and Core 49°C fixture targets. Tank capacity, storage volume and distribution design remain provisional.'],
+                             ['Hot water','Electric resistance tank, fixed {temperature:10:0} mains, {temperature:60:0} storage; Restrooms {temperature:35:0} and Core {temperature:49:0} fixture targets. Tank capacity, storage volume and distribution design remain provisional.'],
                              ['Ground and weather','Kiva two-dimensional slab-ground boundary on all four slabs (294 ft exposed perimeter; 2 in XPS interior vertical insulation to the footing top at 3 ft 6 in; default soil). Early foundation basis; inputs provisional. Typical-year White Plains weather. Borefield and equipment design are not established by these results.']]} }
     write_json(SITE / 'data/results.json', output)
     write_json(SITE / 'downloads/annual-results.json', output)

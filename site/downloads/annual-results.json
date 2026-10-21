@@ -404,7 +404,7 @@
     ],
     "history": [
       {
-        "label": "Previous annual model, constant 18°C slab ground",
+        "label": "Previous annual model, constant {temperature:18} slab ground",
         "total_kWh": 18996.60699434911
       },
       {
@@ -442,10 +442,10 @@
         "all_quarter_hour_max_RH_percent": null
       }
     ],
-    "history_note": "The only physical change between these two runs is the slab-ground boundary: Kiva replaces the constant 18°C ground. Winter slab losses rise and the summer slab no longer acts as a heat sink, so both heating and cooling electricity increase. Earlier window-only comparisons belong to historical models and are not used as current savings claims.",
+    "history_note": "The only physical change between these two runs is the slab-ground boundary: Kiva replaces the constant {temperature:18} ground. Winter slab losses rise and the summer slab no longer acts as a heat sink, so both heating and cooling electricity increase. Earlier window-only comparisons belong to historical models and are not used as current savings claims.",
     "dehumidification_kWh": 190.65679128543303,
     "reporting_basis": "Purchased site electricity, before any PV credit. Heating and cooling are equipment electricity, not thermal loads. Cooling includes supplemental dehumidifier electricity. Hot water includes tank parasitics. Fans and pumps include the shared ERV and conditioning equipment.",
-    "calculation": "Hourly component-energy outputs plus 15-minute supplemental dehumidifier electricity summed by reporting month. Dehumidifiers are included once in Cooling. Electric water-heater off-cycle parasitics reconstructed from its 20 W input, rated capacity and hourly heater electricity. Every monthly sum reconciles to the quarter-hour Electricity:Facility meter within 0.00001 kWh.",
+    "calculation": "Hourly component-energy outputs plus 15-minute supplemental dehumidifier electricity summed by reporting month. Dehumidifiers are included once in Cooling. Electric water-heater off-cycle parasitics reconstructed from its {power:20} input, rated capacity and hourly heater electricity. Every monthly sum reconciles to the quarter-hour Electricity:Facility meter within 0.00001 kWh.",
     "review": {
       "severe_errors": 0,
       "humidity_status": "visitor_core_control_verified_labs_and_winter_comfort_open",
@@ -459,7 +459,7 @@
       ],
       [
         "Humidity control",
-        "Visitor Center/Core each use a generic 120 L/day dehumidifier with a 60% RH target all day; disabled with window opening or outage controls. Electricity is included in Cooling. Labs and Restrooms have no supplemental device."
+        "Visitor Center/Core each use a generic {liquid_per_day:120} dehumidifier with a 60% RH target all day; disabled with window opening or outage controls. Electricity is included in Cooling. Labs and Restrooms have no supplemental device."
       ],
       [
         "Ventilation",
@@ -475,7 +475,7 @@
       ],
       [
         "Window operation",
-        "Occupancy permission in all four zones; indoor 22 to 26°C; outdoor 15 to 25°C; indoor minus outdoor at least 1.5°C. Block at outdoor dew point ≥13°C; re-enable below 12°C. Retain prior permission between."
+        "Occupancy permission in all four zones; indoor {temperature:22} to {temperature:26}; outdoor {temperature:15} to {temperature:25}; indoor minus outdoor at least {temperature_delta:1.5}. Block at outdoor dew point ≥{temperature:13}; re-enable below {temperature:12}. Retain prior permission between."
       ],
       [
         "Thermostats",
@@ -483,7 +483,7 @@
       ],
       [
         "Hot water",
-        "Electric resistance tank, fixed 10°C mains, 60°C storage; Restrooms 35°C and Core 49°C fixture targets. Tank capacity, storage volume and distribution design remain provisional."
+        "Electric resistance tank, fixed {temperature:10:0} mains, {temperature:60:0} storage; Restrooms {temperature:35:0} and Core {temperature:49:0} fixture targets. Tank capacity, storage volume and distribution design remain provisional."
       ],
       [
         "Ground and weather",
@@ -925,12 +925,12 @@
       "ERV_channels_verified": 13,
       "severe_errors": 0
     },
-    "basis": "Room loads are unfactored sensible thermal loads in W. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
+    "basis": "Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
     "limitations": [
       "Ground-source entering-water temperatures and performance curves need MEP/manufacturer confirmation; the template uses an EMS temperature surrogate.",
       "Labs has no supplemental humidity control and reaches 63.62% RH; Visitor/Core remain below 60% in these design-day tests.",
       "Separate community-event and additional summer solar/weather sensitivities remain to be evaluated before final equipment selection.",
-      "The Design-Day run keeps the constant 18°C slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.",
+      "The Design-Day run keeps the constant {temperature:18} slab-ground boundary while the Annual run uses Kiva. Kiva starts the ground from an initialization state that does not represent a design-day condition; see the 21 October Kiva foundation review.",
       "This is a design-analysis model. The results do not size the borefield or establish a final equipment selection."
     ]
   }

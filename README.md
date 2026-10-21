@@ -40,6 +40,8 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 | `scripts/verify_*.py` | Independent native input/SQL/download checks |
 | `scripts/build.mjs` | Shared shell/content for seven generated HTML pages |
 | `site/assets/app.js`, `viewer.js`, `results.js` | Program/geometry and results interactions |
+| `site/assets/units.js` | The only place SI data becomes IP display: conversions, unit labels, precision and `{kind:value}` prose tokens ([contract](docs/UPDATE.md#display-units)) |
+| `scripts/scan_units.browser.js` | Release check: no SI units in any rendered page |
 | `site/assets/site.css` | BLDGTYP report layout and responsive charts |
 | `site/data/`, `site/downloads/` | Reviewed generated data and client downloads |
 | `_private/` | Frozen model and simulation sources, with rollback archives; never deploy |
@@ -49,6 +51,9 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 | `docs/VIEWERS.md` | Historical viewer selection research |
 
 ## Presentation and data boundaries
+
+The site displays US (IP) units; every data file and download stays SI. All conversion goes through `site/assets/units.js` ([display-units contract](docs/UPDATE.md#display-units)).
+
 
 The seven pages are Overview (reached from the logo and project name, not a tab), Program, Model, Annual energy, Peak loads, Resilience and Data & Sources. Program shows annual schedules one Monday-to-Sunday week at a time (weekends shaded) above a clickable daily-mean strip for the whole year; winter/summer design-day profiles stay single-day. The Three.js viewer shows roofs by default and has a Show shading toggle for the 341 detached shading/context surfaces exported with the zones; it serves project geometry and libraries from the same origin; it uploads no model to an external viewer. BLDGTYP CSS assets/licenses are retained; Google Fonts supplies typefaces.
 

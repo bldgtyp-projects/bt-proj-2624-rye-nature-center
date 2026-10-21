@@ -1,3 +1,5 @@
+// Same asset version as this module, so a new release never mixes cached scripts.
+const units = await import("./units.js" + new URL(import.meta.url).search);
 const $ = (selector) => document.querySelector(selector);
 const esc = (value) =>
   String(value ?? "").replace(
@@ -85,70 +87,70 @@ function showProgram(data) {
       [
         "People density",
         l.people
-          ? `${num(l.people.people_per_area, 5)} people/m²`
+          ? units.fmt(l.people.people_per_area, "occupant_density")
           : "Not assigned",
       ],
       [
         "Lighting",
         l.lighting
-          ? `${num(l.lighting.watts_per_area, 3)} W/m²`
+          ? units.fmt(l.lighting.watts_per_area, "power_density")
           : "Not assigned",
       ],
       [
         "Electric equipment",
         l.electric_equipment
-          ? `${num(l.electric_equipment.watts_per_area, 3)} W/m²`
+          ? units.fmt(l.electric_equipment.watts_per_area, "power_density")
           : "Not assigned",
       ],
       [
         "Gas equipment",
         l.gas_equipment
-          ? `${num(l.gas_equipment.watts_per_area, 3)} W/m²`
+          ? units.fmt(l.gas_equipment.watts_per_area, "power_density")
           : "Not assigned",
       ],
       [
         "Outdoor air per person",
         l.ventilation
-          ? `${num(l.ventilation.flow_per_person * 1000, 3)} L/s per person`
+          ? units.fmt(l.ventilation.flow_per_person, "airflow_per_person")
           : "Not assigned",
       ],
       [
         "Outdoor air per floor area",
         l.ventilation
-          ? `${num(l.ventilation.flow_per_area * 1000, 4)} L/s·m²`
+          ? units.fmt(l.ventilation.flow_per_area, "airflow_per_area")
           : "Not assigned",
       ],
       [
         "Outdoor air per zone",
         l.ventilation
-          ? `${num((l.ventilation.flow_per_zone || 0) * 1000, 3)} L/s`
+          ? units.fmt(l.ventilation.flow_per_zone || 0, "airflow")
           : "Not assigned",
       ],
       [
         "Outdoor air ACH",
         l.ventilation
-          ? `${num(l.ventilation.air_changes_per_hour || 0, 3)} 1/h`
+          ? `${num(l.ventilation.air_changes_per_hour || 0, 3)} ACH`
           : "Not assigned",
       ],
       [
         "Infiltration",
         l.infiltration
-          ? `${num(l.infiltration.flow_per_exterior_area * 1000, 5)} L/s·m² exterior area`
+          ? `${units.fmt(l.infiltration.flow_per_exterior_area, "airflow_per_area", 4)} of exterior area`
           : "Not assigned",
       ],
       [
         "Service hot water",
         l.service_hot_water
-          ? `${num(l.service_hot_water.flow_per_area, 4)} L/h·m²`
+          ? units.fmt(l.service_hot_water.flow_per_area, "hot_water_per_area", 2)
           : "Not assigned",
       ],
       ["HVAC reference", zone.hvac_id || "Not assigned"],
-      ["Modeled volume", `${num(zone.volume_m3)} m³`],
+      ["Modeled volume", units.fmt(zone.volume_m3, "volume")],
       ["Program identifier", zone.program_id],
       ["Room identifier", zone.id],
     ];
     $("#zone-detail").innerHTML =
-      `<div class="zone-title"><h2>${esc(zone.name)}</h2><a class="link" href="model.html?zone=${encodeURIComponent(zone.id)}">Locate in model →</a></div><div class="zone-metrics">${metric("Modeled floor area", num(zone.floor_area_m2), "m²")}${metric("Reference People", num(zone.design_people), "people")}${metric("Lighting density", l.lighting ? num(l.lighting.watts_per_area) : "None", "W/m²")}${metric("Equipment density", l.electric_equipment ? num(l.electric_equipment.watts_per_area) : "None", l.electric_equipment ? "W/m²" : "")}</div><div class="schedule-panel"><h3>Schedule</h3><div class="controls"><label>Input<select id="schedule">${options}</select></label><label>Scenario<select id="scenario"><option value="annual">Annual calendar</option><option value="winter_design">Winter design day</option><option value="summer_design">Summer design day</option></select></label><label id="week-label">Week<select id="week">${weeks.map((w, i) => `<option value="${i}" ${i === october ? "selected" : ""}>${esc(w.label)}</option>`).join("")}</select></label></div><div id="schedule-chart"></div><div id="schedule-year"></div><p class="caption" id="schedule-caption"></p><details><summary>Values and schedule definition</summary><div class="details-body"><p id="schedule-id"></p><div id="schedule-values"></div><details><summary>Native schedule rules</summary><pre id="schedule-definition"></pre></details></div></details></div><details><summary>All load and ventilation inputs</summary><div class="details-body">${table(loadRows)}<p class="caption">SI model inputs. Reference People is multiplied by the occupancy schedule. Shared ERV supply/extract and system controls are documented on the Annual energy page. Heat-pump capacities remain provisional.</p></div></details><details><summary>Source and interpretation</summary><div class="details-body">${data.notes.map((n) => `<p>${esc(n)}</p>`).join("")}${provenance(data)}<details><summary>Resolved native load definitions</summary><pre>${esc(JSON.stringify(l, null, 2))}</pre></details><p><a class="link" href="downloads.html">Download inputs and full schedule CSVs →</a></p></div></details>`;
+      `<div class="zone-title"><h2>${esc(zone.name)}</h2><a class="link" href="model.html?zone=${encodeURIComponent(zone.id)}">Locate in model →</a></div><div class="zone-metrics">${metric("Modeled floor area", units.number(zone.floor_area_m2, "area"), units.label("area"))}${metric("Reference People", num(zone.design_people), "people")}${metric("Lighting density", l.lighting ? units.number(l.lighting.watts_per_area, "power_density") : "None", l.lighting ? units.label("power_density") : "")}${metric("Equipment density", l.electric_equipment ? units.number(l.electric_equipment.watts_per_area, "power_density") : "None", l.electric_equipment ? units.label("power_density") : "")}</div><div class="schedule-panel"><h3>Schedule</h3><div class="controls"><label>Input<select id="schedule">${options}</select></label><label>Scenario<select id="scenario"><option value="annual">Annual calendar</option><option value="winter_design">Winter design day</option><option value="summer_design">Summer design day</option></select></label><label id="week-label">Week<select id="week">${weeks.map((w, i) => `<option value="${i}" ${i === october ? "selected" : ""}>${esc(w.label)}</option>`).join("")}</select></label></div><div id="schedule-chart"></div><div id="schedule-year"></div><p class="caption" id="schedule-caption"></p><details><summary>Values and schedule definition</summary><div class="details-body"><p id="schedule-id"></p><div id="schedule-values"></div><details><summary>Native schedule rules</summary><pre id="schedule-definition"></pre></details></div></details></div><details><summary>All load and ventilation inputs</summary><div class="details-body">${table(loadRows)}<p class="caption">Shown in US units; the model inputs and downloads are SI. Reference People is multiplied by the occupancy schedule. Shared ERV supply/extract and system controls are documented on the Annual energy page. Heat-pump capacities remain provisional.</p></div></details><details><summary>Source and interpretation</summary><div class="details-body">${data.notes.map((n) => `<p>${esc(n)}</p>`).join("")}${provenance(data)}<details><summary>Resolved native load definitions</summary><pre>${esc(JSON.stringify(l, null, 2))}</pre></details><p><a class="link" href="downloads.html">Download inputs and full schedule CSVs →</a></p></div></details>`;
     // Fractions start at zero; schedules that never approach zero (setpoints) start just below their minimum.
     function chartValues(values) {
       const min = Math.min(...values), hi = Math.max(...values);
@@ -180,7 +182,7 @@ function showProgram(data) {
       $("#schedule-values").innerHTML = table(
         values.map((v, i) => [
           `${String(Math.floor(i / 4)).padStart(2, "0")}:${String((i % 4) * 15).padStart(2, "0")}`,
-          String(v),
+          num(v, 2),
           schedule.unit,
         ]),
         ["Interval start", "Value", "Unit"],
@@ -226,9 +228,17 @@ function showProgram(data) {
         draw();
       });
     }
+    // Schedules are SI in the data; temperature and per-person power schedules display in IP.
+    function displaySchedule(s) {
+      const kind = units.SCHEDULE_KINDS[s.unit];
+      if (!kind) return s;
+      const c = (v) => units.value(v, kind);
+      const profiles = Array.isArray(s.profiles) ? s.profiles.map((p) => p.map(c)) : Object.fromEntries(Object.entries(s.profiles).map(([k, p]) => [k, p.map(c)]));
+      return { ...s, unit: units.label(kind), profiles, winter_design: s.winter_design.map(c), summer_design: s.summer_design.map(c) };
+    }
     function draw() {
       const id = $("#schedule").value,
-        schedule = data.schedules[id],
+        schedule = displaySchedule(data.schedules[id]),
         scenario = $("#scenario").value;
       $("#week-label").hidden = scenario !== "annual";
       const week = weeks[Number($("#week").value)];
@@ -257,7 +267,7 @@ async function showResults() {
   const results = await getData(area === "resilience" ? "data/resilience.json" : "data/results.json");
   const renderers = await import("./results.js" + new URL(import.meta.url).search);
   const render = { annual: renderers.renderAnnual, peaks: renderers.renderPeaks, resilience: renderers.renderResilience }[area];
-  render(results, host, { esc, num, metric, table });
+  render(results, host, { esc, num, metric, table, units });
   if (location.hash)
     document.getElementById(location.hash.slice(1))?.scrollIntoView();
 }

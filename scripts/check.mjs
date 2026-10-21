@@ -2,7 +2,48 @@ import assert from "node:assert/strict";
 import { readFile, readdir, stat } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import path from "node:path";
+const path_join = path.join;
 const root = fileURLToPath(new URL("../site/", import.meta.url));
+// Display units: SI data, IP display. Known reference pairs for every conversion kind.
+const units = await import(new URL("../site/assets/units.js", import.meta.url));
+const near = (a, b, tol = 1e-6) => assert.ok(Math.abs(a - b) <= tol * Math.max(1, Math.abs(b)), `${a} vs ${b}`);
+for (const [x, kind, ip] of [
+  [0, "temperature", 32], [100, "temperature", 212], [(54 - 32) / 1.8, "temperature", 54], [(103 - 32) / 1.8, "temperature", 103],
+  [1, "temperature_delta", 1.8], [120, "degree_hours", 216], [1, "area", 10.7639104], [1, "volume", 35.3146667],
+  [0.3048, "length", 1], [1, "electricity", 1], [1, "energy", 3.41214163], [1, "eui", 0.31699833],
+  [1000, "load", 3.41214163], [1, "power", 3.41214163], [3516.85284, "cooling_tons", 1], [10.7639104, "power_density", 1],
+  [1, "occupant_density", 92.9030400], [0.00047194745, "airflow", 1], [1699.0108, "airflow_hourly", 1000],
+  [0.0047194745, "airflow_per_person", 10], [1, "airflow_per_area", 196.850394], [0.0000630901964, "water_flow", 1],
+  [1, "hot_water_per_area", 24.5423867], [0.473176473, "liquid_per_day", 1], [0.00508, "speed", 1],
+]) near(units.value(x, kind), ip);
+assert.equal(units.prose("{temperature:22} to {temperature:26:0}; {speed:0.16}"), "72°F to 79°F; 31 fpm");
+assert.throws(() => units.value(1, "furlongs"));
+// SI quantities written as text (not as unit tokens) would display unconverted.
+const SI_TEXT = /\d\s?(?:°C|m²|m³|m\/s|L\/s|L\/day|L\/h|W\/m²|kW\b|K·h|W(?![\w/·])|K(?![\w·])|C(?![\w·]))/;
+const TOKEN = /\{([a-z_]+):(-?[\d.]+)(?::\d)?\}/g;
+const PROSE_SKIP = new Set(["schedules", "loads", "internal_mass", "definition", "source", "hours", "deadly_day"]);
+function* proseStrings(value, path = "") {
+  if (typeof value === "string") yield [path, value];
+  else if (Array.isArray(value)) for (const [i, v] of value.entries()) yield* proseStrings(v, `${path}[${i}]`);
+  else if (value && typeof value === "object")
+    for (const [k, v] of Object.entries(value)) if (!PROSE_SKIP.has(k)) yield* proseStrings(v, `${path}.${k}`);
+}
+for (const name of ["results.json", "resilience.json", "inputs.json"]) {
+  for (const [path, text] of proseStrings(JSON.parse(await readFile(path_join(root, "data", name), "utf8")))) {
+    for (const [, kind] of text.matchAll(TOKEN)) assert.ok(units.KINDS[kind], `${name}${path}: unknown unit token ${kind}`);
+    assert.ok(!SI_TEXT.test(text.replace(TOKEN, "")), `${name}${path}: SI value written as text: ${text}`);
+  }
+}
+// Renderers convert only through units.js: no SI unit strings or conversion factors elsewhere.
+const SI_UNIT = /°C|m²|m³|L\/s|W\/m²|m\/s|\bkW\b|\* ?9 ?\/ ?5|\/ ?1000\b|\* ?1000\b/;
+for (const file of ["assets/results.js", "assets/app.js", "assets/viewer.js"]) {
+  const source = await readFile(path_join(root, file), "utf8");
+  source.split("\n").forEach((line, i) => assert.ok(!SI_UNIT.test(line), `${file}:${i + 1}: SI unit or conversion outside units.js`));
+}
+for (const file of (await readdir(root)).filter((f) => f.endsWith(".html") && f !== "downloads.html")) {
+  const text = (await readFile(path_join(root, file), "utf8")).replace(/<[^>]+>/g, " ");
+  assert.ok(!SI_UNIT.test(text) && !SI_TEXT.test(text), `${file}: SI unit in static page text`);
+}
 const { default: worker } = await import("data:text/javascript," + encodeURIComponent(await readFile(path.join(root, "_worker.js"), "utf8")));
 const inputs = JSON.parse(
   await readFile(path.join(root, "data/inputs.json"), "utf8"),

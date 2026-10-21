@@ -1,6 +1,6 @@
 # IP display units: plan
 
-Status: proposal, 21 October 2026. Nothing is implemented. Implementation starts when Ed approves this plan and the open decisions below.
+Status: **implemented 21 October 2026** with the recommended defaults (kWh electricity, kBtu/ft²·yr EUI, kBtu hourly flows, kBtu/h loads with tons for cooling, IP only, proposed precision). The operating contract is in [UPDATE.md](UPDATE.md#display-units); this file records the design.
 
 ## Goal and rule
 

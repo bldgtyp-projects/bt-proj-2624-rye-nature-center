@@ -741,3 +741,5 @@ header nav a { white-space: nowrap; }
 .year-chart .week-mark { fill: var(--highlight); opacity: .15; }
 .detail-title { margin: 26px 0 0; font-size: 15px; }
 .detail-title small { font-weight: 400; color: var(--text-secondary); margin-left: 6px; }
+/* Wide result tables scroll inside their wrapper on phones instead of breaking words. */
+@media (max-width: 640px) { .table-wrap { overflow-x: auto; } .table-wrap table:has(th:nth-child(5)) { min-width: 600px; } .table-wrap table:has(th:nth-child(5)) td { overflow-wrap: normal; } }
