@@ -55,7 +55,7 @@ function showProgram(data) {
   const offset = (firstDay + 6) % 7;
   const weeks = [];
   for (let start = -offset; start < days365; start += 7)
-    weeks.push({ days: Array.from({ length: 7 }, (_, n) => start + n), label: `${fmtDate(start)} – ${fmtDate(start + 6)}` });
+    weeks.push({ days: Array.from({ length: 7 }, (_, n) => start + n), label: `${fmtDate(start)} to ${fmtDate(start + 6)}` });
   const october = weeks.findIndex((w) => dateOf(w.days[0]).getUTCMonth() === 9);
   const selected = new URLSearchParams(location.search).get("zone");
   let zone = data.zones.find((z) => z.id === selected) || data.zones[0];
