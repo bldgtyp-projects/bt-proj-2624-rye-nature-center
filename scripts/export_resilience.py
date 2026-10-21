@@ -76,15 +76,18 @@ def main()->None:
     args=parser.parse_args()
     config=json.loads((ROOT/'report.json').read_text())
     if args.refresh:
-        source={'model':config['resilience_model'],'weather':config['resilience_weather'],'files':{}}
+        source={'weather':config['resilience_weather'],'files':{}}
+        models=[]
         for season in SEASONS:
             run=(ROOT/config[f'resilience_{season}_run']).resolve();target=PRIVATE/season
             target.mkdir(parents=True,exist_ok=True)
             for relative in RUN_FILES:shutil.copyfile(run/relative,target/Path(relative).name)
-            model=next(run.glob('*.hbjson'))
-            assert digest(model)==digest(ROOT/config['resilience_model']),model
+            models.append(next(run.glob('*.hbjson')))
             source[f'{season}_run']=str(run.relative_to(ROOT.parent))
-        shutil.copyfile(ROOT/config['resilience_model'],PRIVATE/'input.hbjson')
+        # Both seasons must run the same HBJSON; freeze the copy the runs actually used.
+        assert digest(models[0])==digest(models[1]),models
+        source['model']=str(models[0].relative_to(ROOT.parent))
+        shutil.copyfile(models[0],PRIVATE/'input.hbjson')
         source['weather_sha256']=digest(ROOT/config['resilience_weather'])
         source['files']={str(p.relative_to(PRIVATE)):digest(p) for p in sorted(PRIVATE.rglob('*')) if p.is_file() and p.name!='source.json'}
         write_json(PRIVATE/'source.json',source)
@@ -144,7 +147,7 @@ def main()->None:
         'Only Learning Labs carries refuge occupancy (22 people, 09:00-18:00). REVIVE exempts thermal blocks unoccupied during a winter outage from the SET criterion; the 36 F air-temperature criterion applies to every block.',
         'REVIVE 6.3.2 names no metric for the 36 F limit; zone mean air temperature is used. SET is calculated from zone air temperature, mean radiant temperature and humidity at 1 clo, 120 W/person and 0.16 m/s.',
         'The C and F deadly-day formulas printed in REVIVE 6.4.2 differ by 0.36 K at their constant term. Results use the C formula; the F formula gives the same deadly-day count unless noted.',
-        'Ground coupling uses the Kiva foundation measure with provisional inputs. ERV fan power, backup-circuit loads and refuge occupancy remain design assumptions to confirm.']
+        'Ground coupling uses the Kiva foundation measure with provisional inputs; its initial indoor temperature is 21.11 C for winter and 23.89 C for summer. ERV fan power, backup-circuit loads and refuge occupancy remain design assumptions to confirm.']
     if any(z['deadly_days']!=z['deadly_days_F_formula'] for z in data['summer']['zones'].values()):
         data['limitations'][5]=data['limitations'][5].replace(' the same deadly-day count unless noted',' a different deadly-day count; both are in the data')
     write_json(SITE/'data/resilience.json',data)

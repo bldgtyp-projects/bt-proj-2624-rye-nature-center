@@ -1,6 +1,6 @@
 # Client-report release status
 
-Updated 21 October 2026: page restructure and first-pass Resilience package, published. Annual/Design-Day content from the 20 October 21:09 rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
+Updated 21 October 2026: Resilience refreshed from the 09:02 winter/summer reruns, published. Annual/Design-Day content from the 20 October 21:09 rerun. [Report guide](../README.md) · [Project context](../../CONTEXT.md) · [Refresh guide](UPDATE.md)
 
 ## Current local release
 
@@ -8,7 +8,7 @@ Annual electricity is **18,996.6 kWh/year**, **49.1 kWh/m²/year**, before PV cr
 
 The separate Design-Day package is reviewed: coincident sensible room heating/cooling **11.483/15.836 kW**, zone-peak bars, exact loads, selectable winter DB and summer DB/DP/WB conditions, operating checks and provisional capacity/flow tables. Individual zone peaks, detailed coil delivery and rated inputs are labeled separately. The Annual and Design-Day physical inputs match; each export retains its own identity.
 
-Resilience is a **first-pass** package (`draft_first_pass`) from the 21 October REVIVE winter (Jan 12-20) and summer (Jul 19-27) runs: one conditioned day, seven outage days, one recovery day. Against the Phius REVIVE 2024 criteria (reference only): summer heat index peaks at 37.6°C (Extreme Caution) in Learning Labs with zero Danger hours in every zone, but every zone has 3 deadly days (Mora). Winter SET below 54°F is 381 °F·h in Learning Labs (limit 216) and 344-361 °F·h elsewhere; every zone has 15-21 h of air below 36°F. Inputs to note: windows deliver zero airflow in both outages (annual window controls); outage ventilation runs at 62.1-style rates (~980 m³/h in refuge hours) through 75% recovery versus the REVIVE 5 cfm/person; only Learning Labs is occupied. No QA review under `11_QAQC/` exists yet. No certification outcome, PV credit or final equipment/borefield selection is implied. Remaining questions include source-water/manufacturer performance, Lab humidity, winter dry-air/operative comfort and separate event/additional-weather sensitivities.
+Resilience is a **first-pass** package (`draft_first_pass`) from the 21 October 09:02 REVIVE winter (Jan 12-20) and summer (Jul 19-27) reruns: one conditioned day, seven outage days, one recovery day. Against the Phius REVIVE 2024 criteria (reference only): summer heat index peaks at 38.4°C (Extreme Caution, 72 h) in Learning Labs with zero Danger hours in every zone, but every zone has 3 deadly days (Mora). The rerun corrected the summer Kiva initial indoor temperature from 21.11°C to 23.89°C, which raised summer peaks by 0.6-0.9 K; winter inputs and results are unchanged. The run HBJSON (`c9003ea0…`) has regenerated identifiers relative to `15_PHIUS_REVIVE/HBJSON/…_261021.hbjson`; normalized IDFs are otherwise identical, so the exporter now freezes the HBJSON the runs used. Winter SET below 54°F is 381 °F·h in Learning Labs (limit 216) and 344-361 °F·h elsewhere; every zone has 15-21 h of air below 36°F. Inputs to note: windows deliver zero airflow in both outages (annual window controls); outage ventilation runs at 62.1-style rates (~980 m³/h in refuge hours) through 75% recovery versus the REVIVE 5 cfm/person; only Learning Labs is occupied. No QA review under `11_QAQC/` exists yet. No certification outcome, PV credit or final equipment/borefield selection is implied. Remaining questions include source-water/manufacturer performance, Lab humidity, winter dry-air/operative comfort and separate event/additional-weather sensitivities.
 
 The seven-page layout (Overview behind the logo; Annual energy, Peak loads and Resilience as separate tabs), Program schedules, same-origin Three.js viewer, noindex metadata, private-source boundary and alternate-host guard are preserved. This release is live (see Publication below).
 
@@ -45,7 +45,7 @@ The source modeling/results files were preserved. [Annual QA](../../11_QAQC/2610
 
 ## Publication
 
-Current release: commit `07d6ff3` (content from `31617ac`), published 21 October 2026. The first draft was `694b121`; doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
+Current release: the "Refresh Resilience from the 09:02 reruns" commit, published 21 October 2026. Earlier releases: `07d6ff3` (page restructure, first Resilience package) and `694b121` (first draft); doc-only pushes redeploy identical `site/` content. Access mode is public; there is no Cloudflare Access gate. Live checks on the custom host:
 
 - Program, Model, Annual energy, Peak loads, Resilience and Data & Sources return 200; `/` serves the Overview; `/results` and `/results.html` 301 to `/annual-energy`. `X-Robots-Tag: noindex, nofollow` and `robots.txt` disallow are served.
 - All nine downloads match the local `site/downloads/` SHA-256.
