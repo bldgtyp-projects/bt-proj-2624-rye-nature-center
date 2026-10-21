@@ -32,7 +32,7 @@ The current package is `draft_first_pass`, frozen in `_private/resilience/` from
 
 ## Browser and release checks
 
-Check the monthly selector, exact-value disclosure, CSV download, Design-Day selector across winter and humid summer conditions, equipment/provenance disclosures, both outage charts and the REVIVE comparison table. Check all four Program choices and geometry source identity. Inspect desktop and phone width, open the wide tables and confirm page-level overflow is absent. Collect application errors and inspect screenshots.
+Check the monthly selector, exact-value disclosure, CSV download, Design-Day selector across winter and humid summer conditions, equipment/provenance disclosures, both outage charts and the REVIVE comparison table. Check the Program week selector, weekend shading, the annual strip click-to-week, design-day profiles and geometry source identity. Inspect desktop and phone width, open the wide tables and confirm page-level overflow is absent. Collect application errors and inspect screenshots.
 
 The available Playwright MCP browser was used for the current release because the Browser plugin was not available. No browser dependency installation is needed. Screenshots and the verification summary remain in `docs/`; they are not deployed.
 

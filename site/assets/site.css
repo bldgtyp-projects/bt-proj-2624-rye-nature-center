@@ -732,3 +732,10 @@ a.project-id:hover { color: var(--text-primary); }
 .outage-chart .limit-label { fill: var(--text-primary); }
 header nav a { white-space: nowrap; }
 @media (max-width: 640px) { header nav { flex-wrap: wrap; justify-content: flex-start; gap: 4px 20px; } }
+.schedule-chart-wrap { overflow-x: auto; }
+.week-chart { min-width: 620px; }
+.week-chart .weekend { fill: var(--text-secondary); opacity: .08; }
+.year-title { margin: 22px 0 4px; font-size: 14px; }
+.year-chart { max-height: 150px; cursor: pointer; }
+.year-chart .year-bars rect { fill: var(--accent); }
+.year-chart .week-mark { fill: var(--highlight); opacity: .15; }

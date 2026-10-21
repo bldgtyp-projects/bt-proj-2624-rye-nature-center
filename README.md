@@ -50,7 +50,7 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 
 ## Presentation and data boundaries
 
-The seven pages are Overview (reached from the logo and project name, not a tab), Program, Model, Annual energy, Peak loads, Resilience and Data & Sources. Program supports an annual date or separate winter/summer schedule profile. The Three.js viewer serves project geometry and libraries from the same origin; it uploads no model to an external viewer. BLDGTYP CSS assets/licenses are retained; Google Fonts supplies typefaces.
+The seven pages are Overview (reached from the logo and project name, not a tab), Program, Model, Annual energy, Peak loads, Resilience and Data & Sources. Program shows annual schedules one Monday-to-Sunday week at a time (weekends shaded) above a clickable daily-mean strip for the whole year; winter/summer design-day profiles stay single-day. The Three.js viewer serves project geometry and libraries from the same origin; it uploads no model to an external viewer. BLDGTYP CSS assets/licenses are retained; Google Fonts supplies typefaces.
 
 Keep details behind native disclosures while the initial page shows the main results. Preserve explicit units and reporting periods. The effective calendar is 2026, beginning Thursday; saved HB parameters retain Sunday. Times are local standard time with interval-start schedule labels and no display DST inference. Modeled area differs from architectural gross area.
 
