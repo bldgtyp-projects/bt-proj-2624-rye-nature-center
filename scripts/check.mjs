@@ -10,7 +10,7 @@ const near = (a, b, tol = 1e-6) => assert.ok(Math.abs(a - b) <= tol * Math.max(1
 for (const [x, kind, ip] of [
   [0, "temperature", 32], [100, "temperature", 212], [(54 - 32) / 1.8, "temperature", 54], [(103 - 32) / 1.8, "temperature", 103],
   [1, "temperature_delta", 1.8], [120, "degree_hours", 216], [1, "area", 10.7639104], [1, "volume", 35.3146667],
-  [0.3048, "length", 1], [1, "electricity", 1], [1, "energy", 3.41214163], [1, "eui", 0.31699833],
+  [0.3048, "length", 1], [0.0254, "thickness", 1], [1, "u_value", 0.176110159], [1, "r_value", 5.67826334], [1, "electricity", 1], [1, "energy", 3.41214163], [1, "eui", 0.31699833],
   [1000, "load", 3.41214163], [1, "power", 3.41214163], [3516.85284, "cooling_tons", 1], [10.7639104, "power_density", 1],
   [1, "occupant_density", 92.9030400], [0.00047194745, "airflow", 1], [1699.0108, "airflow_hourly", 1000],
   [0.0047194745, "airflow_per_person", 10], [1, "airflow_per_area", 196.850394], [0.0000630901964, "water_flow", 1],

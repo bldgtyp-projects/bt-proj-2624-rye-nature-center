@@ -5,6 +5,7 @@ import hashlib
 import io
 import json
 import math
+import sqlite3
 from pathlib import Path
 from zipfile import ZipFile
 from honeybee.model import Model
@@ -78,7 +79,36 @@ def main() -> None:
             cross=[u[1]*v[2]-u[2]*v[1],u[2]*v[0]-u[0]*v[2],u[0]*v[1]-u[1]*v[0]]
             area += math.sqrt(sum(t*t for t in cross))/2
         assert math.isclose(area,expected[surface['id']],rel_tol=1e-6,abs_tol=1e-6), surface['id']
-    print(f'PASS: 4 native zones, {len(native_schedules)} full annual schedules and 50 design profiles, CSV round trips, {len(geometry["surfaces"])} surface and {len(shade_areas)} shade mesh areas and source hashes.')
+    envelope = data['envelope']
+    rows = list(csv.DictReader(io.StringIO((site / 'downloads/envelope-summary.csv').read_text())))
+    for a in envelope['assemblies']:
+        row = next(r for r in rows if r['construction'] == a['id'])
+        assert float(row['u_value_W_m2K_with_films']) == a['u_value_W_m2K'] and float(row['gross_area_m2']) == a['gross_area_m2']
+        assert math.isclose(sum(l['r_value_m2K_W'] for l in a['layers']), 1 / next(c for c in model.properties.energy.constructions if c.identifier == a['id']).u_value, rel_tol=1e-9)
+    # The simulated EnergyPlus Envelope Summary of both frozen runs must report the same envelope.
+    for run in ('annual', 'design_days'):
+        sql = sqlite3.connect(f'file:{ROOT / "_private" / run / "eplusout.sql"}?mode=ro', uri=True)
+        table = {}
+        for name, row, column, value in sql.execute("select TableName,RowName,ColumnName,Value from TabularDataWithStrings where ReportName in ('EnvelopeSummary','InputVerificationandResultsSummary') and TableName in ('Opaque Exterior','Exterior Fenestration','Window-Wall Ratio','Skylight-Roof Ratio')"):
+            table.setdefault((name, row), {})[column] = value.strip()
+        sql.close()
+        for a in envelope['assemblies']:
+            surfaces = [v for (n, _), v in table.items() if n == 'Opaque Exterior' and v.get('Construction', '').upper() == a['id'].upper()]
+            assert math.isclose(sum(float(v['Gross Area']) for v in surfaces), a['gross_area_m2'], abs_tol=0.01 * len(surfaces)), (run, a['id'])
+            assert math.isclose(sum(float(v['Net Area']) for v in surfaces), a['net_area_m2'], abs_tol=0.01 * len(surfaces)), (run, a['id'])
+            assert all(math.isclose(float(v['U-Factor with Film']), a['u_value_W_m2K'], abs_tol=0.001) for v in surfaces), (run, a['id'])
+        # EnergyPlus reports the SHGC of the layer it derives from the simple-glazing inputs (Duratherm 0.33 reads 0.331).
+        for w in envelope['windows']:
+            openings = [v for (n, _), v in table.items() if n == 'Exterior Fenestration' and v.get('Construction', '').upper() == w['id'].upper()]
+            assert len(openings) == w['count'], (run, w['id'])
+            assert math.isclose(sum(float(v['Area of Multiplied Openings']) for v in openings), w['area_m2'], abs_tol=0.01 * len(openings)), (run, w['id'])
+            assert all(math.isclose(float(v['Glass U-Factor']), w['u_value_W_m2K'], abs_tol=0.001) and math.isclose(float(v['Glass SHGC']), w['shgc'], abs_tol=0.002) for v in openings), (run, w['id'])
+        for o in envelope['orientations']:
+            column = next(c for c in table[('Window-Wall Ratio', 'Gross Window-Wall Ratio')] if c.startswith(o['direction']))
+            assert math.isclose(float(table[('Window-Wall Ratio', 'Gross Wall Area')][column]), o['wall_gross_m2'], abs_tol=0.01), (run, o['direction'])
+            assert math.isclose(float(table[('Window-Wall Ratio', 'Gross Window-Wall Ratio')][column]), 100 * o['window_wall_ratio'], abs_tol=0.01), (run, o['direction'])
+        assert math.isclose(float(table[('Skylight-Roof Ratio', 'Skylight-Roof Ratio')]['Total']), 100 * envelope['skylight_roof_ratio'], abs_tol=0.01), run
+    print(f'PASS: 4 native zones, {len(native_schedules)} full annual schedules and 50 design profiles, CSV round trips, {len(geometry["surfaces"])} surface and {len(shade_areas)} shade mesh areas and source hashes; envelope areas, U-values, SHGC and window ratios match the Annual and Design-Day EnergyPlus Envelope Summary.')
 
 if __name__ == '__main__':
     main()

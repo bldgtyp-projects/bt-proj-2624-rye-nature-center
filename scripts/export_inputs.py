@@ -31,6 +31,74 @@ def csv_text(rows: list) -> str:
     writer.writerows(rows)
     return buf.getvalue()
 
+def cardinal(face) -> str:
+    # EnergyPlus Window-Wall Ratio bins: North 315 to 45 degrees, East 45 to 135, and so on.
+    azimuth = face.horizontal_orientation() % 360
+    return ['North', 'East', 'South', 'West'][int(((azimuth + 45) % 360) // 90)]
+
+def envelope(model: Model) -> tuple[dict, list]:
+    """Exterior assemblies, windows by orientation and infiltration, from the native constructions."""
+    kinds = {('Wall', 'Outdoors'): ('wall', 'Exterior wall'), ('RoofCeiling', 'Outdoors'): ('roof', 'Roof'), ('Floor', 'Ground'): ('floor', 'Slab on grade')}
+    assemblies: dict = {}
+    windows: dict = {}
+    directions = {d: {'direction': d, 'wall_gross_m2': 0.0, 'window_m2': 0.0} for d in ('North', 'East', 'South', 'West')}
+    exterior_m2 = 0.0
+    for face in model.faces:
+        bc = face.boundary_condition.name
+        if bc not in ('Outdoors', 'Ground'):
+            continue
+        if (face.type.name, bc) not in kinds or face.doors:
+            raise ValueError(f'Envelope summary does not handle {face.type.name}/{bc} faces or doors: {face.identifier}')
+        kind, label = kinds[(face.type.name, bc)]
+        c = face.properties.energy.construction
+        a = assemblies.setdefault(c.identifier, {'id': c.identifier, 'kind': kind, 'label': label, 'gross_area_m2': 0.0, 'net_area_m2': 0.0,
+              'u_value_W_m2K': c.u_factor, 'r_value_m2K_W': 1 / c.u_factor, 'layers': [
+                  {'name': m.display_name, 'thickness_m': m.thickness, 'conductivity_W_mK': m.conductivity, 'r_value_m2K_W': m.r_value}
+                  for m in c.materials]})
+        assert a['kind'] == kind, c.identifier
+        a['gross_area_m2'] += face.area
+        a['net_area_m2'] += face.punched_geometry.area
+        if bc == 'Outdoors':
+            exterior_m2 += face.area
+        if kind == 'wall':
+            directions[cardinal(face)]['wall_gross_m2'] += face.area
+        for aperture in face.apertures:
+            glazing = aperture.properties.energy.construction
+            (material,) = glazing.materials
+            w = windows.setdefault(glazing.identifier, {'id': glazing.identifier, 'label': 'Skylights' if kind == 'roof' else 'Windows', 'count': 0, 'area_m2': 0.0,
+                  'u_value_W_m2K': material.u_factor, 'shgc': material.shgc, 'vt': material.vt, 'by_direction_m2': {}})
+            assert w['label'] == ('Skylights' if kind == 'roof' else 'Windows'), glazing.identifier
+            w['count'] += 1
+            w['area_m2'] += aperture.area
+            if kind == 'wall':
+                directions[cardinal(face)]['window_m2'] += aperture.area
+                w['by_direction_m2'][cardinal(face)] = w['by_direction_m2'].get(cardinal(face), 0.0) + aperture.area
+    for d in directions.values():
+        d['window_wall_ratio'] = d['window_m2'] / d['wall_gross_m2']
+    roof = [a for a in assemblies.values() if a['kind'] == 'roof']
+    skylight_m2 = sum(w['area_m2'] for w in windows.values() if w['label'] == 'Skylights')
+    infiltration = {e.infiltration.flow_per_exterior_area for e in (r.properties.energy for r in model.rooms)}
+    (flow_per_area,) = infiltration
+    data = {'assemblies': sorted(assemblies.values(), key=lambda a: ['wall', 'roof', 'floor'].index(a['kind'])),
+            'windows': sorted(windows.values(), key=lambda w: w['label'] != 'Windows'),
+            'orientations': list(directions.values()),
+            'skylight_roof_ratio': skylight_m2 / sum(a['gross_area_m2'] for a in roof),
+            'infiltration': {'flow_per_exterior_area_m3_s_m2': flow_per_area, 'exterior_area_m2': exterior_m2, 'flow_m3_s': flow_per_area * exterior_m2,
+                             'ach': flow_per_area * exterior_m2 * 3600 / sum(r.volume for r in model.rooms)},
+            'notes': ['U-values include standard inside and outside air films. Opaque values are clear-field: framing is blended into the cavity layers, and no junction thermal bridges are modeled.',
+                      'Windows and skylights are single whole-unit values (U-value, SHGC and visible transmittance). Frames are not modeled separately. Product and frame specifications are provisional.',
+                      'The slab U-value is the floor assembly alone. The annual model adds the Kiva two-dimensional ground model with 2 in perimeter XPS; the design-day model holds the ground at a constant {temperature:18}.',
+                      'Infiltration is a constant flow per unit of above-grade exterior surface area (walls and roofs, including windows), always on, with no wind or temperature dependence.']}
+    rows = [['element', 'construction', 'direction', 'gross_area_m2', 'net_area_m2', 'u_value_W_m2K_with_films', 'r_value_m2K_W_with_films', 'shgc', 'visible_transmittance', 'infiltration_m3_s_per_m2_exterior', 'infiltration_m3_s']]
+    for a in data['assemblies']:
+        rows.append([a['label'], a['id'], '', a['gross_area_m2'], a['net_area_m2'], a['u_value_W_m2K'], a['r_value_m2K_W'], '', '', '', ''])
+    for w in data['windows']:
+        for direction, area in sorted(w['by_direction_m2'].items()) or [('Roof', w['area_m2'])]:
+            rows.append([w['label'], w['id'], direction, area, area, w['u_value_W_m2K'], 1 / w['u_value_W_m2K'], w['shgc'], w['vt'], '', ''])
+    i = data['infiltration']
+    rows.append(['Infiltration', 'above-grade exterior surface', '', i['exterior_area_m2'], '', '', '', '', '', i['flow_per_exterior_area_m3_s_m2'], i['flow_m3_s']])
+    return data, rows
+
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--refresh', action='store_true', help='Capture the sources named in report.json before export.')
@@ -113,12 +181,14 @@ def main() -> None:
         for season in ('winter','summer'):
             archive.writestr(f'{ident}_{season}_design.csv', csv_text([['interval_start_local_standard_time','value','unit']] + [[f'{i//4:02d}:{i%4*15:02d}',v,collection.header.unit] for i,v in enumerate(exported[ident][f'{season}_design'])]))
     archive.close()
-    data = {'schema_version':1, 'exported_at':datetime.now(timezone.utc).isoformat(), 'status':'Draft input snapshot',
+    envelope_data, envelope_rows = envelope(model)
+    (SITE / 'downloads/envelope-summary.csv').write_text(csv_text(envelope_rows))
+    data ={'schema_version':1, 'exported_at':datetime.now(timezone.utc).isoformat(), 'status':'Draft input snapshot',
             'snapshot_label':snapshot['snapshot_label'],
             'source':{'path':str(Path(snapshot['input_source']).relative_to('..')), 'sha256':digest(SOURCE), 'simulation_parameters_sha256':digest(PARAMS), 'final_idf_sha256':digest(final_idf), 'honeybee_core':importlib.metadata.version('honeybee-core'), 'honeybee_energy':importlib.metadata.version('honeybee-energy')},
             'calendar':{'year':2026,'days':365,'jan_1_day':effective_day,'saved_parameter_jan_1_day':rp['start_day_of_week'],'steps_per_hour':4,'time_basis':'2026 calendar, January 1 on a Thursday. Times mark the start of each interval, in local standard time with no daylight saving and no holidays.'},
             'notes':['Reference People is the occupant density times modeled floor area.', 'Modeled floor area comes from the energy-model geometry and differs from the architectural gross area.'],
-            'zones':zones,'schedules':exported}
+            'zones':zones,'envelope':envelope_data,'schedules':exported}
     write_json(SITE / 'data/inputs.json', data)
     shades = []
     for shade in model.shades:

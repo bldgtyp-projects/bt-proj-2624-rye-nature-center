@@ -263,6 +263,55 @@ function showProgram(data) {
   }
   renderZone();
 }
+function showEnvelope(data) {
+  const e = data.envelope;
+  const u = (x) => units.number(x, "u_value");
+  const r = (x) => units.number(x, "r_value");
+  const area = (x) => units.number(x, "area");
+  const pct = (x) => `${num(100 * x, 1)}%`;
+  const label = (k) => units.label(k);
+  const opaque = table(
+    e.assemblies.map((a) => [a.label, area(a.net_area_m2), u(a.u_value_W_m2K), r(a.r_value_m2K_W)]),
+    ["Assembly", `Net area (${label("area")})`, `U-value (${label("u_value")})`, `R-value (${label("r_value")})`],
+  );
+  const glazing = table(
+    e.windows.map((w) => [`${w.label} (${w.id})`, w.count, area(w.area_m2), u(w.u_value_W_m2K), w.shgc.toFixed(2), w.vt.toFixed(2)]),
+    ["Element", "Count", `Area (${label("area")})`, `U-value (${label("u_value")})`, "SHGC", "Visible transmittance"],
+  );
+  const sky = e.windows.filter((w) => w.label === "Skylights").reduce((s, w) => s + w.area_m2, 0);
+  const ratios = table(
+    [
+      ...e.orientations.map((o) => [o.direction, area(o.wall_gross_m2), area(o.window_m2), pct(o.window_wall_ratio)]),
+      ["Roof (skylights)", area(e.assemblies.filter((a) => a.kind === "roof").reduce((s, a) => s + a.gross_area_m2, 0)), area(sky), pct(e.skylight_roof_ratio)],
+    ],
+    ["Facing", `Gross wall or roof (${label("area")})`, `Glazing (${label("area")})`, "Glazing ratio"],
+  );
+  const i = e.infiltration;
+  const air = table(
+    [
+      ["Flow per exterior surface area", units.fmt(i.flow_per_exterior_area_m3_s_m2, "airflow_per_area", 4)],
+      ["Above-grade exterior surface", units.fmt(i.exterior_area_m2, "area")],
+      ["Building total", units.fmt(i.flow_m3_s, "airflow")],
+      ["Air changes", `${num(i.ach, 2)} per hour`],
+    ],
+    ["Infiltration", "Model input"],
+  );
+  const layers = e.assemblies
+    .map(
+      (a) =>
+        `<h4>${esc(a.label)}</h4>${table(
+          [...a.layers.map((l) => [l.name, units.number(l.thickness_m, "thickness"), r(l.r_value_m2K_W)]), ["Air films", "", r(a.r_value_m2K_W - a.layers.reduce((s, l) => s + l.r_value_m2K_W, 0))], ["Total", units.number(a.layers.reduce((s, l) => s + l.thickness_m, 0), "thickness"), r(a.r_value_m2K_W)]],
+          ["Layer, outside to inside", `Thickness (${label("thickness")})`, `R-value (${label("r_value")})`],
+        )}`,
+    )
+    .join("");
+  $("#envelope").innerHTML = `<div class="section-title"><h2>Envelope</h2></div><p>The assemblies, glazing and air leakage in the energy model, read from the model file and checked against the EnergyPlus envelope summary.</p>
+    <h3>Opaque assemblies</h3>${opaque}<h3>Windows and skylights</h3>${glazing}
+    <details><summary>Glazing by orientation</summary><div class="details-body">${ratios}</div></details>
+    <details><summary>Assembly layers</summary><div class="details-body">${layers}<p class="caption">Cavity layers blend insulation and framing into one material. Layer names come from the model's material library.</p></div></details>
+    <details><summary>Infiltration</summary><div class="details-body">${air}</div></details>
+    <details><summary>Notes</summary><div class="details-body">${e.notes.map((n) => `<p>${units.prose(esc(n))}</p>`).join("")}<a class="link" href="downloads/envelope-summary.csv" download>Download the envelope summary (CSV) →</a></div></details>`;
+}
 async function showResults() {
   const host = $("#results");
   const area = host.dataset.area;
@@ -275,7 +324,7 @@ async function showResults() {
 }
 async function start() {
   if ($("#results")) await showResults().catch((e) => fail($("#results"), e));
-  if (!$("#program") && !$("#viewer") && !$("#provenance")) return;
+  if (!$("#program") && !$("#viewer") && !$("#provenance") && !$("#envelope")) return;
   let data;
   try {
     data = await getData("data/inputs.json");
@@ -285,6 +334,7 @@ async function start() {
   }
   if ($("#program")) showProgram(data);
   if ($("#provenance")) $("#provenance").innerHTML = provenance(data);
+  if ($("#envelope")) showEnvelope(data);
   if ($("#viewer")) {
     try {
       const { showModel } = await import("./viewer.js" + new URL(import.meta.url).search);

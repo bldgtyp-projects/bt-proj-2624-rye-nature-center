@@ -33,7 +33,7 @@ For a new coordinated snapshot, follow [UPDATE.md](docs/UPDATE.md), archive firs
 | Path | Purpose |
 | --- | --- |
 | `report.json` | Selected project-local source/review paths, snapshot label and proposed publishing identity |
-| `scripts/export_inputs.py` | Native Honeybee program, schedule and geometry projection |
+| `scripts/export_inputs.py` | Native Honeybee program, schedule and geometry projection, plus the envelope summary (assemblies, glazing by orientation, infiltration) for the Model page and `envelope-summary.csv` |
 | `scripts/export_results.py` | Annual monthly/end-use energy, humidity summary and provenance |
 | `scripts/export_design_days.py` | Separate four-condition thermal-load/operating package and source identity |
 | `scripts/export_resilience.py` | Winter SET / summer heat-index outage package, REVIVE criteria comparison, run checks, source identity and the on-demand supporting graphs in `site/data/resilience-details.json` (uses `honeybee_revive` from the Ladybug runtime; evaluates the final nine days of a run with or without a lead-in) |
