@@ -212,7 +212,7 @@ def main() -> None:
             'winter_min_air_C':winter['min_air_C'],'summer_max_air_C':max(v['max_air_C'] for v in summer),
             'summer_max_RH_percent':max(v['max_RH_percent'] for v in summer),'maximum_backup_W':max(v['max_backup_W'] for v in days.values()),
             'equipment':units[key],'coil':analysis['zones'][key],'conditions':[{'name':n,**v} for n,v in days.items()]})
-    data={'schema_version':1,'release':{'id':'design-days-2026-four-conditions-sized','review_date':'2026-10-21','status':'reviewed_design_model',
+    data={'schema_version':1,'release':{'id':'design-days-2026-four-conditions-sized','review_date':'2026-11-03','status':'reviewed_design_model',
         'source':{**source,'idf_sha256':digest(PRIVATE/'in.idf'),'osm_sha256':digest(PRIVATE/'in.osm'),'sql_sha256':digest(PRIVATE/'eplusout.sql'),
                   'energyplus':'25.1.0','openstudio':'3.10.0','annual_hbjson_sha256':matched['annual_input_sha256'],'physical_inputs_match_annual':True}},
         'conditions':conditions,'design_day_programs':programs,'zones':zones,'coincident_room_loads_W':{k:v['peak_W'] for k,v in review['coincident_zone_loads'].items()},
@@ -224,9 +224,9 @@ def main() -> None:
         'sizing_notes':['ERV heat recovery is a provisional 75% sensible and 50% latent, with frost control at a {temperature:0} minimum exhaust temperature. Frost control lowers the winter supply temperature, and the coil heating above includes it. The selected ERV sets the actual winter coil load.',
                         'Infiltration is a constant design rate until the airtightness basis is set. Its share of the room loads is in the component table.',
                         f"On the summer design day the Core kettle and dishwasher run at full draw at the {analysis['room_load_components']['cooling_time'].split()[1][:5]} building room-load peak.",
-                        'Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling. The annual run models the ground with Kiva and has warmer summer soil.',
-                        'Heat-pump performance curves and entering-water temperatures are generic, and the ground loop is a fixed-temperature stand-in for a borefield. MEP and manufacturer data replace both.',
-                        'Community-event occupancy and additional summer weather cases are not yet run.',
+                        'Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling. The annual run models the ground with Kiva.',
+                        'Heat-pump performance curves and entering-water temperatures are generic, and the ground loop is a simple temperature relation standing in for a borefield. MEP and manufacturer data replace both.',
+                        'Design days use the regular program; the four 100-person evening events in the annual run are not included.',
                         'These results do not size the borefield or select equipment.']}
     write_json(SITE/'downloads/design-day-results.json',data)
     buf=io.StringIO(newline='');writer=csv.writer(buf)

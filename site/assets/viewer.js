@@ -140,7 +140,7 @@ export async function showModel(inputs) {
   }
   const info = document.querySelector("#geometry-info");
   const p = document.createElement("p");
-  p.textContent = `${inputs.zones.length} zones · ${geometry.surfaces.length} surfaces including windows and doors · ${(geometry.shades ?? []).length} shading surfaces`;
+  p.textContent = `${inputs.zones.length} zones · ${geometry.surfaces.length} surfaces including windows and skylights · ${(geometry.shades ?? []).length.toLocaleString("en-US")} shading surfaces`;
   info.append(p);
   const north = new THREE.ArrowHelper(
     new THREE.Vector3(0, 1, 0),

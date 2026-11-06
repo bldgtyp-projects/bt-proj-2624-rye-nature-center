@@ -13,26 +13,26 @@ export const REFS = {
     note: "Outage weather (6.1.2.1), winter criteria (6.3.2) and summer criteria (6.4.2)." },
   heat_index: { group: "Standards and methods", label: "Heat index categories", source: "NOAA National Weather Service",
     href: "https://www.weather.gov/ama/heatindex" },
-  mora: { group: "Standards and methods", label: "Mora et al. (2017), Global risk of deadly heat, Nature Climate Change 7, 501–506", source: "doi:10.1038/nclimate3322",
+  mora: { group: "Standards and methods", label: "Mora et al. (2017), Global risk of deadly heat, Nature Climate Change 7, 501 to 506", source: "doi:10.1038/nclimate3322",
     href: "https://doi.org/10.1038/nclimate3322", note: "Basis of the REVIVE deadly-day limit." },
   design_day: { group: "Standards and methods", label: "SizingPeriod:DesignDay, EnergyPlus Input Output Reference", source: "Big Ladder Software",
     href: "https://bigladdersoftware.com/epx/docs/25-1/input-output-reference/group-location-climate-weather-file-access.html#sizingperioddesignday",
     note: "How EnergyPlus builds a design day: daily temperature range and the ASHRAE clear-sky (tau) model." },
-  ashrae160: { group: "Standards and methods", label: "ASHRAE Standard 160, Criteria for Moisture-Control Design Analysis in Buildings", source: "PNNL Building America Solution Center",
+  ashrae160: { group: "Standards and methods", label: "ANSI/ASHRAE Standard 160-2021, Criteria for Moisture-Control Design Analysis in Buildings", source: "PNNL Building America Solution Center (catalog entry)",
     href: "https://basc.pnnl.gov/library/criteria-moisture-control-design-analysis-buildings-ansiashrae-160-2021",
     note: "Indoor moisture, rain leakage and the mold-index limit used on the Wall moisture page." },
-  huber_stone: { group: "Products", label: "Hard coat stucco and adhered stone over ZIP System sheathing per IBC (HUB 9213)", source: "Huber Engineered Woods tech tip",
+  huber_stone: { group: "Products", label: "Hard Coat Stucco/Adhered Stone over ZIP System Sheathing in Accordance with IBC (HUB 9213)", source: "Huber Engineered Woods tech tip",
     href: "https://www.huberwood.com/uploads/documents/technical/Stucco-Adhered-Stone-IBC-over-ZIP-System-sheathing-Tech-Tip-Wall-ZIP-System_2021-02-05-205000.pdf",
-    note: "A second water-resistive barrier over ZIP System sheathing, and the 2021 IBC drainage space of at least 3/16 in in moist climates." },
+    note: "A second water-resistive barrier over ZIP System sheathing, and the 2021 IBC drainage space of at least 3/16 in in moist and marine climates." },
   huber_r_manual: { group: "Products", label: "ZIP System R-sheathing Installation Manual (HUB 3021, rev. 02/12/2025)", source: "Huber Engineered Woods",
-    href: "https://huberwood.com/uploads/documents/technical/ZIP-System-R-sheathing-Installation-Manual.pdf",
+    href: "https://www.huberwood.com/uploads/documents/technical/ZIP-System-R-sheathing-Installation-Manual.pdf",
     note: "Notes and limitations (pages 6 to 8), cladding fasteners (page 23) and adhered stone (page 39)." },
   esr3373: { group: "Products", label: "ICC-ES ESR-3373, ZIP System R-Sheathing (revised October 2025)", source: "ICC Evaluation Service",
     href: "https://icc-es.org/wp-content/uploads/report-directory/ESR-3373.pdf",
     note: "Evaluated uses (walls of Type V construction) and conditions of use." },
   zip_rainscreen: { group: "Products", label: "ZIP System Rainscreen Installation Manual (HUB 82460, rev. 08/01/23)", source: "Huber Engineered Woods",
     href: "https://www.huberwood.com/uploads/documents/technical/Installation-Manual-for-ZIP-System-Rainscreen.pdf",
-    note: "Drainage mat whose taped fabric face serves as the second water-resistive barrier." },
+    note: "Drainage mat whose vapor-permeable fabric face, with taped vertical seams, serves as the second water-resistive barrier (pages 4 and 5)." },
   dorken_lath: { group: "Products", label: "DELTA-DRY & LATH", source: "Dörken Systems",
     href: "https://www.dorken.com/en/our-products/products/commercial/delta-dry-lath.php",
     note: "Drainage mat with built-in lath, modeled behind the stone." },
@@ -47,7 +47,7 @@ export const REFS = {
   honeybee: { group: "Software", label: "Honeybee", source: "Ladybug Tools",
     href: "https://www.ladybug.tools/honeybee.html", note: "Builds the model and writes the simulation inputs." },
   hbjson: { group: "Software", label: "HBJSON model schema", source: "Ladybug Tools",
-    href: "https://ladybug-tools.github.io/honeybee-schema/model.html" },
+    href: "https://www.ladybug.tools/honeybee-schema/model.html" },
   honeybee_revive: { group: "Software", label: "honeybee-REVIVE", source: "PH-Tools",
     href: "https://github.com/PH-Tools/honeybee_REVIVE", note: "Builds the outage weather from the TMYx file and calculates SET." },
 };
@@ -76,7 +76,7 @@ export function pdfPage(id, page, text) {
 }
 
 // Links explicit citations in already-escaped prose: each mapped REVIVE section, then the first of each named source.
-const CITED = [[/Phius REVIVE 2024 Standard v24\.1\.1/, "revive"], [/Mora et al\./, "mora"], [/\bKiva\b/, "kiva"]];
+const CITED = [[/Phius REVIVE 2024 Pilot Standard v24\.1\.1/, "revive"], [/Mora et al\./, "mora"], [/\bKiva\b/, "kiva"]];
 export function cite(html) {
   let out = html.replace(/\b6(?:\.\d)+\b/g, n => (REVIVE_PAGES[n] ? section(n) : n));
   for (const [pattern, id] of CITED) out = out.replace(pattern, m => link(id, m));

@@ -144,8 +144,8 @@ def main():
                  'all_quarter_hour_max_RH_percent': diagnostics['dehumidifiers'].get(key, {}).get('maximum_quarter_hour_RH_percent')}
                 for key, label in [('labs','Learning Labs'),('visitor','Visitor Center'),('core','Core'),('restrooms','Restrooms')]]
     output = {'schema_version': 3, 'release': {'id': 'annual-2026-kiva-slab',
-              'review_date': '2026-10-21', 'status': 'reviewed_design_model',
-              'scenario': 'Current materials, internal mass and sized GSHPs; Kiva slab-ground boundary; windows with moisture limits and Visitor/Core dehumidification',
+              'review_date': '2026-11-03', 'status': 'reviewed_design_model',
+              'scenario': '3 November 2026 model: revised occupancy, window and tree-shading edits; generic water-source heat pump allowances; Kiva slab-ground boundary; windows with moisture limits; Visitor/Core dehumidification',
               'source': {**provenance, 'hbjson_sha256': inputs['source']['sha256'],
                          'idf_sha256': digest(PRIVATE / 'in.idf'), 'osm_sha256': digest(PRIVATE / 'in.osm'),
                          'sql_sha256': digest(PRIVATE / 'eplusout.sql'),
@@ -169,7 +169,7 @@ def main():
                          'review': {'severe_errors': severe_errors, 'severe_error_note': SEVERE_NOTE if severe_errors else None, 'humidity_status': 'visitor_core_control_verified_labs_and_winter_comfort_open',
                                     'occupied_cooling_unmet_hours': occupied_cooling_unmet, 'annual_latch_intervals_checked': 35040},
                          'systems': [
-                             ['Heating and cooling','A water-source heat pump in each of the four zones, with project capacities and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic.'],
+                             ['Heating and cooling','A water-source heat pump in each of the four zones, with provisional capacity allowances and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic.'],
                              ['Humidity control','Visitor Center and Core each have a generic {liquid_per_day:120} dehumidifier set to 60% RH, off while windows are open. Its electricity is in Cooling. Learning Labs and Restrooms have none.'],
                              ['Ventilation','One shared ERV, separate from heating and cooling, at 75% sensible and 50% latent effectiveness for all flows before frost control.'],
                              ['Air paths','The ERV supplies Learning Labs, Visitor Center and Core. Air transfers through Core. Core and Restrooms exhaust through the ERV, with no separate restroom exhaust fan.'],

@@ -1,6 +1,8 @@
 # Open copy flags (local 261103 build)
 
-Raised 3 November, rechecked and extended 6 November 2026 against the rendered local site. Ed rewrites these; do not push `main` until they are closed. Sources: page text in `scripts/build.mjs`, renderer text in `site/assets/results.js`, exporter prose in `scripts/export_*.py` (rerun the exporter without `--refresh` after editing it).
+Raised 3 November, rechecked and extended 6 November 2026 against the rendered local site. Ed rewrites these; do not push `main` until they are closed.
+
+**6 November copy and fact pass (local, not pushed):** closed 1 to 7 and 9 in the page copy (Overview sources, cooling bridge caption and its full-capacity remainder, component totals now computed, design-day events note, trees and their transmittance, `release.scenario`). 10 no longer applies (the Annual run has four sizing days and no page states 114). 16 is resolved in the Resilience method text (interior walls in place of the eight air boundaries, simpler solar distribution). Still open for Ed: 8 (PolygonClipping severe, kept in the JSON only), 11 to 14 (Kendall differences; the pages describe the model) and 15 (22-person refuge). Sources: page text in `scripts/build.mjs`, renderer text in `site/assets/results.js`, exporter prose in `scripts/export_*.py` (rerun the exporter without `--refresh` after editing it).
 
 ## Stale or inaccurate
 

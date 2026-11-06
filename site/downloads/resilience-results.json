@@ -32,7 +32,7 @@
     }
   ],
   "criteria": {
-    "basis": "Phius REVIVE 2024 Standard v24.1.1, sections 6.3.2 and 6.4.2, over the 168 outage hours.",
+    "basis": "Phius REVIVE 2024 Pilot Standard v24.1.1, sections 6.3.2 and 6.4.2, over the 168 outage hours.",
     "set_threshold_C": 12.222222222222221,
     "set_limit_F_h": 216.0,
     "cold_air_limit_C": 2.2222222222222223,
@@ -7001,12 +7001,12 @@
     }
   },
   "limitations": [
-    "First-pass results for design review. They do not designate a refuge or imply certification.",
+    "First-pass results for design review, with Learning Labs as the assumed refuge.",
     "Heating, cooling and water heating are off for the seven outage days. Backup loads draw a constant 8.5 kWh/day and the ERV runs during refuge hours. The backup power supply is not sized.",
     "Outage ventilation follows the refuge programs during refuge hours: 10 cfm/person plus 0.12 cfm/ft2 in Learning Labs and area rates in Core and Visitor Center, through 75% sensible and 50% latent heat recovery. REVIVE 6.3.3 lists 5 cfm/person.",
-    "Windows follow the annual controls: open only with indoor air at {temperature:22} to {temperature:26} and outdoor air at {temperature:15} to {temperature:25}, with no wind-driven flow. They deliver no airflow in either outage. Opening windows during a summer outage is not modeled.",
-    "Only Learning Labs is occupied: 22 people, 09:00 to 18:00. REVIVE exempts unoccupied zones from the winter SET limit. The 36°F air limit applies to every zone.",
-    "REVIVE 6.4.2 prints Celsius and Fahrenheit deadly-day formulas that differ by {temperature_delta:0.36:2}. Results use the Celsius formula; the Fahrenheit formula gives a different deadly-day count; both are in the data.",
+    "Windows keep the annual temperature limits: open only with indoor air at {temperature:22} to {temperature:26} and outdoor air at {temperature:15} to {temperature:25}, with no wind-driven flow and without the annual dew-point limit. They deliver no airflow in either outage. No other window-opening strategy was tested.",
+    "Only Learning Labs is occupied: 22 people, 09:00 to 18:00. REVIVE exempts unoccupied zones from the winter SET limit. The 36°F air limit applies to every zone. For unoccupied zones of a nonresidential building, REVIVE 6.4.2 applies the summer heat-exposure criteria set in the Current Facility Requirements instead; the heat-index and deadly-day limits shown for those zones are a benchmark only.",
+    "REVIVE 6.4.2 prints Celsius and Fahrenheit deadly-day formulas that differ by {temperature_delta:0.357:2}. Results use the Celsius formula; the Fahrenheit formula gives a different deadly-day count; both are in the data.",
     "The Kiva ground model uses provisional inputs and starts from {temperature:21.11:0} indoors in winter and {temperature:23.89:0} in summer. ERV fan power, backup loads and refuge occupancy are assumptions to confirm."
   ]
 }

@@ -2,9 +2,9 @@
   "schema_version": 3,
   "release": {
     "id": "annual-2026-kiva-slab",
-    "review_date": "2026-10-21",
+    "review_date": "2026-11-03",
     "status": "reviewed_design_model",
-    "scenario": "Current materials, internal mass and sized GSHPs; Kiva slab-ground boundary; windows with moisture limits and Visitor/Core dehumidification",
+    "scenario": "3 November 2026 model: revised occupancy, window and tree-shading edits; generic water-source heat pump allowances; Kiva slab-ground boundary; windows with moisture limits; Visitor/Core dehumidification",
     "source": {
       "run": "16_OSM/Rye_Nature_Center_261103/openstudio",
       "weather": "USA_NY_White.Plains-Westchester.County.AP.725037_TMYx.epw",
@@ -335,7 +335,7 @@
     "systems": [
       [
         "Heating and cooling",
-        "A water-source heat pump in each of the four zones, with project capacities and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic."
+        "A water-source heat pump in each of the four zones, with provisional capacity allowances and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic."
       ],
       [
         "Humidity control",
@@ -375,7 +375,7 @@
     "schema_version": 1,
     "release": {
       "id": "design-days-2026-four-conditions-sized",
-      "review_date": "2026-10-21",
+      "review_date": "2026-11-03",
       "status": "reviewed_design_model",
       "source": {
         "run": "17_OSM_DESIGN_DAY/Rye_Nature_Center_261103/openstudio",
@@ -1484,9 +1484,9 @@
       "ERV heat recovery is a provisional 75% sensible and 50% latent, with frost control at a {temperature:0} minimum exhaust temperature. Frost control lowers the winter supply temperature, and the coil heating above includes it. The selected ERV sets the actual winter coil load.",
       "Infiltration is a constant design rate until the airtightness basis is set. Its share of the room loads is in the component table.",
       "On the summer design day the Core kettle and dishwasher run at full draw at the 14:15 building room-load peak.",
-      "Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling. The annual run models the ground with Kiva and has warmer summer soil.",
-      "Heat-pump performance curves and entering-water temperatures are generic, and the ground loop is a fixed-temperature stand-in for a borefield. MEP and manufacturer data replace both.",
-      "Community-event occupancy and additional summer weather cases are not yet run.",
+      "Design days use a constant {temperature:18} slab ground, which credits the slab with some summer cooling. The annual run models the ground with Kiva.",
+      "Heat-pump performance curves and entering-water temperatures are generic, and the ground loop is a simple temperature relation standing in for a borefield. MEP and manufacturer data replace both.",
+      "Design days use the regular program; the four 100-person evening events in the annual run are not included.",
       "These results do not size the borefield or select equipment."
     ]
   }

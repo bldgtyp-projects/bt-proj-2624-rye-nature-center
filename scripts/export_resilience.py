@@ -84,7 +84,7 @@ def details(sql:Path,envelope:bool)->dict:
         figures['energy'].append({'id':fid,'title':title,'unit':'kWh','series':[{'name':LABELS[zone_key(k)],'zone':zone_key(k),'values':v} for k,v in sorted(g.items())]})
     solar=[keyed(get_time_series_data(sql,f'Enclosure Exterior Windows Total Transmitted {kind} Solar Radiation Energy'),1/J_PER_KWH) for kind in ('Beam','Diffuse')]
     figures['energy'].insert(3,{'id':'solar','title':'Transmitted window solar (beam + diffuse)','unit':'kWh',
-        'series':[{'name':'Whole building','zone':None,'values':[round(a+b,4) for a,b in zip(v,solar[1][k])]} for k,v in solar[0].items()]})
+        'series':[{'name':LABELS[zone_key(k)],'zone':zone_key(k),'values':[round(a+b,4) for a,b in zip(v,solar[1][k])]} for k,v in sorted(solar[0].items())]})
     for fid,title,variable in AIR_CHANGES:
         figures['air_changes'].append({'id':fid,'title':title,'unit':'ACH','series':[{'name':LABELS[zone_key(k)],'zone':zone_key(k),'values':v} for k,v in sorted(keyed(get_time_series_data(sql,variable)).items())]})
     if envelope:
@@ -166,7 +166,7 @@ def main()->None:
         'source':{'hbjson_sha256':source['files']['input.hbjson'],'weather_file':Path(source['weather']).name,'weather_sha256':source['weather_sha256'],
                   'energyplus':'25.1.0','openstudio':'3.10.0','set_calculator_sha256':digest(Path(set_calculator.__file__))}},
         'zones':[{'id':k,'label':LABELS[k]} for k in PREFIX],
-        'criteria':{'basis':'Phius REVIVE 2024 Standard v24.1.1, sections 6.3.2 and 6.4.2, over the 168 outage hours.',
+        'criteria':{'basis':'Phius REVIVE 2024 Pilot Standard v24.1.1, sections 6.3.2 and 6.4.2, over the 168 outage hours.',
             'set_threshold_C':SET_THRESHOLD_C,'set_limit_F_h':SET_LIMIT_F_H,'cold_air_limit_C':COLD_AIR_LIMIT_C,
             'set_conditions':{'clo':CLOTHING_INSULATION_CLO,'W_per_person':ACTIVITY_LEVEL_W_PER_PERSON,'air_speed_m_s':AIR_SPEED_M_S},
             'heat_index_bands_C':[{'id':i,'label':l,'from_C':t} for i,l,t in HI_BANDS],
@@ -209,12 +209,12 @@ def main()->None:
                     'air_max_C':max(air[k][WINDOW]),'refuge_occupied':checks['outage_people_heat_kWh'][k]>0}
         data[season]=block
     data['limitations']=[
-        'First-pass results for design review. They do not designate a refuge or imply certification.',
+        'First-pass results for design review, with Learning Labs as the assumed refuge.',
         'Heating, cooling and water heating are off for the seven outage days. Backup loads draw a constant 8.5 kWh/day and the ERV runs during refuge hours. The backup power supply is not sized.',
         'Outage ventilation follows the refuge programs during refuge hours: 10 cfm/person plus 0.12 cfm/ft2 in Learning Labs and area rates in Core and Visitor Center, through 75% sensible and 50% latent heat recovery. REVIVE 6.3.3 lists 5 cfm/person.',
-        'Windows follow the annual controls: open only with indoor air at {temperature:22} to {temperature:26} and outdoor air at {temperature:15} to {temperature:25}, with no wind-driven flow. They deliver no airflow in either outage. Opening windows during a summer outage is not modeled.',
-        'Only Learning Labs is occupied: 22 people, 09:00 to 18:00. REVIVE exempts unoccupied zones from the winter SET limit. The 36°F air limit applies to every zone.',
-        'REVIVE 6.4.2 prints Celsius and Fahrenheit deadly-day formulas that differ by {temperature_delta:0.36:2}. Results use the Celsius formula; the Fahrenheit formula gives the same deadly-day count.',
+        'Windows keep the annual temperature limits: open only with indoor air at {temperature:22} to {temperature:26} and outdoor air at {temperature:15} to {temperature:25}, with no wind-driven flow and without the annual dew-point limit. They deliver no airflow in either outage. No other window-opening strategy was tested.',
+        'Only Learning Labs is occupied: 22 people, 09:00 to 18:00. REVIVE exempts unoccupied zones from the winter SET limit. The 36°F air limit applies to every zone. For unoccupied zones of a nonresidential building, REVIVE 6.4.2 applies the summer heat-exposure criteria set in the Current Facility Requirements instead; the heat-index and deadly-day limits shown for those zones are a benchmark only.',
+        'REVIVE 6.4.2 prints Celsius and Fahrenheit deadly-day formulas that differ by {temperature_delta:0.357:2}. Results use the Celsius formula; the Fahrenheit formula gives the same deadly-day count.',
         'The Kiva ground model uses provisional inputs and starts from {temperature:21.11:0} indoors in winter and {temperature:23.89:0} in summer. ERV fan power, backup loads and refuge occupancy are assumptions to confirm.']
     if any(z['deadly_days']!=z['deadly_days_F_formula'] for z in data['summer']['zones'].values()):
         data['limitations']=[l.replace(' the same deadly-day count.',' a different deadly-day count; both are in the data.') for l in data['limitations']]
