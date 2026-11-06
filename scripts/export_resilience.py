@@ -162,7 +162,7 @@ def main()->None:
     source=json.loads((PRIVATE/'source.json').read_text())
     for name,sha in source['files'].items():assert digest(PRIVATE/name)==sha,name
     annual=json.loads((SITE/'data/results.json').read_text())
-    data={'schema_version':1,'release':{'id':'resilience-2026-10-21-first-pass','run_date':'2026-10-21','status':'draft_first_pass',
+    data={'schema_version':1,'release':{'id':'resilience-2026-11-06-first-pass','run_date':'2026-11-06','status':'draft_first_pass',
         'source':{'hbjson_sha256':source['files']['input.hbjson'],'weather_file':Path(source['weather']).name,'weather_sha256':source['weather_sha256'],
                   'energyplus':'25.1.0','openstudio':'3.10.0','set_calculator_sha256':digest(Path(set_calculator.__file__))}},
         'zones':[{'id':k,'label':LABELS[k]} for k in PREFIX],

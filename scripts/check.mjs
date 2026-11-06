@@ -76,7 +76,12 @@ for (const season of ["winter", "summer"]) {
   assert.equal(resilience[season].checks.outage_conditioning_kWh, 0);
   for (const z of Object.values(resilience[season].zones)) assert.equal(z.air_C.length, 216);
 }
-for (const page of ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "downloads.html"]) await stat(path.join(root, page));
+const hygro = JSON.parse(await readFile(path.join(root, "data/hygrothermal.json"), "utf8"));
+assert.equal(hygro.release.status, "draft_first_pass");
+assert.equal(hygro.runs.length, Object.values(hygro.summary).reduce((n, w) => n + w.runs, 0));
+for (const r of hygro.runs) assert.equal(r.passes, r.peak <= hygro.limit, r.tag);
+assert.equal((await readFile(path.join(root, "downloads/wall-moisture-results.csv"), "utf8")).trim().split("\n").length, hygro.runs.length + 1);
+for (const page of ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "wall-moisture.html", "downloads.html"]) await stat(path.join(root, page));
 await assert.rejects(stat(path.join(root, "results.html")));
 const moved = await worker.fetch(new Request("https://project-2624.bldgtyp.com/results.html"), { ASSETS: { fetch() { throw Error("Unexpected asset access"); } } });
 assert.equal(moved.status, 301);
@@ -141,5 +146,5 @@ async function walk(dir) {
 }
 await walk(root);
 console.log(
-  "PASS: static links, reviewed annual data, matched source identity, monthly totals, reviewed Design-Day data, first-pass resilience package and seven pages, Pages alternate-host rejection, asset size/privacy boundary.",
+  "PASS: static links, reviewed annual data, matched source identity, monthly totals, reviewed Design-Day data, first-pass resilience package, first-pass wall-moisture package and eight pages, Pages alternate-host rejection, asset size/privacy boundary.",
 );

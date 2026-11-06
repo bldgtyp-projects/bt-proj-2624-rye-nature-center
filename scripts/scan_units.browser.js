@@ -4,7 +4,7 @@
 // supporting-graph panel, every Program zone/schedule/scenario and every design condition.
 // Expected result: every page lists [] and 0 errors, peak-loads.html shows 4 condition cards; downloads.html may list "°C".
 (async () => {
-  const pages = ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "downloads.html"];
+  const pages = ["index.html", "program.html", "model.html", "annual-energy.html", "peak-loads.html", "resilience.html", "wall-moisture.html", "downloads.html"];
   const SI = /\d\s?(?:°C|m²|m³|m\/s|L\/s|L\/day|L\/h|W\/m²|kW\b|K·h)|°C|\bm²|\bm³|W\/m²|\bkW\b|L\/s/g;
   const wait = (ms) => new Promise((r) => setTimeout(r, ms));
   const out = {};

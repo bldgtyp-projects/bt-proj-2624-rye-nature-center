@@ -1,0 +1,84 @@
+run,wall,weather,scenario,zip_osb_outer_mold_index,zip_osb_inner_mold_index,wood_fiber_face_mold_index,interior_plywood_mold_index,zip_osb_year5_mold_index,zip_osb_max_moisture_content_pct,passes_mold_index_3
+NYCc-base,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",As designed,0.25,0.41,1.04,0.0,0.09,11.2,yes
+NYCh-base,Cedar siding on a ventilated rainscreen,"NYC hot year, north wall",As designed,0.13,0.35,1.01,0.0,0.02,10.3,yes
+PRVc-base,Cedar siding on a ventilated rainscreen,"Providence cold year, north wall",As designed,1.29,1.19,1.18,0.0,1.29,12.4,yes
+NYCh-NE,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",As designed,0.74,0.89,1.03,0.0,0.23,12.1,yes
+NYCh-E,Cedar siding on a ventilated rainscreen,"NYC hot year, east wall",As designed,0.3,0.43,0.74,0.0,0.05,11.0,yes
+NYCc-m309,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",More indoor moisture (3.09 lb/h),0.28,0.47,1.22,0.0,0.13,11.4,yes
+NYCc-m125,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Less indoor moisture (1.25 lb/h),0.22,0.33,0.78,0.0,0.06,11.1,yes
+NYCc-dh60,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Cooling also dehumidifies to 60% RH,0.25,0.4,0.97,0.0,0.07,11.2,yes
+NYCc-mu1,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Wood fiber more vapor-open,0.26,0.42,1.12,0.0,0.09,11.3,yes
+NYCc-rho3,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Wood fiber at 3.0 pcf,0.24,0.38,0.97,0.0,0.09,11.2,yes
+NYCc-foam03,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",ZIP-R foam at 0.3 perm,0.11,0.2,1.57,0.0,0.05,10.8,yes
+NYCc-noleak,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",No rain leakage,0.0,0.01,1.01,0.0,0.0,7.9,yes
+NYCc-init90,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Built wet,1.31,1.64,2.71,0.38,0.09,11.2,yes
+NYCc-osb,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",OSB in place of the plywood,0.29,0.48,1.33,0.0,0.09,11.3,yes
+NYCc-lk1,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Larger leak into the ZIP-R (1% of rain),4.43,4.22,1.11,0.0,4.43,25.1,no
+NYCc-lk01,Cedar siding on a ventilated rainscreen,"NYC cold year, north wall",Small leak into the ZIP-R (0.1% of rain),0.43,0.59,1.05,0.0,0.19,12.1,yes
+NYCh-m309,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",More indoor moisture (3.09 lb/h),0.77,0.95,1.18,0.0,0.28,12.1,yes
+NYCh-m125,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Less indoor moisture (1.25 lb/h),0.68,0.78,0.68,0.0,0.16,12.0,yes
+NYCh-dh60,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Cooling also dehumidifies to 60% RH,0.71,0.85,0.86,0.0,0.21,12.0,yes
+NYCh-mu1,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Wood fiber more vapor-open,0.74,0.9,1.09,0.0,0.24,12.1,yes
+NYCh-rho3,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Wood fiber at 3.0 pcf,0.72,0.86,0.94,0.0,0.23,12.1,yes
+NYCh-foam03,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",ZIP-R foam at 0.3 perm,0.52,0.55,1.36,0.0,0.18,11.7,yes
+NYCh-noleak,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",No rain leakage,0.0,0.01,0.85,0.0,0.0,7.9,yes
+NYCh-init90,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Built wet,1.86,2.07,2.74,0.49,0.78,12.1,yes
+NYCh-osb,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",OSB in place of the plywood,0.78,0.96,1.27,0.0,0.24,12.1,yes
+NYCh-lk1,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Larger leak into the ZIP-R (1% of rain),5.27,5.1,1.3,0.0,5.27,44.9,no
+NYCh-lk01,Cedar siding on a ventilated rainscreen,"NYC hot year, northeast wall",Small leak into the ZIP-R (0.1% of rain),1.2,1.26,1.08,0.0,1.16,13.0,yes
+SM-c,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",As designed,5.19,5.08,1.3,0.0,5.19,24.3,no
+SM-h,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",As designed,5.16,5.0,1.36,0.0,5.16,22.7,no
+SM-hSE,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, southeast wall",As designed,5.1,4.96,1.14,0.0,5.1,21.3,no
+SM-hN,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, north wall",As designed,5.16,5.02,1.34,0.0,5.16,22.6,no
+SM-P,Stone as drawn (FE3): mortar directly on the ZIP-R,"Providence cold year, north wall",As designed,5.2,5.08,1.37,0.0,5.2,24.5,no
+SM-c-lk1,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",Larger leak into the ZIP-R (1% of rain),5.3,5.3,1.34,0.0,5.3,77.1,no
+SM-h-lk1,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Larger leak into the ZIP-R (1% of rain),5.3,5.3,1.45,0.0,5.3,77.7,no
+SM-c-lk01,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",Small leak into the ZIP-R (0.1% of rain),5.22,5.09,1.31,0.0,5.22,27.7,no
+SM-h-lk01,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Small leak into the ZIP-R (0.1% of rain),5.24,5.1,1.38,0.0,5.24,28.9,no
+SM-c-m309,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",More indoor moisture (3.09 lb/h),5.2,5.18,1.49,0.0,5.19,24.4,no
+SM-h-m309,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",More indoor moisture (3.09 lb/h),5.2,5.2,1.54,0.0,5.2,23.2,no
+SM-c-m125,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",Less indoor moisture (1.25 lb/h),5.16,4.97,1.02,0.0,5.16,23.4,no
+SM-h-m125,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Less indoor moisture (1.25 lb/h),5.13,4.93,1.12,0.0,5.13,21.9,no
+SM-c-init90,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",Built wet,5.19,5.07,3.09,0.36,5.18,24.1,no
+SM-h-init90,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Built wet,5.19,5.09,3.06,0.43,5.15,22.7,no
+SM-c-gran,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",Granite,5.19,5.05,1.22,0.0,5.19,24.4,no
+SM-h-gran,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Granite,5.17,5.02,1.26,0.0,5.17,23.0,no
+SM-h-rue,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Rüthen sandstone,5.08,4.91,1.35,0.0,5.08,20.8,no
+SM-c-abs8,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",Dark stone,5.17,5.03,1.26,0.0,5.17,23.7,no
+SM-h-abs8,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",Dark stone,5.14,4.97,1.33,0.0,5.14,22.1,no
+SM-c-noleak,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC cold year, north wall",No rain leakage,5.16,5.02,1.28,0.0,5.16,23.4,no
+SM-h-noleak,Stone as drawn (FE3): mortar directly on the ZIP-R,"NYC hot year, northeast wall",No rain leakage,5.13,4.97,1.33,0.0,5.13,21.7,no
+SD-c,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",As designed,1.48,1.42,1.25,0.0,0.36,10.2,yes
+SD-h,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",As designed,1.42,1.39,1.21,0.0,0.03,9.4,yes
+SD-hSE,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, southeast wall",As designed,0.61,0.58,0.76,0.0,0.0,8.1,yes
+SD-hN,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, north wall",As designed,1.47,1.44,1.2,0.0,0.07,9.6,yes
+SD-P,Stone on a drainage mat (DELTA-DRY & LATH),"Providence cold year, north wall",As designed,1.75,1.67,1.37,0.0,1.15,11.1,yes
+SD-c-lk1,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Larger leak into the ZIP-R (1% of rain),5.3,5.3,1.35,0.0,5.3,77.7,no
+SD-h-lk1,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Larger leak into the ZIP-R (1% of rain),5.3,5.3,1.5,0.0,5.3,77.7,no
+SD-c-lk01,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Small leak into the ZIP-R (0.1% of rain),2.74,2.48,1.27,0.0,2.57,12.8,yes
+SD-h-lk01,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Small leak into the ZIP-R (0.1% of rain),3.95,3.69,1.29,0.0,3.64,14.2,no
+SD-c-m309,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",More indoor moisture (3.09 lb/h),1.65,1.6,1.45,0.0,0.84,10.8,yes
+SD-h-m309,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",More indoor moisture (3.09 lb/h),1.59,1.58,1.37,0.0,0.23,9.8,yes
+SD-c-m125,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Less indoor moisture (1.25 lb/h),1.22,1.14,1.0,0.0,0.01,9.3,yes
+SD-h-m125,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Less indoor moisture (1.25 lb/h),1.14,1.1,0.9,0.0,0.0,8.7,yes
+SD-c-init90,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Built wet,5.21,5.09,2.93,0.36,5.21,25.8,no
+SD-h-init90,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Built wet,3.86,3.85,3.01,0.43,2.36,9.4,no
+SD-c-gran,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Granite,1.42,1.37,1.2,0.0,0.16,9.9,yes
+SD-h-gran,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Granite,1.25,1.23,1.12,0.0,0.01,9.1,yes
+SD-h-rue,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Rüthen sandstone,1.41,1.39,1.2,0.0,0.03,9.4,yes
+SD-c-abs8,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Dark stone,1.36,1.31,1.2,0.0,0.09,9.8,yes
+SD-h-abs8,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Dark stone,1.25,1.24,1.17,0.0,0.0,9.0,yes
+SD-c-noleak,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",No rain leakage,1.47,1.41,1.25,0.0,0.35,10.2,yes
+SD-h-noleak,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",No rain leakage,1.41,1.38,1.21,0.0,0.03,9.4,yes
+SD-c-ach05,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Drainage gap with less airflow (0.5 ACH),1.63,1.55,1.25,0.0,0.66,10.4,yes
+SD-h-ach05,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Drainage gap with less airflow (0.5 ACH),1.58,1.54,1.21,0.0,0.1,9.5,yes
+SD-c-ach5,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall",Drainage gap vented top and bottom (5 ACH),0.62,0.7,1.23,0.0,0.01,9.7,yes
+SD-h-ach5,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall",Drainage gap vented top and bottom (5 ACH),0.51,0.62,1.2,0.0,0.01,9.3,yes
+SDz-c,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall","Rain behind the mat, onto the ZIP-R (gap 1 ACH)",5.2,5.08,1.34,0.0,5.2,25.3,no
+SDz-h,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall","Rain behind the mat, onto the ZIP-R (gap 1 ACH)",5.2,5.07,1.41,0.0,5.2,24.7,no
+SDz-c-ach5,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall","Rain behind the mat, onto the ZIP-R (gap 5 ACH)",5.2,5.07,1.33,0.0,5.2,24.8,no
+SDz-h-ach5,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall","Rain behind the mat, onto the ZIP-R (gap 5 ACH)",5.19,5.07,1.4,0.0,5.19,24.4,no
+SDz-c-ach10,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall","Rain behind the mat, onto the ZIP-R (gap 10 ACH)",4.94,4.66,1.31,0.0,4.93,19.5,no
+SDz-h-ach10,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall","Rain behind the mat, onto the ZIP-R (gap 10 ACH)",5.03,4.79,1.39,0.0,4.99,19.9,no
+SDz-c-ach20,Stone on a drainage mat (DELTA-DRY & LATH),"NYC cold year, north wall","Rain behind the mat, onto the ZIP-R (gap 20 ACH)",4.35,4.13,1.29,0.0,4.35,18.0,no
+SDz-h-ach20,Stone on a drainage mat (DELTA-DRY & LATH),"NYC hot year, northeast wall","Rain behind the mat, onto the ZIP-R (gap 20 ACH)",4.63,4.45,1.34,0.0,4.61,18.4,no

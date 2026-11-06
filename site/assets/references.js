@@ -18,6 +18,26 @@ export const REFS = {
   design_day: { group: "Standards and methods", label: "SizingPeriod:DesignDay, EnergyPlus Input Output Reference", source: "Big Ladder Software",
     href: "https://bigladdersoftware.com/epx/docs/25-1/input-output-reference/group-location-climate-weather-file-access.html#sizingperioddesignday",
     note: "How EnergyPlus builds a design day: daily temperature range and the ASHRAE clear-sky (tau) model." },
+  ashrae160: { group: "Standards and methods", label: "ASHRAE Standard 160, Criteria for Moisture-Control Design Analysis in Buildings", source: "PNNL Building America Solution Center",
+    href: "https://basc.pnnl.gov/library/criteria-moisture-control-design-analysis-buildings-ansiashrae-160-2021",
+    note: "Indoor moisture, rain leakage and the mold-index limit used on the Wall moisture page." },
+  huber_stone: { group: "Products", label: "Hard coat stucco and adhered stone over ZIP System sheathing per IBC (HUB 9213)", source: "Huber Engineered Woods tech tip",
+    href: "https://www.huberwood.com/uploads/documents/technical/Stucco-Adhered-Stone-IBC-over-ZIP-System-sheathing-Tech-Tip-Wall-ZIP-System_2021-02-05-205000.pdf",
+    note: "A second water-resistive barrier over ZIP System sheathing, and the 2021 IBC drainage space of at least 3/16 in in moist climates." },
+  huber_r_manual: { group: "Products", label: "ZIP System R-sheathing Installation Manual (HUB 3021, rev. 02/12/2025)", source: "Huber Engineered Woods",
+    href: "https://huberwood.com/uploads/documents/technical/ZIP-System-R-sheathing-Installation-Manual.pdf",
+    note: "Notes and limitations (pages 6 to 8), cladding fasteners (page 23) and adhered stone (page 39)." },
+  esr3373: { group: "Products", label: "ICC-ES ESR-3373, ZIP System R-Sheathing (revised October 2025)", source: "ICC Evaluation Service",
+    href: "https://icc-es.org/wp-content/uploads/report-directory/ESR-3373.pdf",
+    note: "Evaluated uses (walls of Type V construction) and conditions of use." },
+  zip_rainscreen: { group: "Products", label: "ZIP System Rainscreen Installation Manual (HUB 82460, rev. 08/01/23)", source: "Huber Engineered Woods",
+    href: "https://www.huberwood.com/uploads/documents/technical/Installation-Manual-for-ZIP-System-Rainscreen.pdf",
+    note: "Drainage mat whose taped fabric face serves as the second water-resistive barrier." },
+  dorken_lath: { group: "Products", label: "DELTA-DRY & LATH", source: "Dörken Systems",
+    href: "https://www.dorken.com/en/our-products/products/commercial/delta-dry-lath.php",
+    note: "Drainage mat with built-in lath, modeled behind the stone." },
+  wufi_pro: { group: "Software", label: "WUFI Pro", source: "Fraunhofer IBP",
+    href: "https://wufi.de/en/software/wufi-pro/", note: "Hourly heat and moisture simulation of the wall assemblies." },
   energyplus: { group: "Software", label: "EnergyPlus 25.1.0", source: "GitHub release",
     href: "https://github.com/NatLabRockies/EnergyPlus/releases/tag/v25.1.0" },
   openstudio: { group: "Software", label: "OpenStudio 3.10.0", source: "GitHub release",
@@ -47,6 +67,12 @@ export function link(id, text = REFS[id].label) {
 export function section(number, text = number) {
   if (!REVIVE_PAGES[number]) throw Error(`Unmapped REVIVE section ${number}`);
   return anchor(`${REVIVE_PDF}#page=${REVIVE_PAGES[number]}`, escape(text));
+}
+
+// A link to one page of a registered PDF source.
+export function pdfPage(id, page, text) {
+  if (!REFS[id]) throw Error(`Unknown reference ${id}`);
+  return anchor(`${REFS[id].href}#page=${page}`, escape(text));
 }
 
 // Links explicit citations in already-escaped prose: each mapped REVIVE section, then the first of each named source.
