@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse,collections,csv,io,json,math,shutil,sqlite3
 from pathlib import Path
 from export_results import digest,objects,write_json
+from known_severe import NOTE as SEVERE_NOTE, check_severe
 
 ROOT=Path(__file__).resolve().parents[1]
 PRIVATE=ROOT/'_private/design_days'
@@ -53,20 +54,27 @@ def coil_analysis(sql:Path,idf:list,design:list) -> dict:
         t=max(total,key=total.get);return t,total[t]
     def ventilation(t):
         """Hourly ERV supply air relative to each room: sensible and moisture load it adds to the zone heat pumps."""
-        e,h,m=t;hour=h if m==0 else h+1;sensible=latent=flow=0.0
+        e,h,m=t;hour=h if m==0 else h+1;sensible=latent=flow=0.0;per_zone={}
         for k in PREFIX:
             steps=[s for s in z[k]['air_C'] if s[0]==e and ((s[1]==hour-1 and s[2]>0) or (s[1]==hour and s[2]==0))];assert steps,(k,t)
             air=sum(z[k]['air_C'][s] for s in steps)/len(steps);rh=sum(z[k]['RH'][s] for s in steps)/len(steps)
             vapor=rh/100*610.94*math.exp(17.625*air/(air+243.04));room_w=0.622*vapor/(pressure[env[e].upper()]-vapor)
             mass=z[k]['supply_kg_s'][(e,hour,0)];flow+=mass
-            sensible+=mass*CP*(air-z[k]['supply_C'][(e,hour,0)]);latent+=mass*HFG*(z[k]['supply_W'][(e,hour,0)]-room_w)
+            per_zone[k]=mass*CP*(air-z[k]['supply_C'][(e,hour,0)]);sensible+=per_zone[k];latent+=mass*HFG*(z[k]['supply_W'][(e,hour,0)]-room_w)
         supply=[(z[k]['supply_C'][(e,hour,0)],z[k]['supply_kg_s'][(e,hour,0)]) for k in PREFIX if z[k]['supply_kg_s'][(e,hour,0)]>0];assert supply,t
-        return sensible,latent,flow,sum(c*m for c,m in supply)/sum(m for _,m in supply)
-    th,heating=coincident(['heat','supplemental']);vent_heat,_,flow_heat,supply_heat=ventilation(th)
+        return sensible,latent,flow,sum(c*m for c,m in supply)/sum(m for _,m in supply),per_zone
+    th,heating=coincident(['heat','supplemental']);vent_heat,_,flow_heat,supply_heat,_=ventilation(th)
     room_heat=sum(max(0.0,z[k]['room_heating'][th]) for k in PREFIX) # Positive when heating is needed; cooling below is negative.
-    tc,total=coincident(['total']);vent_sens,vent_lat,flow_cool,supply_cool=ventilation(tc)
-    room_cool=sum(max(0.0,-z[k]['room_cooling'][tc]) for k in PREFIX)
-    coil_sens=sum(z[k]['sensible'][tc] for k in PREFIX);coil_lat=sum(z[k]['latent'][tc] for k in PREFIX)
+    tc,total=coincident(['total'])
+    # Cooling bridge at the EnergyPlus sizing room-load peak (the component-summary instant), not the coil-total peak:
+    # in 261103 the coil peak falls mid dehumidifier cycle, where the room air stores heat and the remainder stops matching fan power.
+    clg={row:value.strip() for row,value in c.execute("select RowName,Value from TabularDataWithStrings where ReportName='Facility Component Load Summary' and ReportForString='Facility' and TableName='Cooling Peak Conditions' and ColumnName='Value'")}
+    day=next(o[1] for o in design if o[4]!='WinterDesignDay' and abs(float(o[5])-float(clg['Outside Dry Bulb Temperature']))<0.05)
+    hh,mm=map(int,clg['Time of Peak Load'].split()[1].split(':')[:2])
+    tb=(next(i for i,n in env.items() if n.upper()==day.upper()),hh,mm)
+    room_cool=sum(max(0.0,-z[k]['room_cooling'][tb]) for k in PREFIX)
+    vent_sens,vent_lat,flow_cool,supply_cool,vent_zone=ventilation(tb)
+    coil_sens=sum(z[k]['sensible'][tb] for k in PREFIX);coil_lat=sum(z[k]['latent'][tb] for k in PREFIX)
     ts,sensible=coincident(['sensible'])
     # EnergyPlus standard air density (dry air, 20 C) at the design-day pressure converts the ERV mass flow to volume.
     density=pressure[env[th[0]].upper()]/(287.04*293.15)
@@ -74,11 +82,21 @@ def coil_analysis(sql:Path,idf:list,design:list) -> dict:
     assert len(fans)==4
     step=3600/int(next(o for o in idf if o[0].lower()=='timestep')[1])
     fan_W=lambda t:sum(series('Fan Electricity Energy',f)[t] for f in fans)/step
+    zone_fan_W=lambda k,t:series('Fan Electricity Energy',next(f for f in fans if f.startswith(PREFIX[k])))[t]/step
+    # Visitor/Core supplemental dehumidifiers reject their heat to the room; it sits inside the predicted room load.
+    dehumidifiers=[k for (k,) in c.execute("select distinct KeyValue from ReportDataDictionary where Name='Zone Dehumidifier Sensible Heating Energy'")]
+    assert len(dehumidifiers)==2
+    dehumidifier_W=lambda t:sum(series('Zone Dehumidifier Sensible Heating Energy',k).get(t,0.0) for k in dehumidifiers)/step
+    dehum_cool=dehumidifier_W(tb)
     bridge={'heating':{**when(th),'room_sensible_W':room_heat,'ventilation_sensible_W':vent_heat,'fan_and_other_W':heating-room_heat-vent_heat,'coil_W':heating,
                        'erv_supply_m3_s':flow_heat/density,'erv_supply_C':supply_heat,'unit_fan_W':fan_W(th)},
-            'cooling':{**when(tc),'room_sensible_W':room_cool,'ventilation_sensible_W':-vent_sens,'fan_and_other_W':coil_sens-room_cool+vent_sens,'coil_sensible_W':coil_sens,
-                       'room_latent_W':coil_lat-vent_lat,'ventilation_latent_W':vent_lat,'coil_latent_W':coil_lat,'coil_total_W':total,
-                       'erv_supply_m3_s':flow_cool/density,'erv_supply_C':supply_cool,'unit_fan_W':fan_W(tc)},
+            'cooling':{**when(tb),'room_sensible_W':room_cool-dehum_cool,'dehumidifier_heat_W':dehum_cool,'ventilation_sensible_W':-vent_sens,'fan_and_other_W':coil_sens-room_cool+vent_sens,'coil_sensible_W':coil_sens,
+                       'room_latent_W':coil_lat-vent_lat,'ventilation_latent_W':vent_lat,'coil_latent_W':coil_lat,'coil_total_W':coil_sens+coil_lat,
+                       'erv_supply_m3_s':flow_cool/density,'erv_supply_C':supply_cool,'unit_fan_W':fan_W(tb),
+                       # A coil at runtime fraction 1 cannot meet room + ERV + fan heat, so its remainder falls short of its fan power by the unmet load.
+                       'zones':{k:{'room_sensible_W':max(0.0,-z[k]['room_cooling'][tb]),'ventilation_sensible_W':-vent_zone[k],'coil_sensible_W':z[k]['sensible'][tb],
+                                   'fan_and_other_W':z[k]['sensible'][tb]-max(0.0,-z[k]['room_cooling'][tb])+vent_zone[k],'unit_fan_W':zone_fan_W(k,tb),
+                                   'runtime_fraction':z[k]['cool_rtf'][tb]} for k in PREFIX}},
             'air_density_kg_m3':density}
     zones={k:{'heating':peak(k,'heat','heat_rtf'),'total_cooling':peak(k,'total','cool_rtf'),'sensible_cooling':peak(k,'sensible'),'supplemental_heating_W':max(z[k]['supplemental'].values())} for k in PREFIX}
     rows=c.execute("select TableName,RowName,ColumnName,Value from TabularDataWithStrings where ReportName='Facility Component Load Summary' and ReportForString='Facility'").fetchall()
@@ -164,6 +182,7 @@ def main() -> None:
     assert verified['success'] and matched['success']
     assert matched['annual_input_sha256']==annual['release']['source']['hbjson_sha256']
     assert matched['design_input_sha256']==source['hbjson_sha256']
+    severe_errors=check_severe((PRIVATE/'eplusout.err').read_text(errors='replace'))
     idf=objects(PRIVATE/'in.idf')
     design=[o for o in idf if o[0].lower()=='sizingperiod:designday']
     assert len(design)==review['sizing_days']==4 and review['weather_run_environments']==0
@@ -200,7 +219,7 @@ def main() -> None:
         'operating_coil_peaks':review['diagnostics']['coincident_operating_coil_peaks'],
         'coil_peaks':analysis['coincident'],'room_to_coil':analysis['room_to_coil'],'room_load_components':analysis['room_load_components'],
         'controls':{'timesteps_per_hour':12,'sizing_average_minutes':15,'heating_factor':1,'cooling_factor':1,'windows_closed':True,'equipment_sequence':'ERV, WSHP, supplemental dehumidifier',
-                    'heating_setpoint_C':21.1111111111,'cooling_setpoint_C':23.8888888889,'slab_ground_C':18.0,'ERV_channels_verified':13,'severe_errors':0},
+                    'heating_setpoint_C':21.1111111111,'cooling_setpoint_C':23.8888888889,'slab_ground_C':18.0,'ERV_channels_verified':13,'severe_errors':severe_errors,'severe_error_note':SEVERE_NOTE if severe_errors else None},
         'basis':'Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.',
         'sizing_notes':['ERV heat recovery is a provisional 75% sensible and 50% latent, with frost control at a {temperature:0} minimum exhaust temperature. Frost control lowers the winter supply temperature, and the coil heating above includes it. The selected ERV sets the actual winter coil load.',
                         'Infiltration is a constant design rate until the airtightness basis is set. Its share of the room loads is in the component table.',

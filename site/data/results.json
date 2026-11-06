@@ -6,15 +6,15 @@
     "status": "reviewed_design_model",
     "scenario": "Current materials, internal mass and sized GSHPs; Kiva slab-ground boundary; windows with moisture limits and Visitor/Core dehumidification",
     "source": {
-      "run": "16_OSM/Rye_Nature_Center_261021/openstudio",
+      "run": "16_OSM/Rye_Nature_Center_261103/openstudio",
       "weather": "USA_NY_White.Plains-Westchester.County.AP.725037_TMYx.epw",
       "weather_sha256": "0c32c78b60aaa37e2da6be6f12e40061d5e6b0dd9bb843cd7f01ce9380b861e7",
       "measure_sha256": {
         "rnc_shared_erv_dhw/measure.rb": "efea8318445263d99c0645b923b6c308e91dc8a8b5a53af0096da1f84519818d",
         "rnc_shared_erv_dhw/resources/rnc_system.rb": "570431dc320eb22689d18d35a93fbe65aea6ce01c3db57f1d1cdcb1f8d82a53c",
-        "rnc_shared_erv_dhw/resources/sizing.json": "999a0b1643035b7ee2a365eee1296b5238f99f1e12b79990bce54f611ddf0373",
+        "rnc_shared_erv_dhw/resources/sizing.json": "3b2b2fbd2049ced0971b36a9aa5e933b7a705970f9f0b67f2edfa554ea30dedb",
         "rnc_shared_erv_dhw/resources/rnc_dehumidification.rb": "75865b77a17286ff7aaa677ade4b056ef3d41ff35a6cf1357adfd0637fba50fc",
-        "rnc_shared_erv_dhw/resources/airflows.json": "bd9fbaee10b416b7076c741cb3f97dd113f59f97f3aa33246eeb19673b8d4ca8",
+        "rnc_shared_erv_dhw/resources/airflows.json": "bf5a914d3ea39117354ee3863a028acf5f5515cdeb8e1b97911d3ee3430c41b0",
         "rnc_shared_erv_dhw/resources/rnc_window_controls.rb": "42a4b3030c225181763ff035b065abdcbbdcbef2de965380ef0360839bf7d8af",
         "rnc_shared_erv_dhw/resources/rnc_sizing.rb": "810bebff5581c5f257fe7e50f524d7cf5376f8da3730e6d32e3c46eddfb7780d",
         "rnc_kiva_foundation/measure.rb": "2495c5f9568cd0693f56aeaed095073b866998543c4e8d87ce9569863a2cdc25",
@@ -23,138 +23,28 @@
         "rnc_erv_return_paths/measure.rb": "84d43ceb7adac2e7bfd722d70faf8c8b00090fc9df3cd19d1e4d4b041d4cb663"
       },
       "files": {
-        "in.osm": "3b571088567323b6f7027d50b82d4b076bff50ba1c0b4ca2502b4b5aebc0d955",
-        "out.osw": "68946cbe50331851895f4619d927e3a4f33e4f58a173cce43938989f9cab8964",
-        "diagnostics.json": "304bf9505d0bf46069f04d828400a0f6a220f4414acaae8397cfb1fc692b8d27",
-        "eplusout.err": "1618b87c42b19e6fe825bcb0beea3a0602efec6ee9a8927a61376ef18bb90802",
+        "in.osm": "eeb88cd054b8a0dfed61acce1899ae802eef4d6b877d7b4818ea78e03cb80e9b",
+        "out.osw": "7ec937dff24e9e561ff258c1dc6ae954df75c1859908b87bbeac061252069868",
+        "diagnostics.json": "e43a7592ad8ec4ffe064b33fca8b381435815fbf30d1b32389efde9881c8997b",
+        "eplusout.err": "5a8abc784d76faa3fa958d7d94a68eaeda66c25ae26e6e0766967246d789581f",
         "comparison.json": "053a0f45a4cf7e6de66d5f7e160fc523a4c5bf4634886835496b2624738e2503",
-        "in.idf": "cee024d2ddd6e7bd7c5021422ecd8e3d0dabf5ba124cb02902894b22c6f4d2c6",
-        "eplusout.sql": "4c66748242cddc58b85db2ecb3001def563af8ebc16f12ed9f4b7ca2f3d80072",
-        "review.json": "840910b35aeb0e8d9f1bc829f0ea69e98254bcf849c3506337fc3a21f036e9cc"
+        "in.idf": "ab5a6cc33965dbee65845da88899417dc3b3b5f576277ac55e3e052296c85b04",
+        "eplusout.sql": "5fc623b983547a4cfc42447d4eb5db741253ac3296c456577644b39cdd6912bc",
+        "review.json": "ea53c150dd32fbf51f3eab4d94e680ec2b60a60dbdb7837985852156462c1aad"
       },
-      "hbjson_sha256": "01bff299d9eebb83472b32a220c1d14761cfa3b00adfed09620b856cb7c4895e",
-      "idf_sha256": "cee024d2ddd6e7bd7c5021422ecd8e3d0dabf5ba124cb02902894b22c6f4d2c6",
-      "osm_sha256": "3b571088567323b6f7027d50b82d4b076bff50ba1c0b4ca2502b4b5aebc0d955",
-      "sql_sha256": "4c66748242cddc58b85db2ecb3001def563af8ebc16f12ed9f4b7ca2f3d80072",
-      "energyplus": "EnergyPlus, Version 25.1.0-1c11a3d85f, YMD=2026.10.21 10:38",
+      "hbjson_sha256": "f45d3fa8ad1ee6038789f01630895500cf59711c7c0874fbb96d890c1b1bb303",
+      "idf_sha256": "ab5a6cc33965dbee65845da88899417dc3b3b5f576277ac55e3e052296c85b04",
+      "osm_sha256": "eeb88cd054b8a0dfed61acce1899ae802eef4d6b877d7b4818ea78e03cb80e9b",
+      "sql_sha256": "5fc623b983547a4cfc42447d4eb5db741253ac3296c456577644b39cdd6912bc",
+      "energyplus": "EnergyPlus, Version 25.1.0-1c11a3d85f, YMD=2026.11.03 14:44",
       "openstudio": "3.10.0",
       "design_days": {
-        "count": 114,
+        "count": 4,
         "names": [
           "White.Plains-Westchester.Coun Ann Clg .4% Condns DB=>MWB",
           "White.Plains-Westchester.Coun Ann Clg .4% Condns DP=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg .4% Condns Enth=>MDB",
           "White.Plains-Westchester.Coun Ann Clg .4% Condns WB=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg 1% Condns DB=>MWB",
-          "White.Plains-Westchester.Coun Ann Clg 1% Condns DP=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg 1% Condns Enth=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg 1% Condns WB=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg 2% Condns DB=>MWB",
-          "White.Plains-Westchester.Coun Ann Clg 2% Condns DP=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg 2% Condns Enth=>MDB",
-          "White.Plains-Westchester.Coun Ann Clg 2% Condns WB=>MDB",
-          "White.Plains-Westchester.Coun Ann Htg 99% Condns DB",
-          "White.Plains-Westchester.Coun Ann Htg 99.6% Condns DB",
-          "White.Plains-Westchester.Coun Ann Htg Wind 99% Condns WS=>MCDB",
-          "White.Plains-Westchester.Coun Ann Htg Wind 99.6% Condns WS=>MCDB",
-          "White.Plains-Westchester.Coun Ann Hum_n 99% Condns DP=>MCDB",
-          "White.Plains-Westchester.Coun Ann Hum_n 99.6% Condns DP=>MCDB",
-          "White.Plains-Westchester.Coun April .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun April .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun April 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun April 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun April 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun April 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun April 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun April 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun August .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun August .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun August 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun August 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun August 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun August 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun August 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun August 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun December .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun December .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun December 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun December 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun December 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun December 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun December 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun December 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun February .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun February .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun February 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun February 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun February 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun February 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun February 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun February 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun January .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun January .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun January 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun January 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun January 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun January 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun January 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun January 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun July .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun July .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun July 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun July 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun July 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun July 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun July 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun July 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun June .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun June .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun June 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun June 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun June 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun June 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun June 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun June 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun March .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun March .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun March 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun March 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun March 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun March 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun March 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun March 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun May .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun May .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun May 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun May 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun May 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun May 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun May 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun May 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun November .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun November .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun November 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun November 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun November 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun November 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun November 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun November 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun October .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun October .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun October 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun October 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun October 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun October 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun October 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun October 5% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun September .4% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun September .4% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun September 10% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun September 10% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun September 2% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun September 2% Condns WB=>MCDB",
-          "White.Plains-Westchester.Coun September 5% Condns DB=>MCWB",
-          "White.Plains-Westchester.Coun September 5% Condns WB=>MCDB"
+          "White.Plains-Westchester.Coun Ann Htg 99.6% Condns DB"
         ],
         "purpose": "Annual autosizing inputs; the separate four-condition design-day package has its own provenance"
       },
@@ -201,9 +91,9 @@
     }
   ],
   "annual": {
-    "total_kWh": 19568.707658260733,
+    "total_kWh": 21145.20939881881,
     "floor_area_m2": 387.13423742724416,
-    "eui_kWh_m2_year": 50.547602785812416,
+    "eui_kWh_m2_year": 54.61983817123052,
     "end_uses": [
       {
         "id": "heating",
@@ -237,168 +127,168 @@
       }
     ],
     "end_uses_kWh": {
-      "heating": 4447.706305984766,
-      "cooling": 2662.9475972984064,
-      "hot_water": 1494.130623710187,
-      "fans_pumps": 3650.305085353389,
-      "lighting": 4757.853045913954,
-      "equipment": 2555.765000000012
+      "heating": 4519.712248920777,
+      "cooling": 2825.6342485000396,
+      "hot_water": 1803.8790388692205,
+      "fans_pumps": 3924.737694145287,
+      "lighting": 4920.44841838368,
+      "equipment": 3150.7977499999756
     },
     "monthly": [
       {
         "month": 1,
         "label": "Jan",
-        "total_kWh": 2450.4265102007253,
+        "total_kWh": 2564.0520938586483,
         "end_uses_kWh": {
-          "heating": 1190.5605634824005,
+          "heating": 1197.442409106978,
           "cooling": 0.0,
-          "hot_water": 123.14845861704616,
-          "fans_pumps": 505.7993477420637,
-          "lighting": 413.160013646892,
-          "equipment": 217.75812671232998
+          "hot_water": 150.2103884677263,
+          "fans_pumps": 533.2939916826093,
+          "lighting": 415.4526778890148,
+          "equipment": 267.65262671232654
         }
       },
       {
         "month": 2,
         "label": "Feb",
-        "total_kWh": 1997.2485665382562,
+        "total_kWh": 2117.914380665432,
         "end_uses_kWh": {
-          "heating": 896.8152286191804,
+          "heating": 919.6726787748082,
           "cooling": 0.0,
-          "hot_water": 111.4074175094727,
-          "fans_pumps": 424.9632321710296,
-          "lighting": 368.69460604679324,
-          "equipment": 195.36808219178164
+          "hot_water": 135.21335273910546,
+          "fans_pumps": 451.66053218085733,
+          "lighting": 371.27073477888285,
+          "equipment": 240.0970821917791
         }
       },
       {
         "month": 3,
         "label": "Mar",
-        "total_kWh": 1832.808023461462,
+        "total_kWh": 1973.77652082413,
         "end_uses_kWh": {
-          "heating": 696.926636900197,
+          "heating": 714.1398357653306,
           "cooling": 0.0,
-          "hot_water": 121.77340743393286,
-          "fans_pumps": 402.98139130148127,
-          "lighting": 398.3382111135258,
-          "equipment": 212.7883767123298
+          "hot_water": 148.8072413873703,
+          "fans_pumps": 436.17356502010057,
+          "lighting": 409.8945019390025,
+          "equipment": 264.76137671232664
         }
       },
       {
         "month": 4,
         "label": "Apr",
-        "total_kWh": 1216.8162304391353,
+        "total_kWh": 1349.0627525967916,
         "end_uses_kWh": {
-          "heating": 225.57267780389716,
-          "cooling": 19.444162312339213,
-          "hot_water": 121.29594108275185,
-          "fans_pumps": 238.25930345074775,
-          "lighting": 400.832700583911,
-          "equipment": 211.41144520548056
+          "heating": 228.48492536211634,
+          "cooling": 26.700151012334725,
+          "hot_water": 148.3302961688781,
+          "fans_pumps": 265.865006958985,
+          "lighting": 415.4526778890148,
+          "equipment": 264.22969520547736
         }
       },
       {
         "month": 5,
         "label": "May",
-        "total_kWh": 1045.2784721234977,
+        "total_kWh": 1114.615360470813,
         "end_uses_kWh": {
-          "heating": 37.98504044796598,
-          "cooling": 116.84155719915393,
-          "hot_water": 121.31652392992972,
-          "fans_pumps": 158.00876272058935,
-          "lighting": 398.3382111135257,
-          "equipment": 212.78837671232995
+          "heating": 43.07142435941435,
+          "cooling": 110.96261222508824,
+          "hot_water": 145.53292290215904,
+          "fans_pumps": 169.6188495951384,
+          "lighting": 389.0859246767115,
+          "equipment": 256.3436267123265
         }
       },
       {
         "month": 6,
         "label": "Jun",
-        "total_kWh": 1470.4745794324665,
+        "total_kWh": 1675.9679568042943,
         "end_uses_kWh": {
           "heating": 0.0,
-          "cooling": 537.8506827075161,
-          "hot_water": 127.70866442962458,
-          "fans_pumps": 226.9201166770037,
-          "lighting": 369.9826704128377,
-          "equipment": 208.01244520548022
+          "cooling": 589.8114987825702,
+          "hot_water": 154.6507792401305,
+          "fans_pumps": 248.42256954375512,
+          "lighting": 418.8746640323896,
+          "equipment": 264.20844520547774
         }
       },
       {
         "month": 7,
         "label": "Jul",
-        "total_kWh": 1895.3481808179533,
+        "total_kWh": 2090.348635290768,
         "end_uses_kWh": {
           "heating": 0.0,
-          "cooling": 803.7991378634848,
-          "hot_water": 142.61861711292542,
-          "fans_pumps": 307.1107483265357,
-          "lighting": 413.7405508026732,
-          "equipment": 228.07912671232972
+          "cooling": 862.3975931154297,
+          "hot_water": 168.9264441207574,
+          "fans_pumps": 328.42602936866007,
+          "lighting": 451.2281919736176,
+          "equipment": 279.370376712327
         }
       },
       {
         "month": 8,
         "label": "Aug",
-        "total_kWh": 1761.7371436332667,
+        "total_kWh": 1896.03360329811,
         "end_uses_kWh": {
           "heating": 0.0,
-          "cooling": 759.4779576133678,
-          "hot_water": 137.1193386049031,
-          "fans_pumps": 271.73115180157083,
-          "lighting": 378.609068901093,
-          "equipment": 214.79962671232946
+          "cooling": 789.1470795045161,
+          "hot_water": 158.87377719422796,
+          "fans_pumps": 283.23287102358285,
+          "lighting": 407.04624886348563,
+          "equipment": 257.733626712327
         }
       },
       {
         "month": 9,
         "label": "Sep",
-        "total_kWh": 1328.90566228186,
+        "total_kWh": 1419.760060471776,
         "end_uses_kWh": {
-          "heating": 0.040626126693270835,
-          "cooling": 400.4845343908531,
-          "hot_water": 121.29676262281926,
-          "fans_pumps": 190.45620598763625,
-          "lighting": 403.82608794837336,
-          "equipment": 212.8014452054805
+          "heating": 0.8145539803744808,
+          "cooling": 410.88123884230384,
+          "hot_water": 147.16246533234627,
+          "fans_pumps": 191.3522425367578,
+          "lighting": 406.90111457454026,
+          "equipment": 262.6484452054774
         }
       },
       {
         "month": 10,
         "label": "Oct",
-        "total_kWh": 933.7202239863641,
+        "total_kWh": 1083.8489982583972,
         "end_uses_kWh": {
-          "heating": 36.574276890180926,
-          "cooling": 20.295113249235328,
-          "hot_water": 123.37670864011989,
-          "fans_pumps": 122.55598484759426,
-          "lighting": 413.160013646892,
-          "equipment": 217.75812671232998
+          "heating": 52.576355482929095,
+          "cooling": 29.750146937512852,
+          "hot_water": 150.20807670370962,
+          "fans_pumps": 165.27572716845796,
+          "lighting": 418.4460652534772,
+          "equipment": 267.59262671232653
         }
       },
       {
         "month": 11,
         "label": "Nov",
-        "total_kWh": 1516.0348161312047,
+        "total_kWh": 1621.8226011105685,
         "end_uses_kWh": {
-          "heating": 460.2846824226338,
-          "cooling": 4.7544519624559625,
-          "hot_water": 117.63096108141683,
-          "fans_pumps": 345.35661687905645,
-          "lighting": 383.5164085801595,
-          "equipment": 204.49169520548043
+          "heating": 462.4044896093677,
+          "cooling": 3.7978315665069684,
+          "hot_water": 143.1837664834272,
+          "fans_pumps": 370.4298935690819,
+          "lighting": 389.0859246767116,
+          "equipment": 252.9206952054775
         }
       },
       {
         "month": 12,
         "label": "Dec",
-        "total_kWh": 2119.909249214544,
+        "total_kWh": 2238.0064351690808,
         "end_uses_kWh": {
-          "heating": 902.9465732916167,
-          "cooling": 0.0,
-          "hot_water": 125.43782264524457,
-          "fans_pumps": 456.16222344808057,
-          "lighting": 415.6545031172773,
-          "equipment": 219.70812671232989
+          "heating": 901.105576479458,
+          "cooling": 2.1860965137770023,
+          "hot_water": 152.77952812938253,
+          "fans_pumps": 480.98641549730047,
+          "lighting": 427.70969183683115,
+          "equipment": 273.23912671232654
         }
       }
     ],
@@ -406,39 +296,40 @@
       {
         "zone": "labs",
         "label": "Learning Labs",
-        "occupied_hourly_max_RH_percent": 64.63809328869522,
-        "all_hourly_max_RH_percent": 64.63809328869522,
+        "occupied_hourly_max_RH_percent": 65.53689563415143,
+        "all_hourly_max_RH_percent": 65.53689563415143,
         "all_quarter_hour_max_RH_percent": null
       },
       {
         "zone": "visitor",
         "label": "Visitor Center",
-        "occupied_hourly_max_RH_percent": 59.92354781898183,
-        "all_hourly_max_RH_percent": 60.257497473001266,
-        "all_quarter_hour_max_RH_percent": 62.198298585299355
+        "occupied_hourly_max_RH_percent": 60.02591131133068,
+        "all_hourly_max_RH_percent": 60.23543107817524,
+        "all_quarter_hour_max_RH_percent": 61.92317493887968
       },
       {
         "zone": "core",
         "label": "Core",
-        "occupied_hourly_max_RH_percent": 60.00072214038359,
-        "all_hourly_max_RH_percent": 60.30112596694223,
-        "all_quarter_hour_max_RH_percent": 62.29150164133958
+        "occupied_hourly_max_RH_percent": 60.0970733444165,
+        "all_hourly_max_RH_percent": 60.281467004255724,
+        "all_quarter_hour_max_RH_percent": 62.24572275978792
       },
       {
         "zone": "restrooms",
         "label": "Restrooms",
         "occupied_hourly_max_RH_percent": null,
-        "all_hourly_max_RH_percent": 64.01139326221029,
+        "all_hourly_max_RH_percent": 64.21181169223038,
         "all_quarter_hour_max_RH_percent": null
       }
     ],
-    "dehumidification_kWh": 190.65679128543303,
+    "dehumidification_kWh": 243.16907504548317,
     "reporting_basis": "Purchased site electricity, before any PV credit. Heating and cooling are equipment electricity, not thermal loads. Cooling includes supplemental dehumidifier electricity. Hot water includes tank parasitics. Fans and pumps include the shared ERV and conditioning equipment.",
     "calculation": "Monthly totals sum the EnergyPlus end-use electricity, including the dehumidifiers and the water heater's {power:20} standby draw, and match the building electricity meter.",
     "review": {
-      "severe_errors": 0,
+      "severe_errors": 39,
+      "severe_error_note": "39 non-convex casting surfaces under PolygonClipping shading (accepted 2026-11-03): an accuracy notice, not a failed run",
       "humidity_status": "visitor_core_control_verified_labs_and_winter_comfort_open",
-      "occupied_cooling_unmet_hours": 2.0,
+      "occupied_cooling_unmet_hours": 8.75,
       "annual_latch_intervals_checked": 35040
     },
     "systems": [
@@ -487,24 +378,24 @@
       "review_date": "2026-10-21",
       "status": "reviewed_design_model",
       "source": {
-        "run": "17_OSM_DESIGN_DAY/Rye_Nature_Center_261021/openstudio",
-        "hbjson_sha256": "01bff299d9eebb83472b32a220c1d14761cfa3b00adfed09620b856cb7c4895e",
+        "run": "17_OSM_DESIGN_DAY/Rye_Nature_Center_261103/openstudio",
+        "hbjson_sha256": "f45d3fa8ad1ee6038789f01630895500cf59711c7c0874fbb96d890c1b1bb303",
         "files": {
-          "in.osm": "b6bb030055a3cbb873b3aa4d6671b5dff9840431c2528ff3534ec3655aefffcb",
-          "out.osw": "d673b711ff1168d7848e04b55fe041f9cbf4d9f75265159abcdda30624b5b4ad",
-          "eplusout.err": "3f87474973be4699e20f974fa134847c10f3a9ef5023d33fdd1ca68004dededb",
-          "in.idf": "9ab184c347d833ef8f436de29f2a4f5f74b75b7e0bd8ec9198be3ec7df2bb795",
-          "input_match.json": "c09fc86cd4513f4c274c6f2241134c46d1662e43cfea6894b00f1b88a4761d9d",
-          "eplusout.sql": "0ffdb32b11b2d8db5b297015f849949d8e20ed51bb8183dcf52fdfdd33d79bc0",
-          "verification.json": "8bb9fa4e0e22afa44270d408bb16c9c4ab734418b079d2fae481c53f26c992a8",
-          "review.json": "d9a75ca06dd62f48c959ee1ad083d9719acf604468c8eae073f88464ca620c33"
+          "in.osm": "fcf33af7820952793620703a64f5d037a9ced605c8ed07558a43479dbfd8ff57",
+          "out.osw": "1d518dc93b9329bcbafcd9120cddc6f9284d42fb533fd535db10652f2bd30452",
+          "eplusout.err": "e450ff4f44b2862a3eecd7ef798dc476b7194a82d0612e4f58bce51c909a7904",
+          "in.idf": "73052e77d8b05b1dc4a3ff3f6f0285e1ce82e43819595df7c9960775dda40aaf",
+          "input_match.json": "bfbb2c37ca6cbac0ecbd5ee9695e91ae324dfc3275860aadae280269b7330a8f",
+          "eplusout.sql": "cb3ea425eab76e0a8697348d9622ac269e451923974f33ae43b9d6311b8e7332",
+          "verification.json": "905df16237bb0516c2b38ac6eee01efaab199ac8b110fdd69ae89ad4f3e747f2",
+          "review.json": "8190f161baab0bd18d329c3a323ea66456578771d5cb9228fdf8e4b13134bcf3"
         },
-        "idf_sha256": "9ab184c347d833ef8f436de29f2a4f5f74b75b7e0bd8ec9198be3ec7df2bb795",
-        "osm_sha256": "b6bb030055a3cbb873b3aa4d6671b5dff9840431c2528ff3534ec3655aefffcb",
-        "sql_sha256": "0ffdb32b11b2d8db5b297015f849949d8e20ed51bb8183dcf52fdfdd33d79bc0",
+        "idf_sha256": "73052e77d8b05b1dc4a3ff3f6f0285e1ce82e43819595df7c9960775dda40aaf",
+        "osm_sha256": "fcf33af7820952793620703a64f5d037a9ced605c8ed07558a43479dbfd8ff57",
+        "sql_sha256": "cb3ea425eab76e0a8697348d9622ac269e451923974f33ae43b9d6311b8e7332",
         "energyplus": "25.1.0",
         "openstudio": "3.10.0",
-        "annual_hbjson_sha256": "01bff299d9eebb83472b32a220c1d14761cfa3b00adfed09620b856cb7c4895e",
+        "annual_hbjson_sha256": "f45d3fa8ad1ee6038789f01630895500cf59711c7c0874fbb96d890c1b1bb303",
         "physical_inputs_match_annual": true
       }
     },
@@ -802,10 +693,10 @@
           ]
         },
         "summer": {
-          "people_peak": 43.99999999999998,
+          "people_peak": 50.0,
           "occupied": [
-            555,
-            885
+            540,
+            900
           ],
           "lighting_peak_W": 997.7957881541113,
           "equipment_peak_W": 799.9999999999997,
@@ -836,7 +727,7 @@
           ]
         },
         "summer": {
-          "people_peak": 55.0,
+          "people_peak": 23.0,
           "occupied": [
             510,
             990
@@ -870,13 +761,13 @@
           ]
         },
         "summer": {
-          "people_peak": 4.0,
+          "people_peak": 6.0,
           "occupied": [
             510,
             990
           ],
           "lighting_peak_W": 672.4436642046089,
-          "equipment_peak_W": 3555.0,
+          "equipment_peak_W": 3755.0,
           "ventilation": [
             510,
             990
@@ -922,105 +813,105 @@
       {
         "id": "labs",
         "label": "Learning Labs",
-        "heating_room_load_W": 3569.2587737496747,
-        "sensible_cooling_room_load_W": 5639.682943419815,
-        "winter_min_air_C": 21.111116885747425,
-        "summer_max_air_C": 23.897272879024797,
-        "summer_max_RH_percent": 63.6171262157738,
+        "heating_room_load_W": 3599.6759470948796,
+        "sensible_cooling_room_load_W": 5956.970363921883,
+        "winter_min_air_C": 21.11111714564196,
+        "summer_max_air_C": 23.949387648063606,
+        "summer_max_RH_percent": 64.01423395575357,
         "maximum_backup_W": 0.0,
         "equipment": {
-          "rated_heating_W": 9889.56525548091,
-          "rated_total_cooling_W": 10443.5131046153,
-          "rated_sensible_cooling_W": 7399.06527657245,
-          "airflow_m3_s": 0.610921405942168,
-          "source_water_flow_m3_s": 0.000356087844460572
+          "rated_heating_W": 10384.043518255,
+          "rated_total_cooling_W": 10965.688759846,
+          "rated_sensible_cooling_W": 7769.01854040107,
+          "airflow_m3_s": 0.641467476239277,
+          "source_water_flow_m3_s": 0.0003738922366836
         },
         "coil": {
           "heating": {
-            "W": 7206.5591310027075,
+            "W": 7613.901843238052,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
             "hour": 24,
             "minute": 0,
-            "runtime_fraction": 0.8534620024797513
+            "runtime_fraction": 0.852975379618552
           },
           "total_cooling": {
-            "W": 10420.919133847365,
+            "W": 10922.310282770693,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "hour": 14,
-            "minute": 25,
+            "hour": 13,
+            "minute": 20,
             "runtime_fraction": 1.0
           },
           "sensible_cooling": {
-            "W": 7054.48432617603,
+            "W": 7403.218561552208,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
             "hour": 14,
-            "minute": 15
+            "minute": 40
           },
           "supplemental_heating_W": 0.0
         },
         "conditions": [
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
-            "min_air_C": 23.888889496014556,
-            "max_air_C": 23.88960178777508,
-            "max_air_minute": 590,
-            "max_RH_percent": 58.04895743897126,
+            "min_air_C": 23.888889592960194,
+            "max_air_C": 23.934376230715387,
+            "max_air_minute": 865,
+            "max_RH_percent": 59.36075216466994,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -2.3450112962564162e-08
+            "delta_max_air_vs_delivery_trial_C": 0.04477441949019223
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DP=>MDB",
-            "min_air_C": 23.848625647138064,
-            "max_air_C": 23.889556300585262,
-            "max_air_minute": 640,
-            "max_RH_percent": 63.6171262157738,
-            "hours_RH_over_60": 5.833333333333333,
+            "min_air_C": 23.824926023759712,
+            "max_air_C": 23.889594826328846,
+            "max_air_minute": 620,
+            "max_RH_percent": 64.01423395575357,
+            "hours_RH_over_60": 12.666666666666666,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -6.862291712650403e-08
+            "delta_max_air_vs_delivery_trial_C": 3.845712066663509e-05
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "min_air_C": 23.888889634206702,
-            "max_air_C": 23.897272879024797,
-            "max_air_minute": 860,
-            "max_RH_percent": 63.23226169654058,
-            "hours_RH_over_60": 8.416666666666666,
+            "min_air_C": 23.88888950162188,
+            "max_air_C": 23.949387648063606,
+            "max_air_minute": 870,
+            "max_RH_percent": 63.724402955436474,
+            "hours_RH_over_60": 13.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": 8.640752236033222e-05
+            "delta_max_air_vs_delivery_trial_C": 0.052201176561169405
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
-            "min_air_C": 21.111116885747425,
-            "max_air_C": 21.11111694286332,
+            "min_air_C": 21.11111714564196,
+            "max_air_C": 21.11111722861111,
             "max_air_minute": 5,
             "max_RH_percent": 8.293412106574952,
             "hours_RH_over_60": 0.0,
-            "max_heat_W": 7206.5591310027075,
+            "max_heat_W": 7613.901843238052,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0,
             "hours_above_cooling_target_plus_05C": 0,
-            "delta_max_air_vs_delivery_trial_C": 7.105427357601002e-14
+            "delta_max_air_vs_delivery_trial_C": 2.857478627049659e-07
           }
         ]
       },
       {
         "id": "visitor",
         "label": "Visitor Center",
-        "heating_room_load_W": 3172.6436798874543,
-        "sensible_cooling_room_load_W": 5265.289249877125,
-        "winter_min_air_C": 21.11112182742032,
-        "summer_max_air_C": 24.376489688231263,
-        "summer_max_RH_percent": 59.952622863724315,
+        "heating_room_load_W": 3180.649523843264,
+        "sensible_cooling_room_load_W": 3720.8102610662368,
+        "winter_min_air_C": 21.111119309383994,
+        "summer_max_air_C": 23.888894294404174,
+        "summer_max_RH_percent": 60.01900116455721,
         "maximum_backup_W": 0.0,
         "equipment": {
           "rated_heating_W": 12794.2992918615,
@@ -1031,184 +922,184 @@
         },
         "coil": {
           "heating": {
-            "W": 6002.184319472798,
+            "W": 4505.999135810873,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
             "hour": 24,
             "minute": 0,
-            "runtime_fraction": 0.5788919855111533
+            "runtime_fraction": 0.4425264669143336
           },
           "total_cooling": {
-            "W": 13929.33356497981,
-            "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DP=>MDB",
-            "hour": 9,
-            "minute": 15,
-            "runtime_fraction": 1.0
+            "W": 10041.61433975328,
+            "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+            "hour": 10,
+            "minute": 20,
+            "runtime_fraction": 0.7833444116839771
           },
           "sensible_cooling": {
-            "W": 9346.506748245065,
+            "W": 6775.500921626624,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "hour": 9,
-            "minute": 15
+            "hour": 10,
+            "minute": 20
           },
           "supplemental_heating_W": 0.0
         },
         "conditions": [
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
-            "min_air_C": 23.88889016719938,
-            "max_air_C": 23.888894165910486,
-            "max_air_minute": 590,
-            "max_RH_percent": 57.09214719453853,
+            "min_air_C": 23.888890074568344,
+            "max_air_C": 23.888894143898924,
+            "max_air_minute": 530,
+            "max_RH_percent": 58.19605137156424,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": 7.679297198137647e-08
+            "delta_max_air_vs_delivery_trial_C": 5.478140963077749e-08
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DP=>MDB",
-            "min_air_C": 23.888864540874685,
-            "max_air_C": 24.268319601173985,
-            "max_air_minute": 900,
-            "max_RH_percent": 59.55884429887174,
-            "hours_RH_over_60": 0.0,
+            "min_air_C": 23.878835572050686,
+            "max_air_C": 23.888894294404174,
+            "max_air_minute": 580,
+            "max_RH_percent": 60.01900116455721,
+            "hours_RH_over_60": 0.25,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
-            "hours_above_cooling_target_plus_025C": 0.08333333333333333,
+            "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": 0.0002745095825282817
+            "delta_max_air_vs_delivery_trial_C": -0.3791507971872825
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "min_air_C": 23.8888899413122,
-            "max_air_C": 24.376489688231263,
-            "max_air_minute": 900,
-            "max_RH_percent": 59.952622863724315,
+            "min_air_C": 23.888889794030643,
+            "max_air_C": 23.888894125893334,
+            "max_air_minute": 535,
+            "max_RH_percent": 59.959975457812384,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
-            "hours_above_cooling_target_plus_025C": 0.08333333333333333,
+            "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": 0.00015103588641451893
+            "delta_max_air_vs_delivery_trial_C": -0.48744452645151526
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
-            "min_air_C": 21.11112182742032,
-            "max_air_C": 21.111121845960568,
+            "min_air_C": 21.111119309383994,
+            "max_air_C": 21.11111936614943,
             "max_air_minute": 1440,
-            "max_RH_percent": 8.293409677826741,
+            "max_RH_percent": 8.293410649325947,
             "hours_RH_over_60": 0.0,
-            "max_heat_W": 6002.184319472798,
+            "max_heat_W": 4505.999135810873,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0,
             "hours_above_cooling_target_plus_05C": 0,
-            "delta_max_air_vs_delivery_trial_C": 3.552713678800501e-15
+            "delta_max_air_vs_delivery_trial_C": -2.479811133326848e-06
           }
         ]
       },
       {
         "id": "core",
         "label": "Core",
-        "heating_room_load_W": 3356.869357379008,
-        "sensible_cooling_room_load_W": 6008.304785706297,
-        "winter_min_air_C": 21.111116866134278,
-        "summer_max_air_C": 23.98604806831866,
-        "summer_max_RH_percent": 59.91781242717407,
+        "heating_room_load_W": 3419.6413019631386,
+        "sensible_cooling_room_load_W": 6247.270343701336,
+        "winter_min_air_C": 21.11111709087932,
+        "summer_max_air_C": 23.975489226009657,
+        "summer_max_RH_percent": 59.971934857552675,
         "maximum_backup_W": 0.0,
         "equipment": {
-          "rated_heating_W": 9260.73119315173,
-          "rated_total_cooling_W": 9779.4559291066,
-          "rated_sensible_cooling_W": 7107.50506324652,
-          "airflow_m3_s": 0.600107055935745,
-          "source_water_flow_m3_s": 0.000333445780831527
+          "rated_heating_W": 10186.8043124669,
+          "rated_total_cooling_W": 10757.4015220173,
+          "rated_sensible_cooling_W": 7818.25556957117,
+          "airflow_m3_s": 0.660117761529319,
+          "source_water_flow_m3_s": 0.00036679035891468
         },
         "coil": {
           "heating": {
-            "W": 4105.604083202724,
+            "W": 4227.912189991736,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
             "hour": 24,
             "minute": 0,
-            "runtime_fraction": 0.549991898995966
+            "runtime_fraction": 0.5146939927042783
           },
           "total_cooling": {
-            "W": 9783.97624959656,
+            "W": 10810.852395395481,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "hour": 10,
-            "minute": 5,
+            "hour": 9,
+            "minute": 25,
             "runtime_fraction": 1.0
           },
           "sensible_cooling": {
-            "W": 6734.221145212119,
+            "W": 7425.408627428291,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "hour": 10,
-            "minute": 5
+            "hour": 9,
+            "minute": 25
           },
           "supplemental_heating_W": 0.0
         },
         "conditions": [
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
-            "min_air_C": 23.88888946042766,
-            "max_air_C": 23.889342959176123,
-            "max_air_minute": 730,
-            "max_RH_percent": 56.17814057509987,
+            "min_air_C": 23.88888950284483,
+            "max_air_C": 23.88942527234017,
+            "max_air_minute": 735,
+            "max_RH_percent": 57.66786522551771,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -6.889756321015739e-08
+            "delta_max_air_vs_delivery_trial_C": 8.22442664834e-05
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DP=>MDB",
-            "min_air_C": 23.888889518530906,
-            "max_air_C": 23.98604806831866,
-            "max_air_minute": 870,
-            "max_RH_percent": 59.66765569212805,
+            "min_air_C": 23.888889607270144,
+            "max_air_C": 23.975489226009657,
+            "max_air_minute": 900,
+            "max_RH_percent": 59.971934857552675,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": 0.0007733433434715664
+            "delta_max_air_vs_delivery_trial_C": -0.009785498965531048
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "min_air_C": 23.888889602974256,
-            "max_air_C": 23.958661838207142,
+            "min_air_C": 23.88888971402879,
+            "max_air_C": 23.929632573438365,
             "max_air_minute": 730,
-            "max_RH_percent": 59.91781242717407,
+            "max_RH_percent": 59.929201259855944,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -0.00016307444564844786
+            "delta_max_air_vs_delivery_trial_C": -0.029192339214425544
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
-            "min_air_C": 21.111116866134278,
-            "max_air_C": 21.11111689428967,
+            "min_air_C": 21.11111709087932,
+            "max_air_C": 21.11111714219758,
             "max_air_minute": 1440,
-            "max_RH_percent": 8.293412106574952,
+            "max_RH_percent": 8.293412106574955,
             "hours_RH_over_60": 0.0,
-            "max_heat_W": 4105.604083202724,
+            "max_heat_W": 4227.912189991736,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0,
             "hours_above_cooling_target_plus_05C": 0,
-            "delta_max_air_vs_delivery_trial_C": 1.4210854715202004e-14
+            "delta_max_air_vs_delivery_trial_C": 2.4790792352291646e-07
           }
         ]
       },
       {
         "id": "restrooms",
         "label": "Restrooms",
-        "heating_room_load_W": 1384.136044194359,
-        "sensible_cooling_room_load_W": 1082.632803204433,
-        "winter_min_air_C": 21.111116820129737,
-        "summer_max_air_C": 23.88926583994089,
-        "summer_max_RH_percent": 60.360972318356374,
+        "heating_room_load_W": 1377.937114247201,
+        "sensible_cooling_room_load_W": 1089.4878847297343,
+        "winter_min_air_C": 21.111155210415884,
+        "summer_max_air_C": 23.889260789228636,
+        "summer_max_RH_percent": 60.43452753199476,
         "maximum_backup_W": 0.0,
         "equipment": {
           "rated_heating_W": 1503.13587475481,
@@ -1219,86 +1110,86 @@
         },
         "coil": {
           "heating": {
-            "W": 1319.0325833093702,
+            "W": 1313.4586955535228,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
             "hour": 24,
             "minute": 0,
-            "runtime_fraction": 0.9986505747007955
+            "runtime_fraction": 0.9894569793743401
           },
           "total_cooling": {
-            "W": 1511.9122462751593,
-            "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "hour": 14,
-            "minute": 15,
-            "runtime_fraction": 0.9765247474257029
-          },
-          "sensible_cooling": {
-            "W": 1146.3078047938423,
+            "W": 1536.3950802598094,
             "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
             "hour": 14,
-            "minute": 40
+            "minute": 35,
+            "runtime_fraction": 0.9988901033874216
+          },
+          "sensible_cooling": {
+            "W": 1157.9136395663993,
+            "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
+            "hour": 14,
+            "minute": 35
           },
           "supplemental_heating_W": 0.0
         },
         "conditions": [
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
-            "min_air_C": 23.88888910018228,
-            "max_air_C": 23.88926583994089,
-            "max_air_minute": 990,
-            "max_RH_percent": 55.1488487080237,
+            "min_air_C": 23.888889193947133,
+            "max_air_C": 23.889260789228636,
+            "max_air_minute": 975,
+            "max_RH_percent": 56.483909031768476,
             "hours_RH_over_60": 0.0,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -3.749248378426273e-08
+            "delta_max_air_vs_delivery_trial_C": -5.0882047375466755e-06
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DP=>MDB",
-            "min_air_C": 23.888889120296238,
-            "max_air_C": 23.88922544739978,
-            "max_air_minute": 795,
-            "max_RH_percent": 59.48965230129449,
-            "hours_RH_over_60": 0.0,
+            "min_air_C": 23.888843312557764,
+            "max_air_C": 23.889222421809215,
+            "max_air_minute": 815,
+            "max_RH_percent": 60.24485325726556,
+            "hours_RH_over_60": 6.666666666666667,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -2.514057761970889e-07
+            "delta_max_air_vs_delivery_trial_C": -3.276996341838867e-06
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-            "min_air_C": 23.8888891312657,
-            "max_air_C": 23.889243510840167,
-            "max_air_minute": 970,
-            "max_RH_percent": 60.360972318356374,
-            "hours_RH_over_60": 3.1666666666666665,
+            "min_air_C": 23.888889140707473,
+            "max_air_C": 23.889230259010862,
+            "max_air_minute": 945,
+            "max_RH_percent": 60.43452753199476,
+            "hours_RH_over_60": 7.333333333333333,
             "max_heat_W": 0.0,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0.0,
             "hours_above_cooling_target_plus_05C": 0.0,
-            "delta_max_air_vs_delivery_trial_C": -2.3180244568266062e-07
+            "delta_max_air_vs_delivery_trial_C": -1.3483631750688119e-05
           },
           {
             "name": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
-            "min_air_C": 21.111116820129737,
-            "max_air_C": 21.111141123333784,
+            "min_air_C": 21.111155210415884,
+            "max_air_C": 21.111190055731168,
             "max_air_minute": 5,
-            "max_RH_percent": 8.293412106574952,
+            "max_RH_percent": 8.293392676611909,
             "hours_RH_over_60": 0.0,
-            "max_heat_W": 1319.0325833093702,
+            "max_heat_W": 1313.4586955535228,
             "max_backup_W": 0.0,
             "hours_above_cooling_target_plus_025C": 0,
             "hours_above_cooling_target_plus_05C": 0,
-            "delta_max_air_vs_delivery_trial_C": -3.126388037344441e-13
+            "delta_max_air_vs_delivery_trial_C": 4.8932397071155265e-05
           }
         ]
       }
     ],
     "coincident_room_loads_W": {
-      "heating": 11482.908000000001,
-      "cooling": 15837.356
+      "heating": 11577.903999999999,
+      "cooling": 16970.949
     },
     "operating_coil_peaks": {
       "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB": {
@@ -1311,11 +1202,11 @@
           "minute": 5
         },
         "sensible_cooling_W": {
-          "W": 18411.030896748172,
+          "W": 19870.035343353415,
           "minute": 855
         },
         "total_cooling_W": {
-          "W": 25393.01280499026,
+          "W": 28117.08811450653,
           "minute": 845
         }
       },
@@ -1329,12 +1220,12 @@
           "minute": 5
         },
         "sensible_cooling_W": {
-          "W": 17415.157467927806,
-          "minute": 895
+          "W": 20985.992743518156,
+          "minute": 880
         },
         "total_cooling_W": {
-          "W": 26037.96139468557,
-          "minute": 845
+          "W": 31548.578097524005,
+          "minute": 880
         }
       },
       "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB": {
@@ -1347,17 +1238,17 @@
           "minute": 5
         },
         "sensible_cooling_W": {
-          "W": 18070.24492553309,
-          "minute": 900
+          "W": 21751.17963780792,
+          "minute": 785
         },
         "total_cooling_W": {
-          "W": 26933.54526185202,
-          "minute": 845
+          "W": 32651.850050758785,
+          "minute": 785
         }
       },
       "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB": {
         "heating_W": {
-          "W": 18633.3801169876,
+          "W": 17661.271864594186,
           "minute": 1440
         },
         "supplemental_heat_W": {
@@ -1375,47 +1266,82 @@
       }
     },
     "coil_peaks": {
-      "heating_W": 18633.3801169876,
+      "heating_W": 17661.271864594186,
       "heating_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
       "heating_hour": 24,
       "heating_minute": 0,
-      "total_cooling_W": 26933.54526185202,
+      "total_cooling_W": 32651.850050758785,
       "total_cooling_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
-      "total_cooling_hour": 14,
+      "total_cooling_hour": 13,
       "total_cooling_minute": 5,
-      "sensible_cooling_W": 18411.030896748172,
-      "sensible_cooling_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
-      "sensible_cooling_hour": 14,
-      "sensible_cooling_minute": 15
+      "sensible_cooling_W": 21751.17963780792,
+      "sensible_cooling_condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+      "sensible_cooling_hour": 13,
+      "sensible_cooling_minute": 5
     },
     "room_to_coil": {
       "heating": {
         "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN HTG 99.6% CONDNS DB",
         "hour": 24,
         "minute": 0,
-        "room_sensible_W": 11464.456243486908,
-        "ventilation_sensible_W": 8055.394621703618,
-        "fan_and_other_W": -886.4707482029271,
-        "coil_W": 18633.3801169876,
-        "erv_supply_m3_s": 0.5808542516432464,
-        "erv_supply_C": 9.50484224848582,
-        "unit_fan_W": 896.6502451066324
+        "room_sensible_W": 11559.707934936625,
+        "ventilation_sensible_W": 6942.5865574887175,
+        "fan_and_other_W": -841.0226278311566,
+        "coil_W": 17661.271864594186,
+        "erv_supply_m3_s": 0.500613176364167,
+        "erv_supply_C": 9.504857684665023,
+        "unit_fan_W": 849.9061983787511
       },
       "cooling": {
-        "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS WB=>MDB",
+        "condition": "WHITE.PLAINS-WESTCHESTER.COUN ANN CLG .4% CONDNS DB=>MWB",
         "hour": 14,
-        "minute": 5,
-        "room_sensible_W": 15756.129128859044,
-        "ventilation_sensible_W": 1087.8996155961083,
-        "fan_and_other_W": 1121.1057934021248,
-        "coil_sensible_W": 17965.134537857277,
-        "room_latent_W": 5203.251639677015,
-        "ventilation_latent_W": 3765.1590843177332,
-        "coil_latent_W": 8968.410723994748,
-        "coil_total_W": 26933.54526185202,
-        "erv_supply_m3_s": 0.41211199039459356,
-        "erv_supply_C": 26.116496906467273,
-        "unit_fan_W": 1057.3092464708482
+        "minute": 15,
+        "room_sensible_W": 17296.327598815195,
+        "dehumidifier_heat_W": 0.0,
+        "ventilation_sensible_W": 1733.9158715428666,
+        "fan_and_other_W": 839.7918729953535,
+        "coil_sensible_W": 19870.035343353415,
+        "room_latent_W": 6020.516218101418,
+        "ventilation_latent_W": 2201.4252917677863,
+        "coil_latent_W": 8221.941509869204,
+        "coil_total_W": 28091.97685322262,
+        "erv_supply_m3_s": 0.500613176364167,
+        "erv_supply_C": 26.806646261890137,
+        "unit_fan_W": 1121.8325717808025,
+        "zones": {
+          "labs": {
+            "room_sensible_W": 6171.953489648469,
+            "ventilation_sensible_W": 1085.0513335950084,
+            "coil_sensible_W": 7374.078865231928,
+            "fan_and_other_W": 117.07404198845029,
+            "unit_fan_W": 408.26556918666637,
+            "runtime_fraction": 1.0
+          },
+          "visitor": {
+            "room_sensible_W": 3716.815498200507,
+            "ventilation_sensible_W": 389.9537264121095,
+            "coil_sensible_W": 4375.281366436437,
+            "fan_and_other_W": 268.51214182382,
+            "unit_fan_W": 261.24027040039863,
+            "runtime_fraction": 0.5182845074020095
+          },
+          "core": {
+            "room_sensible_W": 6322.839612651645,
+            "ventilation_sensible_W": 258.9108115357487,
+            "coil_sensible_W": 6973.241784172407,
+            "fan_and_other_W": 391.49135998501316,
+            "unit_fan_W": 389.58246729576877,
+            "runtime_fraction": 0.9272778193928686
+          },
+          "restrooms": {
+            "room_sensible_W": 1084.7189983145727,
+            "ventilation_sensible_W": 0.0,
+            "coil_sensible_W": 1147.4333275126435,
+            "fan_and_other_W": 62.7143291980708,
+            "unit_fan_W": 62.74426489796871,
+            "runtime_fraction": 0.9953969226139155
+          }
+        }
       },
       "air_density_kg_m3": 1.1877601556612896
     },
@@ -1423,57 +1349,57 @@
       "cooling": [
         {
           "component": "People",
-          "sensible_W": 3929.65,
-          "latent_W": 3138.62
+          "sensible_W": 5396.05,
+          "latent_W": 4224.56
         },
         {
           "component": "Lights",
-          "sensible_W": 2537.2,
+          "sensible_W": 2667.05,
           "latent_W": 0.0
         },
         {
           "component": "Equipment",
-          "sensible_W": 4043.68,
-          "latent_W": 88.87
+          "sensible_W": 4239.23,
+          "latent_W": 93.87
         },
         {
           "component": "Infiltration",
-          "sensible_W": 666.65,
-          "latent_W": 915.23
+          "sensible_W": 666.68,
+          "latent_W": 873.36
         },
         {
           "component": "Interzone Mixing",
-          "sensible_W": -0.3,
-          "latent_W": 309.14
+          "sensible_W": -0.4,
+          "latent_W": 377.56
         },
         {
           "component": "Roof",
-          "sensible_W": 192.34,
+          "sensible_W": 45.18,
           "latent_W": 0.0
         },
         {
           "component": "Exterior Wall",
-          "sensible_W": 40.35,
+          "sensible_W": -194.2,
           "latent_W": 0.0
         },
         {
           "component": "Interzone Wall",
-          "sensible_W": 34.67,
+          "sensible_W": -34.6,
           "latent_W": 0.0
         },
         {
           "component": "Ground Contact Floor",
-          "sensible_W": -1594.1,
+          "sensible_W": -1799.9,
           "latent_W": 0.0
         },
         {
           "component": "Fenestration Conduction",
-          "sensible_W": 3038.07,
+          "sensible_W": 3255.31,
           "latent_W": 0.0
         },
         {
           "component": "Fenestration Solar",
-          "sensible_W": 2998.06,
+          "sensible_W": 2953.52,
           "latent_W": 0.0
         }
       ],
@@ -1496,36 +1422,36 @@
         {
           "component": "Infiltration",
           "sensible_W": -3266.6,
-          "latent_W": -1413.3
+          "latent_W": -1415.8
         },
         {
           "component": "Interzone Mixing",
-          "sensible_W": -0.1,
-          "latent_W": -3.3
+          "sensible_W": 0.0,
+          "latent_W": 3.54
         },
         {
           "component": "Roof",
-          "sensible_W": -1747.2,
+          "sensible_W": -1686.6,
           "latent_W": 0.0
         },
         {
           "component": "Exterior Wall",
-          "sensible_W": -1819.9,
+          "sensible_W": -1797.9,
           "latent_W": 0.0
         },
         {
           "component": "Interzone Wall",
-          "sensible_W": 0.57,
+          "sensible_W": 0.89,
           "latent_W": 0.0
         },
         {
           "component": "Ground Contact Floor",
-          "sensible_W": -31.3,
+          "sensible_W": 6.21,
           "latent_W": 0.0
         },
         {
           "component": "Fenestration Conduction",
-          "sensible_W": -4599.4,
+          "sensible_W": -4815.3,
           "latent_W": 0.0
         },
         {
@@ -1550,7 +1476,8 @@
       "cooling_setpoint_C": 23.8888888889,
       "slab_ground_C": 18.0,
       "ERV_channels_verified": 13,
-      "severe_errors": 0
+      "severe_errors": 39,
+      "severe_error_note": "39 non-convex casting surfaces under PolygonClipping shading (accepted 2026-11-03): an accuracy notice, not a failed run"
     },
     "basis": "Room loads are unfactored sensible thermal loads. Individual zone peaks are noncoincident. Detailed coil output includes ventilation and latent effects. Rated equipment inputs are provisional allowances.",
     "sizing_notes": [

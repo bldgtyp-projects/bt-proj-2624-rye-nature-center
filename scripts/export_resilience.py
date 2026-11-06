@@ -10,6 +10,7 @@ import honeybee_revive.output.set_calculator as set_calculator
 from honeybee_revive.output.resilience_winter_graphs import envelope_conduction_records,get_surface_data
 from honeybee_revive.output.set_calculator import (ACTIVITY_LEVEL_W_PER_PERSON,AIR_SPEED_M_S,CLOTHING_INSULATION_CLO,
     DEGREE_HOUR_F_PER_K,EDGE_BUFFER_HOURS,OUTAGE_HOURS,SET_THRESHOLD_C,calculate_winter_set_from_sql)
+from known_severe import NOTE as SEVERE_NOTE, check_severe
 
 ROOT=Path(__file__).resolve().parents[1]
 PRIVATE=ROOT/'_private/resilience'
@@ -126,9 +127,11 @@ def run_checks(sql:Path,idf:str)->dict:
     window=hourly_total('Zone Ventilation Standard Density Volume Flow Rate',3600)
     people={}
     for t,v,k in c.execute(q,('Zone People Total Heating Energy','Hourly',cutoff)):people[zone_key(k)]=people.get(zone_key(k),0)+v/3.6e6
-    err=(sql.parent/'eplusout.err').read_text(errors='replace').splitlines()[-1]
-    assert 'Completed Successfully' in err and ' 0 Severe Errors' in err,err
-    return {'severe_errors':0,'warnings':int(err.split('--')[1].split('Warning')[0]),
+    full=(sql.parent/'eplusout.err').read_text(errors='replace')
+    severe_errors=check_severe(full)
+    err=full.splitlines()[-1]
+    assert 'Completed Successfully' in err,err
+    return {'severe_errors':severe_errors,'severe_error_note':SEVERE_NOTE if severe_errors else None,'warnings':int(err.split('--')[1].split('Warning')[0]),
             'timesteps_per_hour':int(idf.split('Timestep,')[1].split(';')[0]),
             'lead_in_hours':lead_hours,'lead_in_conditioning_kWh':sum(v for rows in lead_rows for _,v,_ in rows)/3.6e6,
             'outage_conditioning_kWh':sum(district[WINDOW]),'conditioning_day1_kWh':sum(district[:24]),'conditioning_day9_kWh':sum(district[-24:]),

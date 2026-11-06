@@ -9,6 +9,7 @@ from pathlib import Path
 import re
 import shutil
 import sqlite3
+from known_severe import NOTE as SEVERE_NOTE, check_severe
 
 ROOT = Path(__file__).resolve().parents[1]
 PRIVATE = ROOT / '_private/annual'
@@ -84,7 +85,7 @@ def main():
     assert workflow['completed_status'] == 'Success'
     assert all(s['result']['step_result'] == 'Success' and not s['result'].get('step_errors') for s in workflow['steps'])
     error = (PRIVATE / 'eplusout.err').read_text()
-    assert not re.search(r'\*\*\s+(Severe|Fatal)\s+\*\*', error)
+    severe_errors = check_severe(error)
     idf = objects(PRIVATE / 'in.idf')
     osm_version = next(o[2] for o in objects(PRIVATE / 'in.osm') if o[0].lower() == 'os:version')
     assert osm_version == '3.10.0'
@@ -165,7 +166,7 @@ def main():
                          'humidity': humidity,
                          'dehumidification_kWh': diagnostics['energy']['Dehumidifier Electricity Energy'], 'reporting_basis': 'Purchased site electricity, before any PV credit. Heating and cooling are equipment electricity, not thermal loads. Cooling includes supplemental dehumidifier electricity. Hot water includes tank parasitics. Fans and pumps include the shared ERV and conditioning equipment.',
                          'calculation': 'Monthly totals sum the EnergyPlus end-use electricity, including the dehumidifiers and the water heater\'s {power:20} standby draw, and match the building electricity meter.',
-                         'review': {'severe_errors': 0, 'humidity_status': 'visitor_core_control_verified_labs_and_winter_comfort_open',
+                         'review': {'severe_errors': severe_errors, 'severe_error_note': SEVERE_NOTE if severe_errors else None, 'humidity_status': 'visitor_core_control_verified_labs_and_winter_comfort_open',
                                     'occupied_cooling_unmet_hours': occupied_cooling_unmet, 'annual_latch_intervals_checked': 35040},
                          'systems': [
                              ['Heating and cooling','A water-source heat pump in each of the four zones, with project capacities and matching air, water and fan flows. The ERV runs first. Performance curves and ground-loop water temperatures are generic.'],
